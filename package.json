@@ -12,11 +12,6 @@
     "type": "git",
     "url": "https://github.com/kgu-capstone/study-with-me-fe.git"
   },
-  "contributors": [
-    "yoonji66 <kyr9389@naver.com> (https://github.com/yoonji66)",
-    "heemin1008 <kyr9389@naver.com> (https://github.com/heemin1008)",
-    "gunbambam <lah1203@naver.com> (https://github.com/gunbambam)"
-  ],
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

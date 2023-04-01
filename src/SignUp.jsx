@@ -96,12 +96,22 @@ for(let i = 0; i < townList[citys.indexOf(city)].length; i++){
                     <p>회원가입을 진행해주세요 :)</p>
                 </div>
                 <div className='profile'>
+<<<<<<< HEAD
                     <Avatar
+=======
+                    {/* <Avatar
+>>>>>>> 3697cc296d484062be2cc8b1eed55ff722145c6e
                         size={133}
                         name={nick}
                         variant="beam"
                         colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
+<<<<<<< HEAD
                     />
+=======
+                    /> */}
+                    <img src={`https://source.boringavatars.com/beam/133/${nick}%20Mitchell?colors=FF3D1F,FFEA52,FF5037,1FFF98,4D2BFF`}/>
+                    
+>>>>>>> 3697cc296d484062be2cc8b1eed55ff722145c6e
                 </div>
                 <div>
                     <form>

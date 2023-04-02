@@ -1,0 +1,58 @@
+/* font */
+
+@font-face {
+    font-family: 'Pretnedard-regular';
+    src: url(./fonts/Pretendard-Regular.woff);
+}
+
+
+body{
+    font-family: 'Pretnedard-regular';
+    margin : 0px;
+}
+
+.modal_container{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.main_container{
+    width: 425px;
+    height: 400PX;
+    margin: 150px auto 0 auto;
+    background: white;
+}
+
+.close_button{
+    width: 50px;
+    padding-top: 10px;
+    padding-right: 10px;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.logos{
+    margin-top: 15px;
+    margin-bottom: 40px;
+    width: 303px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.description{
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+.description > p{
+    text-align: center;
+    font-weight: bold;
+}
+
+.google_login{
+    width: 208px;
+    margin: 0 auto;
+}

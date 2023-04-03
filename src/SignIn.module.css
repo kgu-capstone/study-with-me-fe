@@ -21,6 +21,7 @@ body{
 }
 
 .main_container{
+    border-radius: 10px;
     width: 425px;
     height: 400PX;
     margin: 150px auto 0 auto;
@@ -55,4 +56,5 @@ body{
 .google_login{
     width: 208px;
     margin: 0 auto;
+    cursor: pointer;
 }

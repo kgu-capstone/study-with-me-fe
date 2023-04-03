@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styles from './SignIn.module.css';
-import GoogleLoginAuthStudy from './GoogleLoginAuthStudy';
+import GoogleLogin from './GoogleLogin';
 
 export default class SignIn extends Component {
     constructor(props){
@@ -26,7 +26,7 @@ export default class SignIn extends Component {
                             <p>로그인</p>
                         </div>
                         <div className={styles.google_login}>                   
-                            {/* <GoogleLoginAuthStudy/> */}
+                            <GoogleLogin/>
                         </div>
                     </div>
                 </div>

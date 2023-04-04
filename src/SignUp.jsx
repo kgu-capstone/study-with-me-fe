@@ -1,9 +1,11 @@
 import React, { Component, useCallback, useState } from 'react';
 import './SignUp.css';
-import axios from 'axios';
-
+import Avatar from "boring-avatars";
 
 function SignIn() {
+
+// 프로필바꾸기
+const [nick, setNick] = useState('hi');
 
 //년
 const years=[];
@@ -94,7 +96,12 @@ for(let i = 0; i < townList[citys.indexOf(city)].length; i++){
                     <p>회원가입을 진행해주세요 :)</p>
                 </div>
                 <div className='profile'>
-                    <img src={process.env.PUBLIC_URL + '/img/profile.svg'}/>
+                    <Avatar
+                        size={133}
+                        name={nick}
+                        variant="beam"
+                        colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
+                    />                    
                 </div>
                 <div>
                     <form>
@@ -103,7 +110,7 @@ for(let i = 0; i < townList[citys.indexOf(city)].length; i++){
                                 <label htmlFor='name'>이름</label>
                             </div>
                             <div>
-                                <input type='text' id='name' className='inputs_readonly inputs_one' readOnly/>
+                                <input type='text' id='name' className='inputs_readonly inputs inputs_one' readOnly/>
                             </div>                            
                         </div>
                         <div className='floor'>
@@ -111,7 +118,7 @@ for(let i = 0; i < townList[citys.indexOf(city)].length; i++){
                                 <label htmlFor='email'>이메일</label>
                             </div>
                             <div>
-                                <input type='text' id='email' className='inputs_readonly input_one' readOnly/>
+                                <input type='text' id='email' className='inputs_readonly inputs inputs_one' readOnly/>
                             </div>
                         </div>
                         <div className='floor'>
@@ -119,7 +126,7 @@ for(let i = 0; i < townList[citys.indexOf(city)].length; i++){
                                 <label htmlFor="nick">닉네임</label>
                             </div>
                             <div>
-                                <input type="text" id="nick" className='inputs inputs_one'/>
+                                <input type="text" id="nick" className='inputs inputs_one' onChange={(e) => setNick(e.target.value)}/>
                             </div>
                         </div>
                         <div className='floor'>

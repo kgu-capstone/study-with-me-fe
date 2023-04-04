@@ -20,7 +20,7 @@ body{
 }
 
 /* nav */
-nav {
+/* nav {
     height : 80px;
     display : flex;
     justify-content: space-around;
@@ -52,7 +52,7 @@ nav {
     position: relative;
     right : 35px;
     
-}
+} */
 /* 여기까지 nav */
 .floor{
     margin-bottom: 47px;

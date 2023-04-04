@@ -1,6 +1,7 @@
 import React, { Component, useCallback, useState } from 'react';
 import './SignUp.css';
 import Avatar from "boring-avatars";
+import { useLocation } from 'react-router';
 
 function SignIn() {
 
@@ -85,6 +86,7 @@ for(let i = 0; i < townList[citys.indexOf(city)].length; i++){
     towns.push(townList[citys.indexOf(city)][i]);    
 }
 
+const { name, email} = useLocation();
 
     return (
         <div>
@@ -101,7 +103,7 @@ for(let i = 0; i < townList[citys.indexOf(city)].length; i++){
                         name={nick}
                         variant="beam"
                         colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
-                    />                    
+                    />            
                 </div>
                 <div>
                     <form>
@@ -110,7 +112,7 @@ for(let i = 0; i < townList[citys.indexOf(city)].length; i++){
                                 <label htmlFor='name'>이름</label>
                             </div>
                             <div>
-                                <input type='text' id='name' className='inputs_readonly inputs inputs_one' readOnly/>
+                                <input type='text' id='name' value={name} className='inputs_readonly inputs inputs_one' readOnly/>
                             </div>                            
                         </div>
                         <div className='floor'>
@@ -118,7 +120,7 @@ for(let i = 0; i < townList[citys.indexOf(city)].length; i++){
                                 <label htmlFor='email'>이메일</label>
                             </div>
                             <div>
-                                <input type='text' id='email' className='inputs_readonly inputs inputs_one' readOnly/>
+                                <input type='text' id='email' value={email} className='inputs_readonly inputs inputs_one' readOnly/>
                             </div>
                         </div>
                         <div className='floor'>

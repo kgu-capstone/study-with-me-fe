@@ -113,6 +113,11 @@ footer {
   margin-right: 20px;
 }
 
+.hash-tag:hover {
+  background-color: #ff5037;
+  color: white;
+}
+
 .card {
   width: 150px;
   margin-left: 15px;
@@ -124,6 +129,13 @@ footer {
   text-align: center;
 }
 
+.card-body:hover {
+  font-weight: 700;
+  color: #ff5037;
+  border: 1px solid #ff5037;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
 .card-title {
   margin-top: 50px;
 }
@@ -131,6 +143,7 @@ footer {
 .heart {
   float: right;
   font-size: 12px;
+  background-color: white;
 }
 
 .card-area {

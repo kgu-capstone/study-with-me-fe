@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react'
 import styles from '../css/Nav.module.css';
 import SignIn from '../pages/SignIn';
+import MyPage from '../pages/MyPage';
 import Avatar from "boring-avatars";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
@@ -34,7 +35,7 @@ export default class Nav extends Component {
                             />             
                         <p className={styles.nav_detail}>하이 님</p>
                         <div className={styles.dropdown}>
-                            <NavLink className={styles.dropdown_contents}>마이페이지</NavLink>
+                            <NavLink to = '/MyPage' className={styles.dropdown_contents}>마이페이지</NavLink>
                             <NavLink className={styles.dropdown_contents}>로그아웃</NavLink>
                         </div>
                     </div>

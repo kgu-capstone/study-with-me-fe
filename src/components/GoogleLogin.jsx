@@ -10,11 +10,6 @@ export default class GoogleLogin extends Component {
     };
   }
 
-  
-  move = () => {
-    <Link to = 'SignUp' />
-  }
-
   handleLogin = async () => {
     const redirectUrl = encodeURIComponent('http://localhost:3000/SignIn');
     const response = await axios.get(`http://localhost:8080/api/oauth/access?redirectUrl=${redirectUrl}`) // 1. 백엔드 서버에서 Authorization Code 요청 URL 받아오기
@@ -23,12 +18,9 @@ export default class GoogleLogin extends Component {
   };
 
   handleCallback = async () => {
-    console.log('들어오냐?');
     const searchParams = new URLSearchParams(window.location.search);
     const authorizationCode = searchParams.get('code'); // google redirect를 통해서 받아온 Authoriation Code
     const redirectUrl = encodeURIComponent('http://localhost:3000/SignIn'); // Redirect Url -> handleLogin의 redirectUri와 반드시 일치
-
-    console.log('code는?' + authorizationCode);
 
     if (authorizationCode) {
       console.log('if문은?');
@@ -51,18 +43,9 @@ export default class GoogleLogin extends Component {
             localStorage.setItem("name" , error.response.data.name);
             localStorage.setItem("email", error.response.data.email);
             window.location.href = 'http://localhost:3000/SignUp';
-            // <Link to ='SignUp' />
-            // this.move();
-            // navigate('/');
-            // <Redirect 
-            // Navigate('SignUp', { name: error.response.name, email: error.response.email}) // 정보 전달하면서 회원가입 페이지로 이동
-            // <Route path=''
-            // window.location.href = 'http://www.naver.com';
           }
-          
         });
     }
-    return;
   };
 
 

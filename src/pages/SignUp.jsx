@@ -1,5 +1,5 @@
 import React, { Component, useCallback, useState } from 'react';
-import './SignUp.css';
+import '../css/SignUp.css';
 import Avatar from "boring-avatars";
 import { useLocation } from 'react-router';
 
@@ -86,7 +86,8 @@ for(let i = 0; i < townList[citys.indexOf(city)].length; i++){
     towns.push(townList[citys.indexOf(city)][i]);    
 }
 
-const { name, email} = useLocation();
+const name = localStorage.getItem("name");
+const email = localStorage.getItem("email");
 
     return (
         <div>

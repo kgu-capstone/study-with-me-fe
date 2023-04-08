@@ -2,7 +2,7 @@
 
 @font-face {
     font-family: 'Pretnedard-regular';
-    src: url(./fonts/Pretendard-Regular.woff);
+    src: url(../fonts/Pretendard-Regular.woff);
 }
 
 
@@ -11,20 +11,11 @@ body{
     margin : 0px;
 }
 
-.modal_container{
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.6);
-}
-
 .main_container{
     border-radius: 10px;
     width: 425px;
     height: 400PX;
-    margin: 150px auto 0 auto;
+    margin: 0 auto 0 auto;
     background: white;
 }
 
@@ -37,7 +28,7 @@ body{
 }
 
 .logos{
-    margin-top: 15px;
+    margin-top: 90px;
     margin-bottom: 40px;
     width: 303px;
     margin-left: auto;

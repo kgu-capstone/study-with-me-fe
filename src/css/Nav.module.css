@@ -2,7 +2,7 @@ body {
     margin: 0;
     /* width: 1024px; */
 }
-  
+
 nav {
   height: 80px;
   display: flex;
@@ -10,26 +10,50 @@ nav {
   align-items: center;
 }
 
-.nav-detail {
-  margin-left: 15px;
+.nav_detail {
+  margin: 0 0 0 15px;
   text-decoration: none;
   font-size: 16px;
   color: black;
   float: right;
 }
 
-.nickname-area {
+.nickname_area {
   position: relative;
   right: 30px;
   display: flex;
   align-items: center;
+  margin: 15px;
 }
 
-.logo-area {
+.nickname_area:hover{
+
+}
+
+.dropdown{
+  z-index: 1;
+  position: absolute;
+  display: none;
+}
+.dropdown_contents{
+  color: black;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown_contents:hover{
+  color: #ff5037;
+}
+
+.logo_area {
   position: relative;
   left: 30px;
 }
   
 .nav_links{
   cursor: pointer;
+}
+
+.nav_links:hover{
+  color: #ff5037;
 }

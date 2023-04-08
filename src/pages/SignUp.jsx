@@ -207,12 +207,12 @@ const email = localStorage.getItem("email");
                                 관심분야
                             </div>
                             <div className='selects'>
-                                <input type='checkbox' name='category' id='1' className='checkboxs'/><label htmlFor="1">어학</label>
-                                <input type='checkbox' name='category' id='2' className='checkboxs'/><label htmlFor="2">면접</label>
-                                <input type='checkbox' name='category' id='3' className='checkboxs'/><label htmlFor="3">프로그래밍</label>
-                                <input type='checkbox' name='category' id='4' className='checkboxs'/><label htmlFor="4">인적성 & NCS</label>
-                                <input type='checkbox' name='category' id='5' className='checkboxs'/><label htmlFor="5">자격증</label>
-                                <input type='checkbox' name='category' id='6' className='checkboxs'/><label htmlFor="6">기타</label>
+                                <input type='checkbox' name='category' id='1' className='checkboxs' value={'어학'}/><label htmlFor="1">어학</label>
+                                <input type='checkbox' name='category' id='2' className='checkboxs' value={'면접'}/><label htmlFor="2">면접</label>
+                                <input type='checkbox' name='category' id='3' className='checkboxs' value={'프로그래밍'}/><label htmlFor="3">프로그래밍</label>
+                                <input type='checkbox' name='category' id='4' className='checkboxs' value={'인적성 & NCS'}/><label htmlFor="4">인적성 & NCS</label>
+                                <input type='checkbox' name='category' id='5' className='checkboxs' value={'자격증'}/><label htmlFor="5">자격증</label>
+                                <input type='checkbox' name='category' id='6' className='checkboxs' value={'기타'}/><label htmlFor="6">기타</label>
                             </div>
                         </div>
                         <div className='floor'>

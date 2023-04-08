@@ -14,9 +14,9 @@ export default class Nav extends Component {
     }
 
   render() {
-    const isLogin = true;
+    const isLogin = false;
     if(localStorage.getItem("isLogin")){
-        const isLogin = localStorage.getItem("isLogin");
+        isLogin = localStorage.getItem("isLogin");
     }
    
     return (

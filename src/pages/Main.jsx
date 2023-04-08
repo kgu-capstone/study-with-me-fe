@@ -2,9 +2,9 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import "./main.css";
+import "../css/Main.css";
 
-function MAIN() {
+function Main() {
   return (
     // 광고 부분
     <div className="ad-area">
@@ -164,4 +164,4 @@ function MAIN() {
   );
 }
 
-export default MAIN;
+export default Main;

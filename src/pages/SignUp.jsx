@@ -162,8 +162,6 @@ const handelCategory = (e, checked) => { // 카테고리 배열에
 
 // 회원가입 버튼 누르면
 const handleSignUp = (e) => {
-    console.log('하입');
-
     e.preventDefault();
     
     if(nick == ''){ // 닉네임 미입력시
@@ -211,7 +209,8 @@ const handleSignUp = (e) => {
 
         }).catch((error) => {
             if(error.response.status === 409){
-                alert(error.response.message)
+                alert("이미 사용중인 닉네임 입니다:( \n다른 닉네임을 사용해주세요");
+                window.nick.focus();
             }
             console.log(error);
         })

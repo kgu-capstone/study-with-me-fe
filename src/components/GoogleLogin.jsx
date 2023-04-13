@@ -25,7 +25,7 @@ export default class GoogleLogin extends Component {
       axios
       .get(`http://localhost:8080/api/oauth/login?authorizationCode=${authorizationCode}&redirectUrl=${redirectUrl}`) // 2. 백엔드 서버와 인증 통신 후 사용자 정보 + 토큰 받아오기
         .then((response) => {
-          localStorage.setItem("nick", response.data.member); // 정보 저장
+          localStorage.setItem("nick", response.data.member.nickname); // 정보 저장
           localStorage.setItem("accessToken", response.data.accessToken);
           localStorage.setItem("refreshToken", response.data.refreshToken);
           

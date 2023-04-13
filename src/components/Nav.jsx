@@ -10,13 +10,20 @@ export default class Nav extends Component {
     constructor(){
         super();
         this.state = {
+            isLogin : false,
         }
     }
 
+    handleLogout = () => {
+        localStorage.clear();
+
+        window.location.reload();
+    }
+
   render() {
-    const isLogin = false;
+    const nick = localStorage.getItem("nick");
     if(localStorage.getItem("isLogin")){
-        isLogin = localStorage.getItem("isLogin");
+        this.state.isLogin = localStorage.getItem("isLogin");
     }
    
     return (
@@ -25,18 +32,18 @@ export default class Nav extends Component {
             <nav>
                 <Link to = '/'><img src="./img/logo.svg" className={styles.logo_area} /></Link>
                 
-                {isLogin ? //로그인 상태일 때
+                {this.state.isLogin ? //로그인 상태일 때
                     <div className={styles.nickname_area}>
                         <Avatar
                             size={40}
-                            name='하이'
+                            name={nick}
                             variant="beam"
                             colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
                             />             
-                        <p className={styles.nav_detail}>하이 님</p>
+                        <p className={styles.nav_detail}>{nick} 님</p>
                         <div className={styles.dropdown}>
                             <NavLink to = '/MyPage' className={styles.dropdown_contents}>마이페이지</NavLink>
-                            <NavLink className={styles.dropdown_contents}>로그아웃</NavLink>
+                            <p onClick={this.handleLogout} className={styles.dropdown_contents}>로그아웃</p>
                         </div>
                     </div>
                     

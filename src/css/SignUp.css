@@ -157,3 +157,16 @@ input::placeholder{
     border: 1px solid #FF5037;
     color: #FFFFFF;
 }
+.info-circle{
+    margin-bottom: 2px;
+}
+.info-nick{
+    font-size: 16px;
+    color: #7D7D7D;
+    display: inline;
+    text-align: center;
+}
+
+.validated_message{
+    color: #FF5037;
+}

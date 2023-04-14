@@ -30,7 +30,7 @@ export default class Nav extends Component {
         <div>
         <div className={styles.nav_area}>
             <nav>
-                <Link to = '/'><img src="./img/logo.svg" className={styles.logo_area} /></Link>
+                <Link to = '/'><img src={process.env.PUBLIC_URL + '/img/logo.svg'} className={styles.logo_area} /></Link>
                 
                 {this.state.isLogin ? //로그인 상태일 때
                     <div className={styles.nickname_area}>

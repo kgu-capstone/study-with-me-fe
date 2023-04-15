@@ -7,7 +7,6 @@ import Root from './pages/Root';
 import Main from './pages/Main';
 import StudyWork from './pages/StudyWork';
 import Announce from './components/StudyWork/Announce';
-import RootStudy from './pages/RootStudy';
 import Attend from './components/StudyWork/Attend';
 import ByWeek from './components/StudyWork/ByWeek';
 

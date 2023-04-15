@@ -1,0 +1,80 @@
+/* font */
+
+@font-face {
+    font-family: 'Pretendard-regular';
+    src: url(../fonts/Pretendard-Regular.woff);
+}
+
+@font-face{
+    font-family: 'Pretendard-Bold';
+    src: url(../fonts/Pretendard-Bold.woff);
+}
+
+body{
+    font-family: 'Pretendard-regular';
+    margin : 0px;
+}
+
+/* 폰트 스타일 */
+.bold_24{
+    font-family: 'Pretendard-Bold';
+    font-size: 24px;
+}
+
+.regular_18{
+    font-family: 'Pretendard-regular';
+    font-size: 18px;
+}
+
+/* 상단 스터디 정보 영역*/
+.infoes{
+}
+
+.info_container{
+    height: 225px;
+    background-color: #F5F5F5;
+}
+
+.info_left{
+    width: 50%;
+    float: left;
+    padding-right: 40px;
+    padding-top: 36px;
+    position: relative;
+}
+
+.info_right{
+    position: relative;
+    padding-top: 36px;
+    width: 50%;
+    float: right;
+    padding-left: 40px;
+}
+
+.info_left_element{
+    padding: 10px 0;
+    float: right;
+}
+
+.info_right_element{
+}
+
+.info_category{
+    font-size: 18px;
+    color: #7D7D7D;
+    margin-bottom: 10px;
+}
+
+.info_studyname{
+    margin-bottom: 45px;
+}
+
+
+.info_right_buttons{
+    float: right;
+    position: absolute;
+    right: 38px;
+    bottom: 8px;
+}
+
+/* 여기까지 상단 스터디 정보 영역*/

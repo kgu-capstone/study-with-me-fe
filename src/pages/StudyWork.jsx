@@ -10,8 +10,10 @@ export default function StudyWork() {
     <div>
         <Nav />
         <StudyInfo />
-        <StudySidebar />
-        <Outlet />
+        <div className={styles.study_container}>
+          <StudySidebar /><Outlet />
+        </div>
+        
     </div>
   )
 }

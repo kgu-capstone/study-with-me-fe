@@ -26,6 +26,13 @@ body{
     font-size: 18px;
 }
 
+.regular_24{
+    font-family: 'Pretendard-regular';
+    font-size: 24px;
+    text-decoration: none;
+    color: black;
+}
+
 /* 상단 스터디 정보 영역*/
 .infoes{
 }
@@ -78,3 +85,50 @@ body{
 }
 
 /* 여기까지 상단 스터디 정보 영역*/
+
+/* info 아래 영역*/
+.study_container{
+    display: flex;
+    justify-self: center;
+    justify-content: center;
+}
+
+.left_container{   
+    float: left;
+    margin-right: 100px;
+}
+
+.right_container{
+    float: right;
+}
+
+.left_container_element{
+    float: right;
+}
+
+
+
+/* 여기까지 info아래영역 전체설정*/
+
+/* 사이드 바 */
+.side_announce{
+    display: block;
+    margin-top: 60px;
+}
+
+.side_attend{
+    display: block;
+    margin-top: 20px;
+}
+
+.side_byweek{
+    display: block;
+    margin-top: 20px;
+}
+
+.side_icons{
+    margin-right: 15px;
+}
+
+/* 여기까지 사이드 바 */
+

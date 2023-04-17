@@ -21,6 +21,11 @@ body{
     font-size: 24px;
 }
 
+.bold_16{
+    font-family: 'Pretendard-Bold';
+    font-size: 16px;
+}
+
 .regular_18{
     font-family: 'Pretendard-regular';
     font-size: 18px;
@@ -31,6 +36,11 @@ body{
     font-size: 24px;
     text-decoration: none;
     color: black;
+}
+
+.regular_16{
+    font-family: 'Pretendard-regular';
+    font-size: 16px;
 }
 
 /* 상단 스터디 정보 영역*/
@@ -95,25 +105,24 @@ body{
 
 .left_container{   
     float: left;
-    margin-right: 100px;
+    margin-right: 3%;
 }
 
 .right_container{
     float: right;
+    margin-top: 15px;
 }
 
 .left_container_element{
     float: right;
 }
-
-
-
 /* 여기까지 info아래영역 전체설정*/
+
 
 /* 사이드 바 */
 .side_announce{
     display: block;
-    margin-top: 60px;
+    margin-top: 45px;
 }
 
 .side_attend{
@@ -132,3 +141,69 @@ body{
 
 /* 여기까지 사이드 바 */
 
+/* 여기부터 공지사항 구역 */
+.announce_each_contianer{
+    width: 768px;
+    margin-top: 30px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+}
+
+.announce_each_title{
+    padding: 25px 30px;
+}
+
+.announce_each_content{
+    padding: 10px 30px;
+}
+
+.announce_each_commnet_continer{
+    padding: 10px 30px;
+}
+
+.announce_each_comment_count{
+    padding: 50px 0 0 0;
+}
+
+.announce_each_comment_inputs{
+    padding: 18px 0;
+}
+
+.announce_each_comment_input{
+    width: 630px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px 0 0 10px;
+    font-size: 16px;
+    padding: 13px;
+}
+
+.announce_each_comment_button{
+    border: 1px solid #FF5037;
+    background-color: #FF5037;
+    color: white;
+    border-radius: 0 10px 10px 0;
+    font-size: 16px;
+    padding: 13px;
+}
+
+.announce_each_comment_list{
+    display: flex;
+    margin-top: 3px;
+}
+
+.announce_each_comment_list_profile{
+    margin: 7px 0;
+}
+
+.announce_each_comment_list_contents{
+    margin: 0 0 0 20px;
+}
+
+.announce_each_comment_list_nickname{
+    margin: 0 0 0 0;
+}
+
+.announce_each_comment_list_content{
+    word-break: break-all;
+    margin: 12px 0 0 0;
+}

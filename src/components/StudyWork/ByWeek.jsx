@@ -4,7 +4,11 @@ import styles from '../../css/StudyWork.module.css';
 export default class ByWeek extends Component {
   render() {
     return (
-          <div className={`${styles.right_container}`}>ByWeek</div>
+          <div className={`${styles.right_container}`}>
+            <div className={`${styles.attend_each_contianer}`}>
+              ByWeek
+            </div>                        
+          </div>
 
     )
   }

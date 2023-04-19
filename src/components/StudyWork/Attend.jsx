@@ -4,7 +4,11 @@ import styles from '../../css/StudyWork.module.css';
 export default class Attend extends Component {
   render() {
     return (
-          <div className={`${styles.right_container}`}>Attend</div>
+          <div className={`${styles.right_container}`}>
+            <div className={`${styles.announce_each_contianer}`}>            
+              Attend
+            </div>
+          </div>
 
 
     )

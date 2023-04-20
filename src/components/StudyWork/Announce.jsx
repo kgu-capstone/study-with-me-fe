@@ -4,10 +4,10 @@ import Avatar from "boring-avatars";
 
 
 
-export default class Announce extends Component {
+export default function Announce(){
 
   //접었다 펴기
-  handleFold = () =>{
+  const handleFold = () =>{
     if(document.getElementsByClassName(`${styles.announce_each_content_contianer}`)[0].style.display == 'none'){ //접혀있을 때 // 데이터받아올 때 해당 배열값으로 배열 수정필요
       document.getElementsByClassName(`${styles.announce_each_content_contianer}`)[0].style.display = 'block';
     }else{ //펼쳐져있을 때
@@ -15,12 +15,11 @@ export default class Announce extends Component {
     }
     
   }
-  render() {
-
+  
     return (
           <div className={`${styles.right_container}`}>
             <div className={`${styles.announce_each_contianer}`}>
-              <div className={`${styles.announce_each_title} ${styles.regular_24}`} onClick={this.handleFold}>
+              <div className={`${styles.announce_each_title} ${styles.regular_24}`} onClick={() => handleFold()}>
                 공지사항 제목
               </div>
               <div className={`${styles.announce_each_content_contianer}`}>
@@ -61,5 +60,4 @@ export default class Announce extends Component {
           </div>
       
     )
-  }
 }

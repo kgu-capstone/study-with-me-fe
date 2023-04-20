@@ -248,4 +248,104 @@ body{
     border: 1px solid #C5C5C5;
     border-radius: 10px;
 }
-/* 여기까지 출석부 */
+
+
+
+.byweek_each_title{
+    cursor: pointer;
+    padding: 25px 30px;
+}
+
+.announce_each_content{
+    padding: 10px 30px;
+}
+
+.byweek_each_content_contianer{
+    padding: 10px 30px;
+}
+
+.byweek_each_content_contianer{
+    display: none;
+}
+
+
+.byweek_each_attach_list{
+    margin: 30px 0 0 0;
+    display: flex;
+}
+.byweek_each_attach_title{
+    color: #7D7D7D;
+    margin: 0 25px 0 0;
+}
+
+
+.byweek_each_homework_inputs{
+    padding: 10px 0;
+}
+
+.byweek_each_homework_attach{
+    border: 1px solid #C5C5C5;
+    border-radius: 10px 0 0 10px;
+    background-color: #C5C5C5;
+    font-size: 16px;
+    color: white;
+    padding: 13px;
+    width: 102px;
+    text-align: center;
+}
+
+
+.byweek_each_homework_input{
+    width: 495px;
+    border: 1px solid #C5C5C5;
+    font-size: 16px;
+    padding: 13px;
+}
+
+.byweek_each_homework_button{
+    border: 1px solid #FF5037;
+    background-color: #FF5037;
+    border-radius: 0 10px 10px 0;
+    color: white;
+    font-size: 16px;
+    padding: 13px 20px;
+}
+
+
+
+.byweek_each_homework_contianer{
+    margin: 12px 0;
+}
+
+.byweek_each_homework{
+    border: solid 1px #C5C5C5;
+    border-radius: 10px;
+    width: 699px;
+    display: flex;
+}
+
+.byweek_each_homework_profile{
+    margin: 10px 15px;
+}
+
+.byweek_each_homework_nickname{
+    display: flex;
+    align-items: center;
+}
+
+.byweek_each_homework_nickname > p{
+    margin: 0;
+} 
+
+.byweek_each_homework_viewHomework{
+    display: flex;
+    margin: auto 0 auto auto;
+    cursor: pointer;
+}
+
+.byweek_each_homework_viewHomework > p{
+    margin: 0 25px 0 0;
+    color: #7D7D7D;
+    text-decoration: underline;
+}
+/* 여기까지 스터디 */

@@ -229,13 +229,29 @@ body{
 
 
 /* 출석부 */
-.attend_each_contianer{
+.attend_contianer{
     width: 768px;
     margin-top: 30px;
     border: 1px solid #C5C5C5;
     border-radius: 10px;
+    display: flex;
 
 }
+
+.attend_name_contianer{
+    margin: 30px 20px 30px 50px;
+}
+
+.attend_weeks_contianer{
+    display: flex;
+    
+}
+
+.attend_each_weeks{
+    margin: 30px 0 30px 40px;
+}
+
+
 /* 여기까지 출석부 */
 
 

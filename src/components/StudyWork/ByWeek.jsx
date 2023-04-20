@@ -5,7 +5,7 @@ export default class ByWeek extends Component {
   render() {
     return (
           <div className={`${styles.right_container}`}>
-            <div className={`${styles.attend_each_contianer}`}>
+            <div className={`${styles.byweek_each_contianer}`}>
               ByWeek
             </div>                        
           </div>

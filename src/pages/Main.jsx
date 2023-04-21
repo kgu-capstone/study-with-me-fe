@@ -5,6 +5,7 @@ import DropDownSort from "../components/DropDownSort";
 import RealEstate from "../components/RealEstate";
 import Card from "../components/Card";
 import Foot from "../components/Foot";
+import StudyDetail from "./StudyDetail";
 
 function Main() {
   return (
@@ -41,7 +42,22 @@ function Main() {
           </span>
         </div>
 
-        <Card />
+        <div className="card-area">
+          <div></div>
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
+
+        <div className="card-area">
+          <div></div>
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
+
         <Foot />
       </div>
     </div>

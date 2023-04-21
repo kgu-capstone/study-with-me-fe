@@ -205,7 +205,7 @@ const handleSignUp = (e) => {
         .then((response) => {
             console.log('성공');
             alert("회원가입을 성공했습니다!");
-            window.location.href = 'http://localhost:3000/';
+            window.location.href = 'http://localhost:3000/SignIn'; 
 
         }).catch((error) => {
             if(error.response.status === 409){

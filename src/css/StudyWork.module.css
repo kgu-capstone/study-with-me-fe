@@ -1,0 +1,367 @@
+/* font */
+
+@font-face {
+    font-family: 'Pretendard-regular';
+    src: url(../fonts/Pretendard-Regular.woff);
+}
+
+@font-face{
+    font-family: 'Pretendard-Bold';
+    src: url(../fonts/Pretendard-Bold.woff);
+}
+
+body{
+    font-family: 'Pretendard-regular';
+    margin : 0px;
+}
+
+/* 폰트 스타일 */
+.bold_24{
+    font-family: 'Pretendard-Bold';
+    font-size: 24px;
+}
+
+.bold_16{
+    font-family: 'Pretendard-Bold';
+    font-size: 16px;
+}
+
+.regular_18{
+    font-family: 'Pretendard-regular';
+    font-size: 18px;
+}
+
+.regular_24{
+    font-family: 'Pretendard-regular';
+    font-size: 24px;
+    text-decoration: none;
+    color: black;
+}
+
+.regular_16{
+    font-family: 'Pretendard-regular';
+    font-size: 16px;
+}
+
+.bold_24_red{
+    font-family: 'Pretendard-Bold';
+    font-size: 24px;
+    text-decoration: none;
+    color: #FF5037;   
+}
+
+/* 상단 스터디 정보 영역*/
+.infoes{
+}
+
+.info_container{
+    height: 225px;
+    background-color: #F5F5F5;
+}
+
+.info_left{
+    width: 50%;
+    float: left;
+    padding-right: 40px;
+    padding-top: 36px;
+    position: relative;
+}
+
+.info_right{
+    position: relative;
+    padding-top: 36px;
+    width: 50%;
+    float: right;
+    padding-left: 40px;
+}
+
+.info_left_element{
+    padding: 10px 0;
+    float: right;
+}
+
+.info_right_element{
+}
+
+.info_category{
+    font-size: 18px;
+    color: #7D7D7D;
+    margin-bottom: 10px;
+}
+
+.info_studyname{
+    margin-bottom: 45px;
+}
+
+
+.info_right_buttons{
+    float: right;
+    position: absolute;
+    right: 38px;
+    bottom: 8px;
+}
+
+/* 여기까지 상단 스터디 정보 영역*/
+
+/* info 아래 영역*/
+.study_container{
+    display: flex;
+    justify-self: center;
+    justify-content: center;
+}
+
+.left_container{   
+    float: left;
+    margin-right: 100px;
+}
+
+.right_container{
+    float: right;
+    margin-top: 15px;
+}
+
+.left_container_element{
+    float: right;
+}
+/* 여기까지 info아래영역 전체설정*/
+
+
+/* 사이드 바 */
+.side_announce{
+    display: block;
+    margin-top: 45px;
+}
+
+.side_attend{
+    display: block;
+    margin-top: 20px;
+}
+
+.side_byweek{
+    display: block;
+    margin-top: 20px;
+}
+
+.side_icons{
+    margin-right: 15px;
+}
+
+.sidebar:hover{
+    
+}
+
+/* 여기까지 사이드 바 */
+
+/* 여기부터 공지사항 구역 */
+.announce_each_contianer{
+    width: 768px;
+    margin-top: 30px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+}
+
+.announce_each_title{
+    cursor: pointer;
+    padding: 25px 30px;
+}
+
+.announce_each_content{
+    padding: 10px 30px;
+}
+
+.announce_each_commnet_continer{
+    padding: 10px 30px;
+}
+
+.announce_each_comment_count{
+    padding: 50px 0 0 0;
+}
+
+.announce_each_comment_inputs{
+    padding: 18px 0;
+}
+
+.announce_each_comment_input{
+    width: 630px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px 0 0 10px;
+    font-size: 16px;
+    padding: 13px;
+}
+
+.announce_each_comment_button{
+    border: 1px solid #FF5037;
+    background-color: #FF5037;
+    color: white;
+    border-radius: 0 10px 10px 0;
+    font-size: 16px;
+    padding: 13px;
+}
+
+.announce_each_comment_list{
+    display: flex;
+    margin-top: 3px;
+}
+
+.announce_each_comment_list_profile{
+    margin: 7px 0;
+}
+
+.announce_each_comment_list_contents{
+    margin: 0 0 0 20px;
+}
+
+.announce_each_comment_list_nickname{
+    margin: 0 0 0 0;
+}
+
+.announce_each_comment_list_content{
+    word-break: break-all;
+    margin: 12px 0 0 0;
+}
+
+.announce_each_content_contianer{
+    display: none;
+}
+
+/* 여기까지 공지사항 */
+
+
+
+/* 출석부 */
+.attend_contianer{
+    width: 768px;
+    margin-top: 30px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+    display: flex;
+
+}
+
+.attend_name_contianer{
+    margin: 30px 20px 30px 50px;
+}
+
+.attend_weeks_contianer{
+    display: flex;
+    
+}
+
+.attend_each_weeks{
+    margin: 30px 0 30px 40px;
+}
+
+
+/* 여기까지 출석부 */
+
+
+
+
+/* 스터디 */
+.byweek_each_contianer{
+    width: 768px;
+    margin-top: 30px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+}
+
+
+
+.byweek_each_title{
+    cursor: pointer;
+    padding: 25px 30px;
+}
+
+.announce_each_content{
+    padding: 10px 30px;
+}
+
+.byweek_each_content_contianer{
+    padding: 10px 30px;
+}
+
+.byweek_each_content_contianer{
+    display: none;
+}
+
+
+.byweek_each_attach_list{
+    margin: 30px 0 0 0;
+    display: flex;
+}
+.byweek_each_attach_title{
+    color: #7D7D7D;
+    margin: 0 25px 0 0;
+}
+
+
+.byweek_each_homework_inputs{
+    padding: 10px 0;
+}
+
+.byweek_each_homework_attach{
+    border: 1px solid #C5C5C5;
+    border-radius: 10px 0 0 10px;
+    background-color: #C5C5C5;
+    font-size: 16px;
+    color: white;
+    padding: 13px;
+    width: 102px;
+    text-align: center;
+}
+
+
+.byweek_each_homework_input{
+    width: 495px;
+    border: 1px solid #C5C5C5;
+    font-size: 16px;
+    padding: 13px;
+}
+
+.byweek_each_homework_button{
+    border: 1px solid #FF5037;
+    background-color: #FF5037;
+    border-radius: 0 10px 10px 0;
+    color: white;
+    font-size: 16px;
+    padding: 13px 20px;
+}
+
+
+
+.byweek_each_homework_contianer{
+    margin: 12px 0;
+}
+
+.byweek_each_homework{
+    border: solid 1px #C5C5C5;
+    border-radius: 10px;
+    width: 699px;
+    display: flex;
+}
+
+.byweek_each_homework_profile{
+    margin: 10px 15px;
+}
+
+.byweek_each_homework_nickname{
+    display: flex;
+    align-items: center;
+}
+
+.byweek_each_homework_nickname > p{
+    margin: 0;
+} 
+
+.byweek_each_homework_viewHomework{
+    display: flex;
+    margin: auto 0 auto auto;
+    cursor: pointer;
+}
+
+.byweek_each_homework_viewHomework > p{
+    margin: 0 25px 0 0;
+    color: #7D7D7D;
+    text-decoration: underline;
+}
+/* 여기까지 스터디 */

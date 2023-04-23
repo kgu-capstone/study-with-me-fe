@@ -118,6 +118,7 @@ body{
 .right_container{
     float: right;
     margin-top: 15px;
+    margin-bottom: 100px;
 }
 
 .left_container_element{
@@ -153,9 +154,69 @@ body{
 /* 여기까지 사이드 바 */
 
 /* 여기부터 공지사항 구역 */
+.announce_writebutton{
+    text-align: center;
+}
+
+.announce_write_contianer{
+    width: 768px;
+    margin-top: 13px;
+    margin-bottom: 20px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+}
+
+.announce_write_title{
+    margin: 25px 0 0 30px;
+}
+
+.announce_write_title_input{
+    width: 698px;
+    height: 50px;
+    margin: 0 0 0 30px;
+    padding: 15px;
+    border: solid 1px #C5C5C5;
+    border-radius: 10px;
+}
+
+.announce_write_contents{
+    margin: 25px 0 0 30px;
+
+}
+.announce_write_contents_input{
+    width: 698px;
+    height: 200px;
+    margin: 0 0 0 30px;
+    padding: 15px;
+    border: solid 1px #C5C5C5;
+    border-radius: 10px;
+}
+
+.write_button_container{
+    align-items: center;
+    display: flex;
+}
+.write_button{
+    margin: 30px auto;
+    background-color: #FF5037;
+    border: solid 1px #FF5037;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 30px;
+
+}
+
+
+
+
+
+
+
+
 .announce_each_contianer{
     width: 768px;
-    margin-top: 30px;
+    margin-top: 13px;
+    margin-bottom: 20px;
     border: 1px solid #C5C5C5;
     border-radius: 10px;
 }

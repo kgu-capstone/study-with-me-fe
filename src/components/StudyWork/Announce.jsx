@@ -1,6 +1,7 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import styles from '../../css/StudyWork.module.css';
 import Avatar from "boring-avatars";
+import axios from 'axios';
 
 
 
@@ -15,9 +16,37 @@ export default function Announce(){
     }
     
   }
+
+  // 공지사항 정보 불러오기
+
+
   
     return (
           <div className={`${styles.right_container}`}>
+            <div className={`${styles.announce_writebutton}`}>
+              + 새 공지사항
+            </div>
+            <div className={`${styles.announce_write_contianer}`}>
+              <div>
+                <div className={`${styles.announce_write_title}`}>
+                  <p>공지사항 제목</p>
+                </div>
+                <div>
+                  <input type='text' className={`${styles.announce_write_title_input}`}></input>
+                </div>                
+              </div>
+              <div>
+                <div className={`${styles.announce_write_contents}`}>
+                  <p>공지사항 내용</p>
+                </div>
+                <div>
+                  <input type='text' className={`${styles.announce_write_contents_input}`}></input>
+                </div>
+              </div>
+              <div className={`${styles.write_button_container}`}>
+                <button type='button' className={`${styles.write_button}`}>등록</button>
+              </div>
+            </div>
             <div className={`${styles.announce_each_contianer}`}>
               <div className={`${styles.announce_each_title} ${styles.regular_24}`} onClick={() => handleFold()}>
                 공지사항 제목

@@ -20,13 +20,33 @@ export default function Announce(){
   // 공지사항 정보 불러오기
 
 
+
+  //글쓰기 펼치기
+  const [viewWriteAnnounce, setViewWriteAnnounce] = useState(`${styles.announce_write_contianer_none}`);
+  const [writeOrCloseAnnounce, setWriteOrCloseAnnounce] = useState('+ 새 공지사항')
+  const [isWriteAnnounce, setIsWriteAnnounce] = useState(false);
+
+  const handleAnnounceWrite = () =>{
+    setIsWriteAnnounce(!isWriteAnnounce)
+
+    if(isWriteAnnounce == false){ //펼칠 때
+      setViewWriteAnnounce(`${styles.announce_write_contianer_block}`);
+      setWriteOrCloseAnnounce('닫기');
+
+    }else{ //이미 펼쳐져있을 때
+      setViewWriteAnnounce(`${styles.announce_write_contianer_none}`);
+      setWriteOrCloseAnnounce('+ 새 공지사항');
+
+    }
+  }
+
   
     return (
           <div className={`${styles.right_container}`}>
-            <div className={`${styles.announce_writebutton}`}>
-              + 새 공지사항
+            <div className={`${styles.announce_writebutton}`} onClick={() => handleAnnounceWrite()}>
+              {writeOrCloseAnnounce}
             </div>
-            <div className={`${styles.announce_write_contianer}`}>
+            <div className={viewWriteAnnounce}>
               <div>
                 <div className={`${styles.announce_write_title}`}>
                   <p>공지사항 제목</p>
@@ -43,8 +63,8 @@ export default function Announce(){
                   <input type='text' className={`${styles.announce_write_contents_input}`}></input>
                 </div>
               </div>
-              <div className={`${styles.write_button_container}`}>
-                <button type='button' key='announceUpload' className={`${styles.write_button}`}>등록</button>
+              <div className={`${styles.upload_button_container}`}>
+                <button type='button' key='announceUpload' className={`${styles.upload_button}`}>등록</button>
               </div>
             </div>
             <div className={`${styles.announce_each_contianer}`}>

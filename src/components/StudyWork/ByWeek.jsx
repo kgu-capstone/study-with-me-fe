@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import styles from '../../css/StudyWork.module.css';
 import Avatar from "boring-avatars";
 
@@ -13,12 +13,32 @@ export default function ByWeek(){
     //두번클릭해야하는 오류 수정 필요
 
   }
+
+  const [viewWriteByweek, setViewWriteByweek] = useState(`${styles.byweek_write_contianer_none}`);
+  const [writeOrCloseByweek, setWriteOrCloseByweek] = useState('+ 새 스터디')
+  const [isWriteByweek, setIsWriteByweek] = useState(false);
+
+  const handleByweekWrite = () =>{
+    setIsWriteByweek(!isWriteByweek)
+
+    if(isWriteByweek == false){ //펼칠 때
+      setViewWriteByweek(`${styles.byweek_write_contianer_block}`);
+      setWriteOrCloseByweek('닫기');
+
+    }else{ //이미 펼쳐져있을 때 닫기
+      setViewWriteByweek(`${styles.byweek_write_contianer_none}`);
+      setWriteOrCloseByweek('+ 새 스터디');
+
+    }
+  }
+
+
     return (
           <div className={`${styles.right_container}`}>
-            <div className={`${styles.byweek_writebutton}`}>
-              + 새 공지사항
+            <div className={`${styles.byweek_writebutton}`} onClick={() => handleByweekWrite()}>
+              {writeOrCloseByweek}
             </div>
-            <div className={`${styles.byweek_write_contianer}`}>
+            <div className={viewWriteByweek}>
               <div>
                 <div className={`${styles.byweek_period}`}>
                   스터디 기간
@@ -82,8 +102,8 @@ export default function ByWeek(){
               </div>
 
 
-              <div className={`${styles.write_button_container}`}>
-                <button type='button' key='byweekUpload' className={`${styles.write_button}`}>등록</button>
+              <div className={`${styles.upload_button_container}`}>
+                <button type='button' key='byweekUpload' className={`${styles.upload_button}`}>등록</button>
               </div>
 
             </div>

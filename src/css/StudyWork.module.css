@@ -158,7 +158,21 @@ body{
     text-align: center;
 }
 
-.announce_write_contianer{
+.announce_writebutton:hover{
+    cursor: pointer;
+    color: #FF5037;
+}
+
+.announce_write_contianer_none{
+    display: none;
+    width: 768px;
+    margin-top: 13px;
+    margin-bottom: 20px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+}
+.announce_write_contianer_block{
+    display: block;
     width: 768px;
     margin-top: 13px;
     margin-bottom: 20px;
@@ -169,6 +183,8 @@ body{
 .announce_write_title{
     margin: 25px 0 0 30px;
 }
+
+
 
 .announce_write_title_input{
     width: 698px;
@@ -192,11 +208,11 @@ body{
     border-radius: 10px;
 }
 
-.write_button_container{
+.upload_button_container{
     align-items: center;
     display: flex;
 }
-.write_button{
+.upload_button{
     margin: 30px auto;
     background-color: #FF5037;
     border: solid 1px #FF5037;
@@ -322,14 +338,28 @@ body{
 .byweek_writebutton{
     text-align: center;
 }
+.byweek_writebutton:hover{
+    cursor: pointer;
+    color: #FF5037;
+}
 
-.byweek_write_contianer{
+.byweek_write_contianer_none{
+    display: none;
     width: 768px;
     margin-top: 13px;
     margin-bottom: 20px;
     border: 1px solid #C5C5C5;
     border-radius: 10px;
 }
+.byweek_write_contianer_block{
+    display: block;
+    width: 768px;
+    margin-top: 13px;
+    margin-bottom: 20px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+}
+
 .byweek_period{
     margin: 25px 0 0 30px;
 }

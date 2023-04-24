@@ -44,7 +44,7 @@ export default function Announce(){
                 </div>
               </div>
               <div className={`${styles.write_button_container}`}>
-                <button type='button' className={`${styles.write_button}`}>등록</button>
+                <button type='button' key='announceUpload' className={`${styles.write_button}`}>등록</button>
               </div>
             </div>
             <div className={`${styles.announce_each_contianer}`}>

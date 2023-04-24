@@ -184,8 +184,6 @@ const handleSignUp = (e) => {
         // 회원가입 request 보내기
         setMessage_category('');
 
-        console.log('들어왔나염');
-
         const data = {
             "name" : `${name}`,
             "nickname" : `${nick}`,

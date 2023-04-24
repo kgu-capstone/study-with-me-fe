@@ -15,6 +15,81 @@ export default function ByWeek(){
   }
     return (
           <div className={`${styles.right_container}`}>
+            <div className={`${styles.byweek_writebutton}`}>
+              + 새 공지사항
+            </div>
+            <div className={`${styles.byweek_write_contianer}`}>
+              <div>
+                <div className={`${styles.byweek_period}`}>
+                  스터디 기간
+                </div>
+                <div className={`${styles.byweek_period_input_contianer}`}>
+                  <div>
+                    <button type='button' key='byweekStart' className={`${styles.byweek_period_input_start}`}>2023-04-05</button>
+                  </div>
+                  <div className={`${styles.byweek_period_tilde_contianer}`}>
+                    <p className={`${styles.byweek_period_tilde}`}>~</p>
+                  </div>
+                  <div>
+                    <button type='button' key='byweekEnd' className={`${styles.byweek_period_input_end}`}>2023-05-05</button>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div className={`${styles.byweek_write_title}`}>
+                  <p>제목</p>
+                </div>
+                <div>
+                  <input type='text' className={`${styles.byweek_write_title_input}`}></input>
+                </div>
+              </div>
+
+              <div>
+                <div className={`${styles.byweek_write_contents}`}>
+                  <p>내용</p>
+                </div>
+                <div>
+                  <input type='text' className={`${styles.byweek_write_contents_input}`}></input>
+                </div>
+              </div>
+
+              <div>           
+                <div>
+                  <button type='button' key='byweek_attach' className={`${styles.byweek_file_attech_button}`}>파일 첨부</button>
+                </div>
+              </div>
+
+              <div>
+                <div className={`${styles.byweek_isHomework_toggle}`}>
+                  <p>과제 여부</p>
+                </div>
+                <div className={`${styles.byweek_toggles_contianer}`}>
+                  <input type='radio' name='isHomework' id='yesHomework' className={`${styles.byweek_toggle_on}`} value={true} defaultChecked/><label htmlFor='yesHomework'>ON</label>
+                  <input type='radio' name='isHomework' id='notHomework' className={`${styles.byweek_toggle_off}`} value={false}/><label htmlFor='notHomework'>OFF</label>
+                </div>
+              </div>
+
+              <div>
+                <div className={`${styles.byweek_isAutoAtten_toggle}`}>
+                  과제 제출에 따라 자동으로 출석 처리합니다.
+                </div>
+                <div className={`${styles.byweek_toggles_contianer}`}>
+                  <input type='radio' name='isAutoAttend' id='yesAutoAttend' className={`${styles.byweek_toggle_on}`} value={true} defaultChecked/><label htmlFor='yesAutoAttend'>ON</label>
+                  <input type='radio' name='isAutoAttend' id='notAutoAttend' className={`${styles.byweek_toggle_off}`} value={false}/><label htmlFor='notAutoAttend'>OFF</label>
+                </div>
+              </div>
+
+
+              <div className={`${styles.write_button_container}`}>
+                <button type='button' key='byweekUpload' className={`${styles.write_button}`}>등록</button>
+              </div>
+
+            </div>
+
+
+
             <div className={`${styles.byweek_each_contianer}`}>
             <div className={`${styles.byweek_each_title} ${styles.regular_24}`} onClick={() => handleFold()}>
                 3주차 3월 8일 스터디

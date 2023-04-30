@@ -1,36 +1,13 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {Component} from 'react';
 import '../css/MyPage.css';
-import axios from 'axios';
-import { authApi } from '../services/api';
 import Avatar from "boring-avatars";
 import Button from 'react-bootstrap/Button';
 /*import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';*/
 
 
-function MyPage() {
-//const axios.get()
-let [memberNickname, setMemberNickname] = useState('');
-let [memberEmail, setMemberEmail] = useState('');
-let [memberBirth, setMemberBirth] = useState('');
-let [memberGender, setMemberGender] = useState('');
-let [memberRegion, setMemberRegion] = useState('');
-let [memberInterest, setMemberInterest] = useState('');
-
-useEffect(() => {
-    authApi.get('members/1')
-    .then((response) => {
-        setMemberNickname(response.data.nickname);
-        setMemberEmail(response.data.email);
-        setMemberBirth(response.data.birth);
-        setMemberGender(response.data.gender);
-        setMemberRegion(response.data.region);
-        setMemberInterest(response.data.interests);
-    })
-    .catch((error) => {
-        console.log(error);
-    })
-})
+class MyPage extends Component {
+    render(){
         return(
 
             <><>
@@ -66,25 +43,26 @@ useEffect(() => {
                         <div>
                             <label for='id' className='labele'>관심사</label>
                         </div>
-                            </div>
-                            <div className='alabele'>{memberNickname}</div>
                         <div>
-                            <label for='id' className='blabele'>{memberEmail}</label>
+                            <label for='id' className='alabele'>별명</label>
                         </div>
                         <div>
-                            <label for='id' className='clabele'>{memberBirth}</label>
+                            <label for='id' className='blabele'>이메일@naver.com</label>
                         </div>
                         <div>
-                            <label for='id' className='dlabele'>{memberGender}</label>
+                            <label for='id' className='clabele'>2000.01.01</label>
                         </div>
                         <div>
-                            <label for='id' className='elabele'>{memberRegion}</label>
+                            <label for='id' className='dlabele'>여</label>
                         </div>
                         <div>
-                            <label for='id' className='flabele'>{memberInterest}</label>
+                            <label for='id' className='elabele'>경기도 수원시</label>
+                        </div>
+                        <div>
+                            <label for='id' className='flabele'>면접</label>
                         </div>
                     </div>
-                
+                </div>
                 <div class="square"></div>
                     <div>
                         <label for='id' className='astudy'>활동중인 스터디</label>
@@ -128,7 +106,7 @@ useEffect(() => {
 
 
         )
-
+    }
 }
 
 

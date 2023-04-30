@@ -118,6 +118,7 @@ body{
 .right_container{
     float: right;
     margin-top: 15px;
+    margin-bottom: 100px;
 }
 
 .left_container_element{
@@ -153,9 +154,95 @@ body{
 /* 여기까지 사이드 바 */
 
 /* 여기부터 공지사항 구역 */
+.announce_writebutton{
+    text-align: center;
+}
+
+.announce_writebutton:hover{
+    cursor: pointer;
+    color: #FF5037;
+}
+
+.announce_write_contianer_none{
+    display: none;
+    width: 768px;
+    margin-top: 13px;
+    margin-bottom: 20px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+}
+.announce_write_contianer_block{
+    display: block;
+    width: 768px;
+    margin-top: 13px;
+    margin-bottom: 20px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+}
+
+.announce_write_title{
+    margin: 25px 0 0 30px;
+}
+
+
+
+.announce_write_title_input{
+    width: 698px;
+    height: 60px;
+    margin: 0 0 0 30px;
+    padding: 10px;
+    border: solid 1px #C5C5C5;
+    border-radius: 3px;
+}
+.announce_write_title_input:focus{
+    outline: 1px solid #3779eb;
+}
+
+.announce_write_contents{
+    margin: 25px 0 0 30px;
+
+}
+.announce_write_contents_input_container{
+    margin: 0 40px 0 30px;
+    
+    border-radius: 10px;
+
+}
+.announce_write_contents_input{
+    font-size: 16px;
+    width: 698px;
+    /* height: 200px; */
+    margin: 0 0 0 30px;
+    border: solid 1px #C5C5C5;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.upload_button_container{
+    align-items: center;
+    display: flex;
+}
+.upload_button{
+    margin: 30px auto;
+    background-color: #FF5037;
+    border: solid 1px #FF5037;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 30px;
+
+}
+
+
+
+
+
+
+
+
 .announce_each_contianer{
     width: 768px;
-    margin-top: 30px;
+    margin-top: 13px;
+    margin-bottom: 20px;
     border: 1px solid #C5C5C5;
     border-radius: 10px;
 }
@@ -258,13 +345,207 @@ body{
 
 
 /* 스터디 */
-.byweek_each_contianer{
+.byweek_writebutton{
+    text-align: center;
+}
+.byweek_writebutton:hover{
+    cursor: pointer;
+    color: #FF5037;
+}
+
+.byweek_write_contianer_none{
+    display: none;
     width: 768px;
-    margin-top: 30px;
+    margin-top: 13px;
+    margin-bottom: 20px;
     border: 1px solid #C5C5C5;
     border-radius: 10px;
 }
+.byweek_write_contianer_block{
+    display: block;
+    width: 768px;
+    margin-top: 13px;
+    margin-bottom: 20px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+    transition-duration: 4s;
+}
 
+.byweek_period{
+    margin: 25px 0 0 30px;
+}
+
+.byweek_period_input_contianer{
+    display: flex;
+    margin: 10px 0 0 30px;
+}
+.byweek_period_input_start{
+    margin: 25px 27px 0 30px;
+    border: solid 1px #C5C5C5;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    padding: 10px 30px;
+}
+.byweek_period_tilde_contianer{
+    display: flex;
+
+}
+.byweek_period_tilde{
+    margin: 23px 27px 0 27px;
+}
+.byweek_period_input_end{
+    margin: 25px 0 0 27px;
+    border: solid 1px #C5C5C5;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    padding: 10px 30px;
+}
+
+
+
+
+.byweek_write_title{
+    margin: 25px 0 0 30px;
+}
+
+.byweek_write_title_input{
+    width: 698px;
+    height: 60px;
+    margin: 0 0 0 30px;
+    padding: 10px;
+    border: solid 1px #C5C5C5;
+    border-radius: 3px;
+}
+.byweek_write_title_input:focus{
+    outline: 1px solid #3779eb;
+}
+
+.byweek_write_contents{
+    margin: 25px 0 0 30px;
+}
+.byweek_write_contents_input_container{
+    margin: 0 40px 0 30px;
+    
+    border-radius: 10px;
+}
+.byweek_write_contents_input{
+    width: 698px;
+    height: 200px;
+    margin: 0 0 0 30px;
+    padding: 15px;
+    border: solid 1px #C5C5C5;
+    border-radius: 10px;
+}
+
+
+
+.byweek_file_attech_button{
+    /* margin: 15px 27px 0 30px;
+    border: solid 1px #C5C5C5;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    padding: 10px 30px; */
+    display: none;
+}
+.byweek_file_attech_button_label{
+    margin: 15px 27px 0 30px;
+    border: solid 1px #C5C5C5;
+    border-radius: 3px;
+    background-color: white;
+    color: black;
+    padding: 10px 30px;
+}
+.byweek_file_attech_button_label:hover{
+    cursor: pointer;
+}
+
+
+.byweek_isHomework_toggle{
+    margin: 50px 0 0 30px;
+}
+
+.byweek_toggles_contianer{
+    margin: 25px 0 0 30px;
+}
+
+/* 토글 선택창 구현 */
+.byweek_toggles_contianer input[type=radio]{
+    display: none;
+}
+.byweek_toggle_on+label{
+    cursor: pointer;
+    width: 98px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+
+    background-color: white;
+    border-top: 1px solid #C5C5C5;
+    border-left: 1px solid #C5C5C5;
+    border-bottom: 1px solid #C5C5C5;
+    border-radius: 10px 0 0 10px;
+    color: #000000;
+
+}
+.byweek_toggle_on:checked+label{
+    border: 1px solid #FF5037;
+    background-color: #FF5037;
+    color: #FFFFFF;
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.byweek_toggle_off+label{
+    cursor: pointer;
+    width: 98px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+
+    background-color: white;
+    border-top: 1px solid #C5C5C5;
+    border-right: 1px solid #C5C5C5;
+    border-bottom: 1px solid #C5C5C5;
+    border-radius: 0 10px 10px 0;
+    color: #000000;
+
+}
+.byweek_toggle_off:checked+label{
+    border: 1px solid #A6A6A6;
+    background-color: #A6A6A6;
+    color: #FFFFFF;
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+
+
+
+
+.byweek_isHomework_yes{
+    margin: 25px 0 0 30px;
+
+}
+
+
+
+
+.byweek_isAutoAtten_toggle{
+    margin: 25px 0 0 30px;
+}
+
+
+
+
+
+
+.byweek_each_contianer{
+    width: 768px;
+    margin-top: 13px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+}
 
 
 .byweek_each_title{

@@ -24,14 +24,15 @@ export default class GoogleLogin extends Component {
 
     if (authorizationCode) {
       defaultapi
-      .get(`${process.env.REACT_APP_API_URL}oauth/login?authorizationCode=${authorizationCode}&redirectUrl=${redirectUrl}`) // 2. 백엔드 서버와 인증 통신 후 사용자 정보 + 토큰 받아오기
+      .get(`oauth/login?authorizationCode=${authorizationCode}&redirectUrl=${redirectUrl}`) // 2. 백엔드 서버와 인증 통신 후 사용자 정보 + 토큰 받아오기
         .then((response) => {
           localStorage.setItem("nick", response.data.member.nickname); // 정보 저장
+          localStorage.setItem("id", response.data.member.id);
           localStorage.setItem("accessToken", response.data.accessToken);
           localStorage.setItem("refreshToken", response.data.refreshToken);
           
           localStorage.setItem("isLogin", true);
-
+          
           window.location.href = `${process.env.REACT_APP_BASE_URL}`;
         })
         .catch((error) => {

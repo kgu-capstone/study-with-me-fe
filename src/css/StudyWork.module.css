@@ -188,24 +188,34 @@ body{
 
 .announce_write_title_input{
     width: 698px;
-    height: 50px;
+    height: 60px;
     margin: 0 0 0 30px;
-    padding: 15px;
+    padding: 10px;
     border: solid 1px #C5C5C5;
-    border-radius: 10px;
+    border-radius: 3px;
+}
+.announce_write_title_input:focus{
+    outline: 1px solid #3779eb;
 }
 
 .announce_write_contents{
     margin: 25px 0 0 30px;
 
 }
+.announce_write_contents_input_container{
+    margin: 0 40px 0 30px;
+    
+    border-radius: 10px;
+
+}
 .announce_write_contents_input{
+    font-size: 16px;
     width: 698px;
-    height: 200px;
+    /* height: 200px; */
     margin: 0 0 0 30px;
-    padding: 15px;
     border: solid 1px #C5C5C5;
     border-radius: 10px;
+    padding: 15px;
 }
 
 .upload_button_container{
@@ -358,6 +368,7 @@ body{
     margin-bottom: 20px;
     border: 1px solid #C5C5C5;
     border-radius: 10px;
+    transition-duration: 4s;
 }
 
 .byweek_period{
@@ -366,6 +377,7 @@ body{
 
 .byweek_period_input_contianer{
     display: flex;
+    margin: 10px 0 0 30px;
 }
 .byweek_period_input_start{
     margin: 25px 27px 0 30px;
@@ -377,9 +389,10 @@ body{
 }
 .byweek_period_tilde_contianer{
     display: flex;
+
 }
 .byweek_period_tilde{
-    margin: 35px auto 0 auto;
+    margin: 23px 27px 0 27px;
 }
 .byweek_period_input_end{
     margin: 25px 0 0 27px;
@@ -399,17 +412,24 @@ body{
 
 .byweek_write_title_input{
     width: 698px;
-    height: 50px;
+    height: 60px;
     margin: 0 0 0 30px;
-    padding: 15px;
+    padding: 10px;
     border: solid 1px #C5C5C5;
-    border-radius: 10px;
+    border-radius: 3px;
+}
+.byweek_write_title_input:focus{
+    outline: 1px solid #3779eb;
 }
 
 .byweek_write_contents{
     margin: 25px 0 0 30px;
 }
-
+.byweek_write_contents_input_container{
+    margin: 0 40px 0 30px;
+    
+    border-radius: 10px;
+}
 .byweek_write_contents_input{
     width: 698px;
     height: 200px;
@@ -422,18 +442,29 @@ body{
 
 
 .byweek_file_attech_button{
-    margin: 15px 27px 0 30px;
+    /* margin: 15px 27px 0 30px;
     border: solid 1px #C5C5C5;
     border-radius: 10px;
     background-color: white;
     color: black;
+    padding: 10px 30px; */
+    display: none;
+}
+.byweek_file_attech_button_label{
+    margin: 15px 27px 0 30px;
+    border: solid 1px #C5C5C5;
+    border-radius: 3px;
+    background-color: white;
+    color: black;
     padding: 10px 30px;
-
+}
+.byweek_file_attech_button_label:hover{
+    cursor: pointer;
 }
 
 
 .byweek_isHomework_toggle{
-    margin: 25px 0 0 30px;
+    margin: 50px 0 0 30px;
 }
 
 .byweek_toggles_contianer{

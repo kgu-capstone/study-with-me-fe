@@ -49,6 +49,7 @@ export default function Attend() {
   const delay = 10;
   const onThrottleDragMove = throttle(onDragMove, delay);
 
+
     return (
           <div className={`${styles.right_container}`}>
             <div className={`${styles.attend_contianer}`}>  

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { authApi } from '../services/api';
 import Avatar from "boring-avatars";
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 /*import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';*/
 
@@ -123,10 +124,13 @@ useEffect(() => {
                     <div>
                         <label for='id' className='cstudyarrow'>v</label>
                     </div>
-                    <div class='squarebutton'></div>
-                    <div>
-                        <label for='id' className='createbutton'>스터디 만들기</label>
-                    </div>           
+
+                    <Link to="/StudyForm">
+                        <div class='squarebutton'></div>
+                        <div>
+                            <label for='id' className='createbutton'>스터디 만들기</label>
+                        </div>
+                    </Link>
             </></>
 
 

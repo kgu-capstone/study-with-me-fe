@@ -330,6 +330,11 @@ body{
 }
 .attend_name_field{
     white-space: nowrap;
+
+}
+
+.attend_names{
+    position: static;
 }
 
 .attend_weeks_contianer{

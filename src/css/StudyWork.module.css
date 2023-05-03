@@ -326,16 +326,30 @@ body{
 }
 
 .attend_name_contianer{
-    margin: 30px 20px 30px 50px;
+    margin: 30px 70px 30px 50px;
+}
+.attend_name_field{
+    white-space: nowrap;
 }
 
 .attend_weeks_contianer{
     display: flex;
-    
+    overflow-x: scroll;
+    cursor: pointer;
+}
+.attend_weeks_contianer::-webkit-scrollbar{
+    display: none;
 }
 
 .attend_each_weeks{
-    margin: 30px 0 30px 40px;
+    margin: 30px 40px 30px 0;
+
+}
+.attend_weeks_field{
+    white-space: nowrap;
+}
+.attend_weeks{
+    white-space: nowrap;
 }
 
 

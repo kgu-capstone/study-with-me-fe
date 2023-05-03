@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../../css/StudyWork.module.css';
 import { authApi } from '../../services/api';
+import { Link, NavLink } from 'react-router-dom';
 
 export default function StudyInfo({studyId}) {
 
@@ -45,12 +46,18 @@ export default function StudyInfo({studyId}) {
                 <p className={styles.regular_18}>{studyCurrentMembers} / {studyMaxMembers}</p>
               </div>
               <div className={`${styles.info_right_buttons}`}>
-                <div>
-                  스터디정보수정
-                </div>
-                <div>
-                  신청한 사람 보기
-                </div>
+
+                <NavLink to="/StudyRevice">
+                  <div>
+                    스터디정보수정
+                  </div>
+                </NavLink>
+
+                <NavLink to="/ApplicantList">
+                  <div>
+                    신청한 사람 보기
+                  </div>
+                </NavLink>
               </div>
             </div>
           </div>

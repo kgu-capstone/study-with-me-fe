@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import styles from '../../css/StudyWork.module.css';
+import UserName from '../UserName';
 
 export default function Attend() {
 
@@ -57,12 +58,12 @@ export default function Attend() {
                   
                 </div>
                 <div className={`${styles.attend_names} ${styles.regular_16}`}>
-                  <p>닉네임</p>
-                  <p>닉네임</p>
-                  <p>닉네임</p>
-                  <p>닉네임</p>
-                  <p>닉네임</p>
-                  <p>닉네임</p>
+                  <UserName userNickname={"닉네임"}/>
+                  <UserName userNickname={"닉네임"}/>
+                  <UserName userNickname={"닉네임"}/>
+                  <UserName userNickname={"닉네임"}/>
+                  <UserName userNickname={"닉네임"}/>
+                  <UserName userNickname={"닉네임"}/>
                 </div>                
               </div>          
 

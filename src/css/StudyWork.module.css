@@ -332,6 +332,10 @@ body{
     white-space: nowrap;
 }
 
+.attend_names{
+    position: static;
+}
+
 .attend_weeks_contianer{
     display: flex;
     overflow-x: scroll;

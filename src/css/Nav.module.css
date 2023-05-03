@@ -48,7 +48,7 @@ nav {
 }
 
 .dropdown{
-  z-index: 1;
+  z-index: 9999;
   position: absolute;
   display: none;
   border: solid 1px #E1E1E1;

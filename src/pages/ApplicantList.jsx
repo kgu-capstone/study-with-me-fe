@@ -66,5 +66,6 @@ export default function ApplicantList() {
         </div>
       </div>
     </div>
+
   )
 }

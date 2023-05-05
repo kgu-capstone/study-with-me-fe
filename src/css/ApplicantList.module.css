@@ -17,6 +17,7 @@ body{
 
 .title{
     font-family: 'Pretendard-Bold';
+
     font-size: 24px;
     text-align: center;
 }
@@ -43,6 +44,7 @@ body{
     display: flex;
     float: right;
 }
+
 
 .approve_button{
     width: 90px;

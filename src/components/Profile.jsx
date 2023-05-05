@@ -7,8 +7,6 @@ export default function Profile({closeModal}) {
       <div className={styles.modal_container} onClick={(e) => e.stopPropagation()}>
       Profile
       </div>
-      
-      
     </div>
   )
 }

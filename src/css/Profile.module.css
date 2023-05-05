@@ -1,0 +1,22 @@
+.profile_container{
+    
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+}
+
+.modal_container{
+    z-index: 1000;
+    position: absolute;
+    width: 824px;
+    height: 782px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 10px;
+}

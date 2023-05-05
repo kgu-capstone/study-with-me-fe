@@ -1,8 +1,7 @@
 import React, { Component, useCallback, useEffect, useState } from 'react';
 import '../css/SignUp.css';
 import Avatar from "boring-avatars";
-import axios from 'axios';
-import { useLocation } from 'react-router';
+import { defaultapi } from '../services/api';
 
 function SignIn() {
 
@@ -124,7 +123,7 @@ const handleCity = (e) => {
 //카테고리 조회
 let [category_list, setCategory_list] = useState([]);
 const category_find = () => {
-    axios.get(`http://localhost:8080/api/categories`)
+    defaultapi.get(`categories`)
     .then((response) => {
         setCategory_list(response.data.result);
 
@@ -185,9 +184,6 @@ const handleSignUp = (e) => {
         // 회원가입 request 보내기
         setMessage_category('');
 
-        console.log('들어왔나염');
-
-        const url = 'http://localhost:8080/api/member';
         const data = {
             "name" : `${name}`,
             "nickname" : `${nick}`,
@@ -201,11 +197,10 @@ const handleSignUp = (e) => {
         }
         const config = {"Content-Type": 'application/json'};
 
-        axios.post(url, data)
+        defaultapi.post(`member`, data)
         .then((response) => {
-            console.log('성공');
             alert("회원가입을 성공했습니다!");
-            window.location.href = 'http://localhost:3000/SignIn'; 
+            window.location.href = `${process.env.REACT_APP_BASE_URL}SignIn`; 
 
         }).catch((error) => {
             if(error.response.status === 409){

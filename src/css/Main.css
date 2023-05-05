@@ -40,6 +40,7 @@ a {
   justify-content: center;
   align-items: center;
   font-size: 18px;
+  padding: 15px;
 }
 
 .some-area {
@@ -191,6 +192,7 @@ link {
   margin-bottom: 300px;
 }
 
+
 .btn-secondary {
   --bs-btn-bg: #ffffff;
   color: black;
@@ -300,3 +302,4 @@ input {
   justify-content: center;
   margin-left: 0%;
 }
+

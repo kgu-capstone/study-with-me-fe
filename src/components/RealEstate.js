@@ -7,7 +7,7 @@ const RealEstate = () => {
   }, []);
 
   return (
-    <div>
+    <div className="some-area">
       <select name="sido1" id="sido1"></select>
       <select name="gugun1" id="gugun1"></select>
     </div>

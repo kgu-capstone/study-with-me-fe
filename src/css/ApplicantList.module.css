@@ -1,0 +1,81 @@
+/* font */
+
+@font-face {
+    font-family: 'Pretendard-regular';
+    src: url(../fonts/Pretendard-Regular.woff);
+}
+
+@font-face{
+    font-family: 'Pretendard-Bold';
+    src: url(../fonts/Pretendard-Bold.woff);
+}
+
+body{
+    font-family: 'Pretendard-regular';
+    margin : 0px;
+}
+
+.title{
+    font-family: 'Pretendard-regular';
+    font-size: 24px;
+    text-align: center;
+}
+
+.container{
+    margin-top: 52px;
+    display: flex;
+    justify-content: center;
+}
+
+.field{
+    margin-top: 52px;
+    margin-bottom: 12px;
+    display: flex;
+}
+.field1{
+    margin-right: 74px;
+}
+.field2{
+    margin-right: 74px;
+}
+.field3{
+    margin-left: 65px;
+}
+
+.data1{
+    margin-top: 10px;
+    margin-left: 8px;
+    margin-right: 80px;
+}
+.data2{
+    margin-top: 10px;
+    margin-right: 60px;
+}
+.data3{
+    display: flex;
+}
+
+.approve_button{
+    width: 90px;
+    height: 40px;
+    color: white;
+    background-color: #FF5037;
+    text-align: center;
+    padding: 8px;
+    border-radius: 10px;
+    margin-right: 26px;
+}
+.reject_button{
+    width: 90px;
+    height: 40px;
+    color: white;
+    background-color: #A6A6A6;
+    text-align: center;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.list{
+    margin-top: 24px;
+    display: flex;
+}

@@ -14,10 +14,9 @@ import StudyWork from "./pages/StudyWork";
 import Announce from "./components/StudyWork/Announce";
 import Attend from "./components/StudyWork/Attend";
 import ByWeek from "./components/StudyWork/ByWeek";
+import MakeStudy from "./pages/MakeStudy";
 import StudyDetail from "./pages/StudyDetail";
-import StudyForm from "./pages/StudyForm";
-import StudyRevice from "./pages/StudyRevice";
-import ApplicantList from "./pages/ApplicantList";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,8 +28,6 @@ const router = createBrowserRouter([
       { path: "MyPage", element: <MyPage /> },
       { path: "StudyDetail", element: <StudyDetail /> },
       { path: "MakeStudy", element: <MakeStudy /> },
-      { path: "StudyRevice", element: <StudyRevice /> },
-      { path: "ApplicantList", element: <ApplicantList /> },
     ],
   },
   {

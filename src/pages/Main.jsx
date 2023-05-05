@@ -23,7 +23,7 @@ function Main() {
 
         <div className="sort-area">
           <span>
-            <RealEstate />
+            <RealEstate className="some-area" />
           </span>
 
           <span className="test">
@@ -32,12 +32,14 @@ function Main() {
               sub1="온/오프라인 전체"
               sub2="온라인만"
               sub3="오프라인만"
+              className="some-area"
             />
             <DropDownSort
               title="모집 최신순"
               sub1="모집 최신순"
               sub2="찜 많은 순"
               sub3="리뷰많은순"
+              className="some-area"
             />
           </span>
         </div>

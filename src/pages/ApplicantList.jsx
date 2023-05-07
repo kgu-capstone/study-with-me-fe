@@ -11,8 +11,9 @@ export default function ApplicantList() {
   const location = useLocation()
   const studyId = location.state?.studyId
 
-  정보 불러오기
-
+  // 정보 불러오기
+  let applicantsList = [];
+  
   useEffect(() => {
     authApi(`studies/${studyId}/applicants`)
     .then((response) => {
@@ -94,17 +95,10 @@ export default function ApplicantList() {
                   )
                 })
             }
-
-</table>
-
+      </table>
 
 
           </div>
-
-
-
-
-          
 
         </div>
       </div>

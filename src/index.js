@@ -10,7 +10,7 @@ import MakeStudy from "./pages/MakeStudy";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <MakeStudy />
+    <App />
   </React.StrictMode>
 );
 

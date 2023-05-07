@@ -1,7 +1,9 @@
 
+
 .component_container{ 
     position: relative;
 }
+
 .container:not(:hover){
 display: none;
 }
@@ -10,9 +12,11 @@ display: none;
     display: none;
 }
 
+
 .userName:hover{
     cursor: pointer;
 }
+
 .view_container{
     z-index: 99;
     display: block;

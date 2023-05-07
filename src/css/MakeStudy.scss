@@ -1,0 +1,10 @@
+@import "../../node_modules/@yaireo/tagify/src/tagify.scss";
+
+body .tagify{
+    
+    
+    --tag-border-radius: 10px;
+    --tags-border-color: #ffffff;
+    --tags-hover-border-color: #ffffff;
+    --tags-focus-border-color: #ffffff;
+}

@@ -82,7 +82,7 @@ useEffect(() => {
                             <label for='id' className='dlabele'>{memberGender}</label>
                         </div>
                         <div>
-                            <label for='id' className='elabele'>{memberRegion}</label>
+                            <label for='id' className='elabele'>{memberRegion.province} {memberRegion.city}</label>
                         </div>
                         <div>
                             <label for='id' className='flabele'>{memberInterest}</label>
@@ -125,7 +125,7 @@ useEffect(() => {
                         <label for='id' className='cstudyarrow'>v</label>
                     </div>
 
-                    <Link to="/StudyForm">
+                    <Link to="/MakeStudy">
                         <div class='squarebutton'></div>
                         <div>
                             <label for='id' className='createbutton'>스터디 만들기</label>

@@ -51,6 +51,7 @@ body{
     font-size: 16px;
     border: 1px solid #C5C5C5;
     border-radius: 10px;
+    height: 50px;
 }
 input::placeholder{
     color: #C5C5C5;
@@ -86,7 +87,9 @@ input::placeholder{
 
 .buttons{
     justify-self: center;
-    padding: 11px 40px;
+    padding: 9px 20px;
+    width: 165px;
+    height: 50px;
     background-color: #FF5037;
     border-radius: 10px;
     color: #FFFFFF;
@@ -157,10 +160,10 @@ input::placeholder{
     border: 1px solid #FF5037;
     color: #FFFFFF;
 }
-.info-circle{
+.info_circle{
     margin-bottom: 2px;
 }
-.info-nick{
+.info_nick{
     font-size: 16px;
     color: #7D7D7D;
     display: inline;

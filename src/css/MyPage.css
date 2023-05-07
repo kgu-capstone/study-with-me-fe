@@ -288,6 +288,9 @@ top: -34px;
   border-color:#FF5037;
   top:865px;
 }
+.squarebutton:hover{
+  cursor: pointer;
+}
 .createbutton{
 font-size:19px;
 position: relative;
@@ -298,4 +301,7 @@ top: -32px;
 
 color: #FF5037;
 
+}
+.createbutton:hover{
+  cursor: pointer;
 }

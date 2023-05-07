@@ -1,5 +1,5 @@
 import React, { Component, useCallback, useEffect, useState } from 'react';
-import '../css/SignUp.css';
+import styles from '../css/SignUp.module.css';
 import Avatar from "boring-avatars";
 import { defaultapi } from '../services/api';
 
@@ -217,14 +217,14 @@ const handleSignUp = (e) => {
 
     return (
         <div>
-            <div className='main_container'>
-                <div className='logos'>
+            <div className={styles.main_container}>
+                <div className={styles.logos}>
                     <img src={process.env.PUBLIC_URL + '/img/logo.svg'}/>
                 </div>
-                <div className='description'>
+                <div className={styles.description}>
                     <p>회원가입을 진행해주세요 :)</p>
                 </div>
-                <div className='profile'>
+                <div className={styles.profile}>
                     <Avatar
                         size={133}
                         name={nick}
@@ -234,47 +234,47 @@ const handleSignUp = (e) => {
                 </div>
                 <div>
                     <form onSubmit={handleSignUp}>
-                        <div className='floor'>
-                            <div className='labels'>
+                        <div className={styles.floor}>
+                            <div className={styles.labels}>
                                 <label htmlFor='name'>이름</label>
                             </div>
                             <div>
-                                <input type='text' id='name' value={name} className='inputs_readonly inputs inputs_one' readOnly/>
+                                <input type='text' id='name' value={name} className={`${styles.inputs_readonly} ${styles.inputs} ${styles.inputs_one}`} readOnly/>
                             </div>                            
                         </div>
-                        <div className='floor'>
-                            <div className='labels'>
+                        <div className={styles.floor}>
+                            <div className={styles.labels}>
                                 <label htmlFor='email'>이메일</label>
                             </div>
                             <div>
-                                <input type='text' id='email' value={email} className='inputs_readonly inputs inputs_one' readOnly/>
+                                <input type='text' id='email' value={email} className={`${styles.inputs_readonly} ${styles.inputs} ${styles.inputs_one}`} readOnly/>
                             </div>
                         </div>
-                        <div className='floor'>
-                            <div className='labels'>
-                                <label htmlFor="nick">닉네임</label> <img src='./img/info-circle.svg' className='info-circle'/><p className='info-nick'> 2~10글자, 한글/영어/숫자만 입력가능</p>
+                        <div className={styles.floor}>
+                            <div className={styles.labels}>
+                                <label htmlFor="nick">닉네임</label> <img src='./img/info-circle.svg' className={styles.info_circle} /><p className={styles.info_nick}> 2~10글자, 한글/영어/숫자만 입력가능</p>
                             </div>
                             <div>
-                                <input type="text" id="nick" className='inputs inputs_one' minLength='2' maxLength='10' onChange={(e) => handleNick(e.target.value)} value={nick}/>
-                                <p className='validated_message'>{message_nick}</p>
+                                <input type="text" id="nick" className={`${styles.inputs} ${styles.inputs_one}`} minLength='2' maxLength='10' onChange={(e) => handleNick(e.target.value)} value={nick}/>
+                                <p className={styles.validated_message}>{message_nick}</p>
                             </div>
                             
                         </div>
-                        <div className='floor'>
-                            <div className='labels'>
+                        <div className={styles.floor}>
+                            <div className={styles.labels}>
                                 <label htmlFor="tel">연락처</label>
                             </div>
                             <div>
-                                <input type="text" id="tel" className='inputs inputs_one' maxLength='13' onChange={(e) => handlePhone(e.target.value)} value={phone}/>
-                                <p className='validated_message'>{message_tel}</p>
+                                <input type="text" id="tel" className={`${styles.inputs} ${styles.inputs_one}`} maxLength='13' onChange={(e) => handlePhone(e.target.value)} value={phone}/>
+                                <p className={styles.validated_message}>{message_tel}</p>
                             </div>
                         </div>
-                        <div className='floor'>
-                            <div className='labels'>
+                        <div className={styles.floor}>
+                        <div className={styles.labels}>
                                 <label htmlFor="birth">생년월일</label>
                             </div>
                             <div>
-                                <select id="birth-year" className='inputs inputs_three inputs_margin' onChange={(e) => setYear(e.target.value)}>
+                                <select id="birth-year" className={`${styles.inputs} ${styles.inputs_three} ${styles.inputs_margin}`} onChange={(e) => setYear(e.target.value)}>
                                     {years.map((year)=> {
                                         return (
                                             <option value={year} key={year}>{year}</option>
@@ -282,7 +282,7 @@ const handleSignUp = (e) => {
                                     })}
 
                                 </select>
-                                <select id="birth-month" className='inputs inputs_three inputs_margin' onChange={(e) => setMonth(e.target.value)}>
+                                <select id="birth-month" className={`${styles.inputs} ${styles.inputs_three} ${styles.inputs_margin}`} onChange={(e) => setMonth(e.target.value)}>
                                     {months.map((month)=> {
                                         return (
                                             <option value={month} key={month}>{month}</option>
@@ -290,7 +290,7 @@ const handleSignUp = (e) => {
                                     })}
 
                                 </select>
-                                <select id="birth-day" className='inputs inputs_three' onChange={(e) => setDay(e.target.value)}>
+                                <select id="birth-day" className={`${styles.inputs} ${styles.inputs_three}`} onChange={(e) => setDay(e.target.value)}>
                                     {days.map((day)=> {
                                         return (
                                             <option value={day} key={day}>{day}</option>
@@ -299,22 +299,22 @@ const handleSignUp = (e) => {
                                 </select>
                             </div>
                         </div>
-                        <div className='floor'>
-                            <div className='labels'>
+                        <div className={styles.floor}>
+                            <div className={styles.labels}>
                                 성별
                             </div>
-                            <div className='selects'>
-                                <input type="radio" name="gender" id="man" className='radios' value='M' onClick={(e) => setGender(e.target.value)}/><label htmlFor="man" className='inputs_margin'>남</label>
-                                <input type="radio" name="gender" id="woman" className='radios' value='F' onClick={(e) => setGender(e.target.value)} /><label htmlFor="woman">여</label>
-                                <p className='validated_message'>{message_gender}</p>
+                            <div className={styles.selects}>
+                                <input type="radio" name="gender" id="man" className={styles.radios} value='M' onClick={(e) => setGender(e.target.value)}/><label htmlFor="man" className={styles.inputs_margin}>남</label>
+                                <input type="radio" name="gender" id="woman" className={styles.radios} value='F' onClick={(e) => setGender(e.target.value)} /><label htmlFor="woman">여</label>
+                                <p className={styles.validated_message}>{message_gender}</p>
                             </div>
                         </div>
-                        <div className='floor'>
-                            <div className='labels'>
+                        <div className={styles.floor}>
+                            <div className={styles.labels}>
                                 거주지역
                             </div>
                             <div>
-                                <select id="area-city" className='inputs inputs_two inputs_margin' onChange={(e) => handleCity(e.target.value)}>
+                                <select id="area-city" className={`${styles.inputs} ${styles.inputs_two} ${styles.inputs_margin}`} onChange={(e) => handleCity(e.target.value)}>
                                     {citys.map((city)=> {
                                         return (
                                             <option value={city} key={city}>{city}</option>
@@ -322,7 +322,7 @@ const handleSignUp = (e) => {
                                     })}
 
                                 </select>
-                                <select id="area-town" className='inputs inputs_two' onChange={(e) => setTown(e.target.value)}>
+                                <select id="area-town" className={`${styles.inputs} ${styles.inputs_two}`} onChange={(e) => setTown(e.target.value)}>
                                     {towns.map((town)=> {
                                         return (
                                             <option value={town} key={town}>{town}</option>
@@ -331,22 +331,22 @@ const handleSignUp = (e) => {
                                 </select>
                             </div>
                         </div>
-                        <div className='floor'>
-                            <div className='labels'>
+                        <div className={styles.floor}>
+                            <div className={styles.labels}>
                                 관심분야
                             </div>
-                            <div className='selects'>
+                            <div className={styles.selects}>
                                 {category_list.map((data) => {
                                     return(
-                                        <><input type='checkbox' name='category' id={data.id} className='checkboxs' value={data.id} key={data.id} checked={data.isChecked} onClick={(e) => handelCategory(e.target.value, data.isChecked)}/><label htmlFor={data.id}>{data.name}</label></>
+                                        <><input type='checkbox' name='category' id={data.id} className={styles.checkboxs} value={data.id} key={data.id} checked={data.isChecked} onClick={(e) => handelCategory(e.target.value, data.isChecked)}/><label htmlFor={data.id}>{data.name}</label></>
                                         );
                                 })}
-                                <p className='validated_message'>{message_category}</p>                    
+                                <p className={styles.validated_message}>{message_category}</p>                    
                             </div>
                         </div>
-                        <div className='floor'>
-                            <div className='button_container'>
-                                <input type="submit" className='buttons' value="회원가입"/>
+                        <div className={styles.floor}>
+                            <div className={styles.button_container}>
+                                <input type="submit" className={styles.buttons} value="회원가입"/>
                             </div>
                         </div>   
                     </form>

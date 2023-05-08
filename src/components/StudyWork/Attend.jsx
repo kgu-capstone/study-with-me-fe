@@ -58,12 +58,12 @@ export default function Attend() {
                   
                 </div>
                 <div className={`${styles.attend_names} ${styles.regular_16}`}>
-                  <UserName userNickname={"닉네임"}/>
-                  <UserName userNickname={"닉네임"}/>
-                  <UserName userNickname={"닉네임"}/>
-                  <UserName userNickname={"닉네임"}/>
-                  <UserName userNickname={"닉네임"}/>
-                  <UserName userNickname={"닉네임"}/>
+                  <UserName userNickname={"닉네임"} userId={10} />
+                  <UserName userNickname={"닉네임"} userId={20} />
+                  <UserName userNickname={"닉네임"} userId={30} />
+                  <UserName userNickname={"닉네임"} userId={40} />
+                  <UserName userNickname={"닉네임"} userId={50} />
+                  <UserName userNickname={"닉네임"} userId={60} />
                 </div>                
               </div>          
 

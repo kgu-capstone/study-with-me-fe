@@ -37,7 +37,7 @@ export default function StudyInfo({studyId}) {
           <div className={styles.infoes}>
             <div className={styles.info_left}>
               <div className={styles.info_left_element}>
-                <img src={process.env.PUBLIC_URL + `/img/study_thumbnail/${studyThumbnail}`}/>
+                <img src={process.env.PUBLIC_URL + `/img/studyprofiles/${studyThumbnail}`}/>
               </div>
             </div>
             <div className={styles.info_right}>

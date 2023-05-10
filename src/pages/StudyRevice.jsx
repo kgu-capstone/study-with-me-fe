@@ -54,7 +54,12 @@ export default function StudyRevice() {
       authApi(`studies/${studyId}`)
       .then((response) => {
         console.log(response.data)
-        setStudyRecruit(response.data.recruitmentStatus);
+        if(response.data.recruitmentStatus == '모집중'){
+          setStudyRecruit(true);
+        }else{
+          setStudyRecruit(false);
+        }
+        
         setStudyThumbnail(response.data.thumbnail)
         setStudyName(response.data.name)
         setStudyInfo(response.data.description)
@@ -471,8 +476,8 @@ const handleCity = (e) => {
                     {category_list.map((data) => {
                         return(
                             <><input type='radio' name='category' id={data.id} className={styles.category_input} value={data.id} key={data.id}                           
-                            onClick={(e) => handleCategory(e.target.value - 1)}/>
-                            <label className={`${styles.category_label} ${categoryclass[data.id - 1]}`} htmlFor={data.id} >{data.name}</label></>
+                            onClick={(e) => handleCategory(e.target.value)}/>
+                            <label className={`${styles.category_label} ${categoryclass[data.id]}`} htmlFor={data.id} >{data.name}</label></>
                             );
                     })}              
               </div>

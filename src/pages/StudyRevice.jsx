@@ -53,7 +53,6 @@ export default function StudyRevice() {
       //스터디 정보 조회
       authApi(`studies/${studyId}`)
       .then((response) => {
-        console.log(response.data)
         if(response.data.recruitmentStatus == '모집중'){
           setStudyRecruit(true);
         }else{
@@ -79,7 +78,6 @@ export default function StudyRevice() {
 
         setHashtagarr(response.data.hashtags);
 
-        console.log(tagifyProps);
 
         if(response.data.type == "온라인"){
           setOnclass(`${styles.check_radios}`)
@@ -145,7 +143,6 @@ const handleCategory = (id) => {
 
   // change value
   setCategories(id)
-  console.log(categories);
 }
 
 
@@ -400,11 +397,12 @@ const handleCity = (e) => {
         }
       }
 
-      console.log(data)
+
+      
       //api 발송
       authApi.patch(`studies/${studyId}`, data)
       .then((response) => {
-        console.log(response.data);
+        
         alert('스터디를 성공적으로 수정했습니다.')
         window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork`;
       })
@@ -419,6 +417,24 @@ const handleCity = (e) => {
   }
 
 
+
+
+  // 스터디 종료
+  const handleFinishStudy = () => {
+    if(window.confirm('정말 종료하시겠습니까?')){
+        authApi.delete(`studies/${studyId}`)
+        .then((response) => {
+          console.log(response);
+          alert('스터디를 종료하였습니다.')
+          window.location.href = `${process.env.REACT_APP_BASE_URL}`;
+        }).catch((e)=>{
+          console.log(e);
+        })
+    }
+    
+
+    
+  }
 
 
 
@@ -582,7 +598,7 @@ const handleCity = (e) => {
 
             <button className={styles.make_study_button} onClick={() => handleReviceStudy()}>수정사항 저장</button>
 
-            <div className={styles.finish_button_container}>
+            <div className={styles.finish_button_container} onClick={() => handleFinishStudy()}>
               <div className={styles.finish_button}><img src={process.env.PUBLIC_URL + '/img/warningbutton.png'}/><p className={styles.finish_text}>스터디 종료하기</p></div>
             </div>
 

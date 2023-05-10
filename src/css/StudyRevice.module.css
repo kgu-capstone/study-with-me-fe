@@ -388,6 +388,7 @@ body:no-scroll{
     margin-bottom: 300px;
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 .finish_button{
     width: 175px;

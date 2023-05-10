@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import "../css/Main.css";
 import styles from "../css/MakeStudy.module.css"
 import '../css/MakeStudy.scss'
 
@@ -51,16 +50,6 @@ const [categories, setCategories] = useState([]);
 
 
 
-// const handleCategory = (e, checked) => { // 카테고리 배열에
-//   if(categories.includes(parseInt(e))){ // 있으면 삭제
-//       setCategories(categories.filter(categories => categories !== parseInt(e)));
-//   }else{ // 없으면 추가
-//       categories.push(parseInt(e));
-//       checked = true; //checkbox
-//   }
-//   categories.sort();
-  
-// }
 
 
   // 참여인원 숫자만 입력되도록
@@ -230,7 +219,6 @@ const handleCity = (e) => {
       window.info.focus();
     }
     else if(categories.length == 0 ){
-      console.log('들어온다는거야');
       setStudyInfoWarning('');
       setStudyCategroryWarning('카테고리를 선택해주세요.');
       categoryelement.scrollIntoView();
@@ -443,6 +431,7 @@ const handleCity = (e) => {
                       settings={settings}
                       autoFocus={true}
                       {...tagifyProps}
+                      value={hashtagarr}
                       onChange={(e) => handleHashTag(e)}
                       placeholder="입력 후 엔터를 눌러주세요." 
                       

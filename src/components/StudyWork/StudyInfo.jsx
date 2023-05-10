@@ -11,6 +11,7 @@ export default function StudyInfo({studyId}) {
   const [studyName, setStudyName] = useState('');
   const [studyCurrentMembers, setStudyCurrentMembers] = useState(0);
   const [studyMaxMembers, setStudyMaxMembers] = useState(0);
+  studyId = 3
 
   useEffect(() => {
     authApi.get(`studies/${studyId}`)
@@ -47,13 +48,13 @@ export default function StudyInfo({studyId}) {
               </div>
               <div className={`${styles.info_right_buttons}`}>
 
-                <NavLink to="/StudyRevice">
+                <NavLink to="/StudyRevice" state={{studyId : 1}} >
                   <div>
                     스터디정보수정
                   </div>
                 </NavLink>
 
-                <NavLink to="/ApplicantList">
+                <NavLink to="/ApplicantList" studyId={studyId}>
                   <div>
                     신청한 사람 보기
                   </div>

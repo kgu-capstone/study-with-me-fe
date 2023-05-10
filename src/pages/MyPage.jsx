@@ -39,7 +39,7 @@ useEffect(() => {
 
             <><>
                 <div>
-                    <label for='id' className='nicknameProfile'>닉네임님 프로필</label>
+                    <label for='id' className='nicknameProfile'>{memberNickname}님 프로필</label>
                 </div>
                 <div className='biprof'>
                 <Avatar

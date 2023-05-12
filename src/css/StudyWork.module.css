@@ -236,7 +236,9 @@ body{
 
 
 
-
+.announce_contianer{
+    width: 768px;
+}
 
 
 .announce_each_contianer{
@@ -307,8 +309,13 @@ body{
     margin: 12px 0 0 0;
 }
 
-.announce_each_content_contianer{
-    display: none;
+.announce_each_content_contianer_none{
+    visibility: hidden;
+    height: 0vh;
+    
+}
+.announce_each_content_contianer_block{
+    visibility: visible;
 }
 
 /* 여기까지 공지사항 */

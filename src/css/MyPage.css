@@ -5,6 +5,14 @@ main{
   position:relative;
 }  
 
+.mypage_container{
+  width: 1024;
+
+}
+.mapage_child_container{
+  margin: 0 auto;
+}
+
 .nicknameProfile{
   position: absolute;
   height: 20.88px;

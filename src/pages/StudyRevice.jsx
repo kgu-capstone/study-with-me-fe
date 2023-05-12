@@ -31,9 +31,6 @@ export default function StudyRevice() {
     .then((response) => {
         setCategory_list(response.data.result);
 
-
-        //usesate넣기 전 임시 배열
-
         for(let i = 0; i < category_list.length; i++){ //check박스
             category_list[i].isChecked = false;
 

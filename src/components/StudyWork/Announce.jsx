@@ -1,27 +1,64 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../../css/StudyWork.module.css';
 import Avatar from "boring-avatars";
-
+import parse from 'html-react-parser';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 import { authApi } from '../../services/api';
+import { useLocation } from 'react-router';
 
 export default function Announce(){
 
-  //접었다 펴기
-  const handleFold = () =>{
-    if(document.getElementsByClassName(`${styles.announce_each_content_contianer}`)[0].style.display == 'none'){ //접혀있을 때 // 데이터받아올 때 해당 배열값으로 배열 수정필요
-      document.getElementsByClassName(`${styles.announce_each_content_contianer}`)[0].style.display = 'block';
+  
+
+    // 넘어올 정보
+    const location = useLocation()
+    const studyId = 3
+    // const studyId = location.state?.studyId
+
+
+  // 공지사항 조회
+  const [announceList, setAnnounceList] = useState([]);
+
+
+  useEffect(() => {
+    authApi.get(`studies/${studyId}/notices`)
+    .then((response) => {
+      setAnnounceList(response.data.result);
+    
+    })
+    .catch((e) => console.log(e))
+   }, [])
+
+    // 공지사항 none css 입력
+    const [foldListcss, setFoldListcss] = useState([]);
+
+    useEffect(() => {
+    let tempFoldListcss = [];
+    for(let i = 0; i< announceList.length; i++){
+      tempFoldListcss[i] = `${styles.announce_each_content_contianer_none}`;
+    }
+
+    setFoldListcss(tempFoldListcss)
+
+    }, [announceList])
+   
+     //접었다 펴기
+  const handleFold = (index) =>{
+    let tempFoldListcss = [...foldListcss];
+    
+    if(tempFoldListcss[index] == (`${styles.announce_each_content_contianer_none}`)){ //접혀있을 때
+      tempFoldListcss[index] = (`${styles.announce_each_content_contianer_block}`)
     }else{ //펼쳐져있을 때
-      document.getElementsByClassName(`${styles.announce_each_content_contianer}`)[0].style.display = 'none';
+      tempFoldListcss[index] = (`${styles.announce_each_content_contianer_none}`)
     }
     
+    setFoldListcss(tempFoldListcss)
   }
 
-  // 공지사항 정보 불러오기
 
 
   //글쓰기 펼치기
@@ -43,51 +80,30 @@ export default function Announce(){
     }
   }
 
-  // 글쓰기 에디터관련
   
-  // useEffect = () =>{
-  //   authApi.post('study', 
-  //   {
-  //     "name" : "TOEIC 스터디",
-  //     "description" : "TOEIC 스터디입니다",
-  //     "capacity" : 8,
-  //     "category" : 1,
-  //     "thumbnail" : "language_001.png",
-  //     "type" : "ON",
-  //     "province" : null,
-  //     "city" : null,
-  //     "minimumAttendanceForGraduation" : 5,
-  //     "hashtags" : [ "TOEIC", "언어", "토익" ]
-  //   }
-  //   ).then((response) => {
-  //     console.log(response);
-  //   }).catch((e) => console.log(e))
-  // }
-
-
+  // 글쓰기 에디터관련
   const [flag, setFlag] = useState(false);
 
   const customUploadAdapter = (loader) => { // (2)
     return {
         upload(){
             return new Promise ((resolve, reject) => {
-                const data = new FormData();
+                const formData = new FormData();
                  loader.file.then( (file) => {
-                        data.append("name", file.name);
-                        data.append("file", file);
+                        formData.append("filename", file.name);
+                        formData.append("file", file);
 
-                        authApi.post(`image`, data)
+                        authApi.post(`image`, formData)
                             .then((res) => {
-                                if(!flag){
-                                    setFlag(true);
-                                    // setImage(res.data.filename);
-                                }
                                 resolve({
                                     // default: `${imgLink}/${res.data.filename}`
-                                    default: `${res.data.filename}`
+                                    default: `${res.data.result}`
                                 });
                             })
-                            .catch((err)=>reject(err));
+                            .catch((err)=>{
+                              console.log(err);
+                              reject(err)
+                            });
                     })
             })
         }
@@ -107,12 +123,13 @@ const [announceContent, setAnnounceContent] = useState('');
 
 //등록  api
 const handleAnnounceUpload = () => {
-  authApi.post(`studies/1/notice`, 
+  authApi.post(`studies/${studyId}/notice`, 
   {
     "title": announceTitle,
     "content": announceContent
   })
   .then((response)=>{
+    console.log(response);
     window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/Announce`;
   })
   .catch((e) => {
@@ -157,14 +174,14 @@ const handleAnnounceUpload = () => {
                     } }
                     onChange={ ( event, editor ) => {
                         const data = editor.getData();
-                        // console.log( { event, editor, data } );
+                        console.log( { event, editor, data } );
                         setAnnounceContent(data);
                     } }
                     onBlur={ ( event, editor ) => {
-                        // console.log( 'Blur.', editor );
+                        console.log( 'Blur.', editor );
                     } }
                     onFocus={ ( event, editor ) => {
-                        // console.log( 'Focus.', editor );
+                        console.log( 'Focus.', editor );
                     } }
                   />    
 
@@ -179,23 +196,32 @@ const handleAnnounceUpload = () => {
               </div>
             </div>
 
-            
-            <div className={`${styles.announce_each_contianer}`}>
-              <div className={`${styles.announce_each_title} ${styles.regular_24}`} onClick={() => handleFold()}>
-                공지사항 제목
+
+
+
+            <div className={styles.announce_contianer}> 
+
+            {/* 공지사항 목록들 */}
+            {
+              announceList.map((item, index) => {
+                return(
+                  <>
+              <div className={`${styles.announce_each_contianer}`}>
+              <div className={`${styles.announce_each_title} ${styles.regular_24}`} onClick={() => handleFold(index)}>
+                {announceList[index].title}
               </div>
-              <div className={`${styles.announce_each_content_contianer}`}>
+              <div className={`${foldListcss[index]}`}>
                 <div className={`${styles.announce_each_content} ${styles.regular_16}`}>
-                  공지사항 내용
+                  {parse(announceList[index].content)}
                 </div>
 
-{/* 
+              {/* 
                 <div>
                   <p className={`${styles.announce_}`}>수정</p>
                   <p className={`${styles.announce_delete}`}>삭제</p>
                 </div> */}
 
-
+                
                 <div className={`${styles.announce_each_commnet_continer}`}>
                   <div className={`${styles.announce_each_comment_count}`}>
                     댓글 (1)
@@ -227,6 +253,15 @@ const handleAnnounceUpload = () => {
                 </div>
               </div>
             </div>
+                  </>
+                )
+              })
+            }
+
+
+        </div>
+
+           
           </div>
       
     )

@@ -40,6 +40,7 @@
     "dayjs": "^1.11.7",
     "draft-js": "^0.11.7",
     "eslint-config-react-app": "^7.0.1",
+    "html-react-parser": "^3.0.16",
     "image-extensions": "^1.1.0",
     "is-hotkey": "^0.2.0",
     "is-url": "^1.2.4",

@@ -11,7 +11,8 @@ import Button from 'react-bootstrap/Button';*/
 
 function MyPage() {
 // 사용자 id get
-const memberId = localStorage.getItem("id")
+// const memberId = localStorage.getItem("id")
+const memberId = 6
 
 //const axios.get()
 let [memberNickname, setMemberNickname] = useState('');
@@ -34,7 +35,28 @@ useEffect(() => {
     .catch((error) => {
         console.log(error);
     })
-})
+}, [])
+
+// 참여중인 스터디 리스트 변수
+const [participateList, setParticipateList] = useState([]);
+
+// api 함수
+const my_participate = () => {
+    console.log({memberId});
+
+    authApi.get(`members/6/studies/participate`)
+    .then((response) => {
+        console.log(response);
+        console.log(response.data.result);
+
+        // setParticipateList(response.data.result);
+        
+       
+    })
+    .catch((e) => {
+        console.log(e);
+    })
+}
         return(
 
             <><>
@@ -90,13 +112,18 @@ useEffect(() => {
                     </div>
                 
                 <div class="square"></div>
-                    <div>
+                    <div onClick={() => my_participate()}>
                         <label for='id' className='astudy'>활동중인 스터디</label>
                     </div>
                     <div>
                         <label for='id' className='astudyarrow'>^</label>
                     </div>
                     <div className='astudyprof1'></div>
+                    
+                    {participateList.map((index, item) => {
+                        <label for='id' className='astudy1'>{item}</label>
+                    }) 
+                    }
                     <div>
                         <label for='id' className='astudy1'>스터디 이름</label>
                     </div>

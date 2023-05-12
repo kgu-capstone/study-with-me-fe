@@ -31,12 +31,13 @@ const authApi = axios.create({
 
             if(error.response.status === 401){
 
-                const refreshToken = localStorage.getItem("refreshToken");
                 try{
                     const {data} = await axios({
                         method: 'POST',
                         url: `${process.env.REACT_APP_API_URL}api/token/reissue`,
-                        data: {refreshToken}
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
+                        }
                     })
 
                     const newAccessToken = data.data.accessToken
@@ -50,6 +51,7 @@ const authApi = axios.create({
                     return await axios(origianlRequest);
 
                 }catch(err){
+                    console.log('refesh로그아웃: ' + err);
                     // refresh Token도 만료 -> 로그아웃
                     localStorage.clear();
 

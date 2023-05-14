@@ -23,20 +23,27 @@ export default function Announce(){
   // 공지사항 조회
   const [announceList, setAnnounceList] = useState([]);
 
-
-  useEffect(() => {
+  const announceApi = () => {
     authApi.get(`studies/${studyId}/notices`)
     .then((response) => {
       setAnnounceList(response.data.result);
-    
     })
     .catch((e) => console.log(e))
+  }
+
+
+  useEffect(() => {
+    // 스크롤 맨 위로
+    window.scrollTo(0, 0);
+
+    announceApi()
    }, [])
 
-    // 공지사항 none css 입력
-    const [foldListcss, setFoldListcss] = useState([]);
+   
+  // 공지사항 none css 입력
+  const [foldListcss, setFoldListcss] = useState([]);
 
-    useEffect(() => {
+  useEffect(() => { 
     let tempFoldListcss = [];
     for(let i = 0; i< announceList.length; i++){
       tempFoldListcss[i] = `${styles.announce_each_content_contianer_none}`;
@@ -44,7 +51,9 @@ export default function Announce(){
 
     setFoldListcss(tempFoldListcss)
 
-    }, [announceList])
+  }, [announceList])
+
+
    
      //접었다 펴기
   const handleFold = (index) =>{
@@ -121,7 +130,7 @@ const [announceContent, setAnnounceContent] = useState('');
 
   
 
-//등록  api
+//공지사항등록  api
 const handleAnnounceUpload = () => {
   authApi.post(`studies/${studyId}/notice`, 
   {
@@ -129,12 +138,108 @@ const handleAnnounceUpload = () => {
     "content": announceContent
   })
   .then((response)=>{
-    console.log(response);
     window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/Announce`;
   })
   .catch((e) => {
     console.log(e);
   })
+  }
+
+
+  // 댓글 useState
+  const [comment, setComment] = useState([]);
+  
+  const handleCommentValue = (value, index) =>{
+    let tempComment = [...comment]; // 임시배열을 만들어서
+    tempComment[index] = value // 임시배열의 값을 바꾸고
+    setComment(tempComment) // 다시 임시배열을 set useState 
+    // -- 공지사항 여러개 열어놓고 댓글을 쓸 때를 대비해서, 서로 값을 분리하기 위함 --
+
+  }
+
+
+    //댓글등록 api
+  const handleCommentUplaod = (value, index) => {
+
+    // 줄바꿈 \n을 <br>로 변경
+    value = value.replaceAll(/(?:\r\n|\r|\n)/g, '<br>');
+
+
+    authApi.post(`notices/${index}/comment`,
+      {"content" : value}
+    )
+    .then((response) => {
+      window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/Announce`;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+
+  // 댓글삭제 api
+  const handleCommentDelete = (noticeId, commentId) => {
+    if(window.confirm('댓글을 삭제하시겠습니까?')){
+      authApi.delete(`notices/${noticeId}/comments/${commentId}`)
+      .then((response) => {
+        announceApi();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+  }
+
+
+  // 댓글 textarea높이조절
+  const autoResizeTextarea = (className) => {
+    let textarea = document.querySelector(className);
+
+    if(textarea){
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }
+
+  //--댓글 수정--
+  // 댓글 수정 칸 열기
+  const [commentReviceOn, setCommentReviceOn] = useState([]);
+
+  const handleCommentReviceOnOff = (commentIndex, onoff, value) => {
+    let TempReviceOn = [...commentReviceOn];
+    TempReviceOn[commentIndex] = onoff
+    setCommentReviceOn(TempReviceOn);
+
+    // 초기 입력값
+    commentReivceValue[commentIndex] = value
+  }
+
+  // 댓글 수정 입력값 받기
+  const [commentReivceValue, setCommentReviceValue] = useState([]);
+  
+  const handleCommentReviceValue = (value, index) =>{
+    let tempRevice = [...commentReivceValue];
+    tempRevice[index] = value
+    setCommentReviceValue(tempRevice) 
+
+  }
+
+  //댓글수정 api
+  const handleCommentReviceRevice = (noticeId, commentId, reviceValue) => {
+    // 줄바꿈 \n을 <br>로 변경
+    reviceValue = reviceValue.replaceAll(/(?:\r\n|\r|\n)/g, '<br>');
+
+
+    authApi.put(`notices/${noticeId}/comments/${commentId}`,
+    {
+      "content" : reviceValue
+    })
+    .then((response)=>{
+      window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/Announce`;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
 
@@ -174,14 +279,14 @@ const handleAnnounceUpload = () => {
                     } }
                     onChange={ ( event, editor ) => {
                         const data = editor.getData();
-                        console.log( { event, editor, data } );
+                        // console.log( { event, editor, data } );
                         setAnnounceContent(data);
                     } }
                     onBlur={ ( event, editor ) => {
-                        console.log( 'Blur.', editor );
+                        // console.log( 'Blur.', editor );
                     } }
                     onFocus={ ( event, editor ) => {
-                        console.log( 'Focus.', editor );
+                        // console.log( 'Focus.', editor );
                     } }
                   />    
 
@@ -208,11 +313,11 @@ const handleAnnounceUpload = () => {
                   <>
               <div className={`${styles.announce_each_contianer}`}>
               <div className={`${styles.announce_each_title} ${styles.regular_24}`} onClick={() => handleFold(index)}>
-                {announceList[index].title}
+                {item.title}
               </div>
               <div className={`${foldListcss[index]}`}>
                 <div className={`${styles.announce_each_content} ${styles.regular_16}`}>
-                  {parse(announceList[index].content)}
+                  {parse(item.content)}
                 </div>
 
               {/* 
@@ -221,36 +326,108 @@ const handleAnnounceUpload = () => {
                   <p className={`${styles.announce_delete}`}>삭제</p>
                 </div> */}
 
-                
+
                 <div className={`${styles.announce_each_commnet_continer}`}>
                   <div className={`${styles.announce_each_comment_count}`}>
-                    댓글 (1)
+                    댓글 ({item.comments.length})
                   </div>
                   <div className={`${styles.announce_each_comment_inputs}`}>
-                    <input type='text' className={`${styles.announce_each_comment_input}`}></input>
-                    <buuton type='button' className={`${styles.announce_each_comment_button}`}>올리기</buuton>              
+
+                    <textarea 
+                    value={comment[index]} 
+                    onChange={(e) => handleCommentValue(e.target.value, index)} 
+                    type='text' 
+                    className={`${styles.announce_each_comment_input}`} 
+                    onKeyDown={() => autoResizeTextarea(`.${styles.announce_each_comment_input}`)}
+                    onKeyUp={() => autoResizeTextarea(`.${styles.announce_each_comment_input}`)}
+                    />
+
+                    <button type='button' 
+                            className={`${styles.announce_each_comment_button}`}
+                            onClick={() => handleCommentUplaod(comment[index], item.id)}
+                    >올리기</button>              
                   </div>
                   <div className={`${styles.announce_each_comment_lists}`}>
-                    <div className={`${styles.announce_each_comment_list}`}>
-                      <div className={`${styles.announce_each_comment_list_profile}`}>
-                        <Avatar
-                          size={40}
-                          name='닉넴'
-                          variant="beam"
-                          colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
-                        />
-                      </div>
-                      <div className={`${styles.announce_each_comment_list_contents}`}>
-                        <div>
-                          <p className={`${styles.announce_each_comment_list_nickname} ${styles.bold_16}`}>닉넴</p>
+                  
+
+                    {item.comments.map((content, contentIndex) => {
+                      return (
+                        <div className={`${styles.announce_each_comment_list}`}>
+                          <div className={`${styles.announce_each_comment_list_profile}`}>
+                            <Avatar
+                              size={40}
+                              name='닉넴'
+                              variant="beam"
+                              colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
+                            />
+                          </div>
+                          <div className={`${styles.announce_each_comment_list_contents}`}>
+                            <div className={styles.announce_each_comment_top_container}>
+                              <div className={styles.announce_each_comment_nickname_contianer}>
+                                <p className={`${styles.announce_each_comment_list_nickname} ${styles.bold_16}`}>{content.writer.nickname}</p>
+                              </div>
+                              <div className={styles.announce_each_comment_revice_container}>
+                                {
+                                  //수정누르면 완료 버튼으로 바뀜
+                                  commentReviceOn[contentIndex]
+                                  ?
+                                  <>
+                                  
+                                  <p className={styles.announce_each_comment_revice_button}
+                                      onClick={() => handleCommentReviceRevice(item.id, content.id,commentReivceValue[contentIndex])}
+                                  >
+                                    수정완료
+                                  </p>
+                                  <p className={styles.announce_each_comment_reviceOff_button}
+                                  onClick={() => handleCommentReviceOnOff(contentIndex, false, content.content)}>
+                                    수정취소
+                                  </p>
+                                  </>
+                            
+                                  :
+                                  <p className={styles.announce_each_comment_reviceOn_button}
+                                    onClick={() => handleCommentReviceOnOff(contentIndex, true, content.content.replaceAll('<br>', '\n'))}
+                                  >수정</p>
+
+
+                                }
+                                
+                                <p className={styles.announce_each_comment_delete_button}
+                                  onClick={() => handleCommentDelete(item.id, content.id)}
+                                >삭제</p>
+                              </div>
+                            </div>
+                            <div>
+
+                              
+                              {//수정 누르면 input으로 바뀜
+                                commentReviceOn[contentIndex]
+                                ?
+                                <textarea
+                                  className={`${styles.announce_each_comment_list_content_revice}`}
+                                  onKeyDown={() => autoResizeTextarea(`.${styles.announce_each_comment_list_content_revice}`)}
+                                  onKeyUp={() => autoResizeTextarea(`.${styles.announce_each_comment_list_content_revice}`)}
+                                  value={commentReivceValue[contentIndex]}
+                                  onChange={(e) => handleCommentReviceValue(e.target.value, contentIndex)}
+                                />
+                                :
+                                <p className={`${styles.announce_each_comment_list_content} ${styles.regular_16}`}>{parse(content.content)}</p>
+                              }
+                              
+                              
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <p className={`${styles.announce_each_comment_list_content} ${styles.regular_16}`}>댓글 쭈르ddddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddddddddddddvvvccccccccccccccccvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvdddddddddddddddddddddddddddddddddd륵<br/>쭈르<br/>륵</p>
-                        </div>
-                      </div>
-                    </div>
+                      )
+
+                    })}
+                    
+
+
                   </div>
                 </div>
+
+
               </div>
             </div>
                   </>

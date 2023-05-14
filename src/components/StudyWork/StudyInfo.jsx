@@ -47,18 +47,21 @@ export default function StudyInfo({studyId}) {
                 <p className={styles.regular_18}>{studyCurrentMembers} / {studyMaxMembers}</p>
               </div>
               <div className={`${styles.info_right_buttons}`}>
-
-                <NavLink to="/StudyRevice" state={{studyId : 1}} >
+                <NavLink to="/ApplicantList" studyId={studyId} className={styles.applicantList_button}>
                   <div>
-                    스터디정보수정
+                    <img  src={process.env.PUBLIC_URL + '/img/participate_button.png'}
+                    className={styles.info_button}/>신청한 사람 보기
                   </div>
                 </NavLink>
 
-                <NavLink to="/ApplicantList" studyId={studyId}>
+                <NavLink to="/StudyRevice" state={{studyId : studyId, studyName : studyName}} className={styles.studyRevice_button}>
                   <div>
-                    신청한 사람 보기
+                  <img  src={process.env.PUBLIC_URL + '/img/setting_button.png'}
+                  className={styles.info_button}/>스터디정보수정
                   </div>
                 </NavLink>
+
+                
               </div>
             </div>
           </div>

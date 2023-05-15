@@ -145,6 +145,83 @@ const handleAnnounceUpload = () => {
   })
   }
 
+// 공지사항 수정 버튼누르면 에디터 등장
+const [announceReviceOnOff, setAnnounceReviceOnOff] = useState([]);
+
+const announceReviceOnoff = (anoounceIndex, onoff, title, content) => {
+  // 나머지 수정화면은 수정취소상태로 닫힘
+  console.log(announceReviceOnOff);
+  let TempReviceOn = [...announceReviceOnOff];
+
+
+  for(let i = 0; i < TempReviceOn.length; i++){
+
+    TempReviceOn[i] = false
+  }
+
+  TempReviceOn[anoounceIndex] = onoff
+  setAnnounceReviceOnOff(TempReviceOn);
+
+  // 수정 초기값
+  announceReivceTitle[anoounceIndex] = title
+  announceReivceContent[anoounceIndex] = content
+}
+
+ // 공지사항 수정 입력값 받기
+ const [announceReivceTitle, setAnnounceReivceTitle] = useState([]);
+  
+ const handleAnnounceReviceTitle = (value, index) =>{
+   let tempRevice = [...commentReivceValue];
+   tempRevice[index] = value
+   setAnnounceReivceTitle(tempRevice) 
+
+ }
+
+ const [announceReivceContent, setAnnounceReivceContent] = useState([]);
+ const handleAnnounceReviceContent = (value, index) =>{
+  let tempRevice = [...commentReivceValue];
+  tempRevice[index] = value
+  setAnnounceReivceContent(tempRevice) 
+}
+
+// 공지사항 수정 api
+const handleAnnounceRevice = (noticeId, title, content) => {
+  authApi.patch(`studies/${studyId}/notices/${noticeId}`,
+  {
+    "title" : title,
+    "content" : content
+  }
+  )
+  .then((response) => {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/Announce`;
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+}
+
+
+
+
+
+
+//공지사항 삭제 api
+const announce_delete = (noticeId) => {
+  if(window.confirm('공지사항을 삭제하시겠습니까?')){
+    authApi.delete(`studies/${studyId}/notices/${noticeId}`)
+    .then((response) => {
+      window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/Announce`;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+}
+
+
+
+
+
 
   // 댓글 useState
   const [comment, setComment] = useState([]);
@@ -316,15 +393,105 @@ const handleAnnounceUpload = () => {
                 {item.title}
               </div>
               <div className={`${foldListcss[index]}`}>
+
+              {
+                  announceReviceOnOff[index]
+                  ?
+
+                  // --- 수정상태일 때 ---
+                  <>
+
+                    <div>
+                      <div>
+                        <div className={`${styles.announce_revice_title}`}>
+                          <p>공지사항 제목 수정</p>
+                        </div>
+                        <div>
+                          <input value={announceReivceTitle[index]} type='text' className={`${styles.announce_write_title_input}`} onChange={(e) => handleAnnounceReviceTitle(e.target.value, index)}></input>
+                        </div>                
+                      </div>
+
+                  
+                      <div className={`${styles.announce_write_contents}`}>
+                        <p>공지사항 내용 수정</p>
+                      </div>
+                      <div className={`${styles.announce_write_contents_input_container}`}>      
+                      <CKEditor
+                        editor={ ClassicEditor }
+                        config={{ // (4)
+                            extraPlugins: [uploadPlugin]
+                        }}
+                        data={announceReivceContent[index]}
+                        onReady={ editor => {
+                            // You can store the "editor" and use when it is needed.
+                            // console.log( 'Editor is ready to use!', editor );
+                        } }
+                        onChange={ ( event, editor ) => {
+                            const data = editor.getData();
+                            // console.log( { event, editor, data } );
+                            handleAnnounceReviceContent(data, index);
+                        } }
+                        onBlur={ ( event, editor ) => {
+                            // console.log( 'Blur.', editor );
+                        } }
+                        onFocus={ ( event, editor ) => {
+                            // console.log( 'Focus.', editor );
+                        } }
+                      />  
+                      </div>
+                      
+                    </div>
+                      
+                    
+                  </>
+                  :
+
+
+                  // ---일반적인 보기 상태일 때 ---
+                  <>
+                  
+                
+              
+              
                 <div className={`${styles.announce_each_content} ${styles.regular_16}`}>
                   {parse(item.content)}
                 </div>
 
-              {/* 
-                <div>
-                  <p className={`${styles.announce_}`}>수정</p>
-                  <p className={`${styles.announce_delete}`}>삭제</p>
-                </div> */}
+                
+
+
+              
+              </>
+              }
+              {/* 공지사항 수정 삭제 버튼*/}
+                
+              <div className={`${styles.announce_revice_contianer}`}>
+                {
+                  //수정상태일 때 버튼 변화
+                  announceReviceOnOff[index]
+                  ?
+                  <>
+                  <p className={`${styles.announce_revice}`}
+                    onClick={() => announceReviceOnoff(index, false, item.title, item.content)}
+                    >
+                    수정취소</p>
+                  <p className={`${styles.announce_revice}`}
+                  onClick={() => handleAnnounceRevice(item.id, announceReivceTitle[index], announceReivceContent[index])}
+                  > 
+                  수정완료</p>
+                  </>
+                  :
+                  <p className={`${styles.announce_revice}`}
+                    onClick={() => announceReviceOnoff(index, true, item.title, item.content)}
+                    >
+                    수정</p>
+
+                }
+                  
+                  <p className={`${styles.announce_delete}`}
+                    onClick={() => announce_delete(item.id)}
+                    >삭제</p>
+                </div>
 
 
                 <div className={`${styles.announce_each_commnet_continer}`}>
@@ -426,8 +593,6 @@ const handleAnnounceUpload = () => {
 
                   </div>
                 </div>
-
-
               </div>
             </div>
                   </>

@@ -73,7 +73,6 @@ export default function Attend() {
                 onMouseDown={onDragStart}
                 onMouseMove={isDrag ? onThrottleDragMove : null}
                 onMouseUp={onDragEnd}
-                onMouseLeave={onDragEnd}
                 >
                 
                 <div className={`${styles.attend_each_weeks}`}>

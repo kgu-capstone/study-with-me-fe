@@ -197,6 +197,9 @@ body{
 .announce_write_title{
     margin: 25px 0 0 30px;
 }
+.announce_revice_title{
+    margin: 0 0 0 30px;
+}
 
 
 
@@ -275,12 +278,32 @@ body{
     max-width: 100%;
 }
 
+
+/*공지사항 수정삭제버튼*/
+.announce_revice_contianer{
+    margin-top: 30px;
+    margin-left: 30px;
+    display: flex;
+    color: #7D7D7D;
+}
+.announce_revice{
+    margin-right: 15px;
+    cursor: pointer;
+}
+.announce_delete{
+    cursor: pointer;
+}
+
+
+
+
+
+
 .announce_each_commnet_continer{
     padding: 10px 30px;
 }
-
 .announce_each_comment_count{
-    padding: 50px 0 0 0;
+    padding: 20px 0 0 0;
 }
 
 .announce_each_comment_inputs{

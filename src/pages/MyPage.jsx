@@ -42,16 +42,18 @@ const [participateList, setParticipateList] = useState([]);
 
 // api 함수
 const my_participate = () => {
-    console.log({memberId});
-
-    authApi.get(`members/6/studies/participate`)
+    authApi.get(`members/${memberId}/studies/participate`)
     .then((response) => {
-        console.log(response);
-        console.log(response.data.result);
+        setParticipateList(response.data.result); 
+        // return 부분에 participateList.map((item, index) => {return (<><div>item.name</div></> )}) 
+        // 나는 이런식으로 map을 돌려
+        // Announce.jsx 에 map을 엄청많이 사용했거든. 참고할 수 있을거야. (Announce가 좀 많이 복잡해져서 알아보기 힘들어지긴 했지만ㅎㅎ;;)
 
-        // setParticipateList(response.data.result);
+        // 펼치고 접는거는 밑에 내용을 dislplay: none; 해놓고 클릭하면 css가 block으로 바뀌게 했어.
+        // <div>분리해서 제목이랑 펼쳤을 떄 나오는 내용이랑 분리하면 편할거야.
+
+        // !!읽고 나서 주석은 지워줘!!
         
-       
     })
     .catch((e) => {
         console.log(e);
@@ -118,12 +120,7 @@ const my_participate = () => {
                     <div>
                         <label for='id' className='astudyarrow'>^</label>
                     </div>
-                    <div className='astudyprof1'></div>
-                    
-                    {participateList.map((index, item) => {
-                        <label for='id' className='astudy1'>{item}</label>
-                    }) 
-                    }
+                    <div className='astudyprof1'></div>                  
                     <div>
                         <label for='id' className='astudy1'>스터디 이름</label>
                     </div>

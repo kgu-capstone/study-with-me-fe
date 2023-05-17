@@ -11,11 +11,20 @@ import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
+
+import moment from 'moment';
+
+// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+import DatePicker, { registerLocale } from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
+
+import ko from "date-fns/locale/ko";
 
 import { authApi } from '../../services/api';
 import { error, event } from 'jquery';
+
 
 export default function ByWeek(){
   //접었다 펴기
@@ -49,30 +58,27 @@ export default function ByWeek(){
 
 
   //글쓰기 에디터 관련
-  const [flag, setFlag] = useState(false);
 
   const customUploadAdapter = (loader) => { // (2)
     return {
         upload(){
             return new Promise ((resolve, reject) => {
-                const data = new FormData();
-                 loader.file.then( (file) => {
-                        data.append("name", file.name);
-                        data.append("file", file);
+              const formData = new FormData();
+              loader.file.then( (file) => {
+                     formData.append("filename", file.name);
+                     formData.append("file", file);
 
-                        authApi.post(`image`, data)
-                            .then((res) => {
-                                if(!flag){
-                                    setFlag(true);
-                                    // setImage(res.data.filename);
-                                }
-                                resolve({
-                                    // default: `${imgLink}/${res.data.filename}`
-                                    default: `${res.data.filename}`
-                                });
-                            })
-                            .catch((err)=>reject(err));
-                    })
+                     authApi.post(`image`, formData)
+                         .then((res) => {
+                             resolve({                                
+                                 default: `${res.data.result}`
+                             });
+                         })
+                         .catch((err)=>{
+                           console.log(err);
+                           reject(err)
+                         });
+                 })
             })
         }
     }
@@ -95,7 +101,7 @@ const handleFileUpload = (e) => {
 
 
 //업로드
-const studyId = 1;
+const studyId = 3;
 const week = 1;
 
 let fileNames;
@@ -103,7 +109,8 @@ let fileNames;
 const [byweekInputTitle, setByweekInputTitle] = useState('');
 const [byweekInputContent, setByweekInputContent] = useState('');
 const [startDate, setStartDate] = useState(dayjs());
-const [endDate, setEndDate] = useState(dayjs().add(7,'day'));
+const [endDate, setEndDate] = useState(dayjs());
+// const [endDate, setEndDate] = useState(dayjs().add(7,'day'));
 const [inputAssignmentExists, setInputAssignmentExists] = useState(true);
 const [inputAutoAttendance, setInputAutoAttendance] = useState(true);
 
@@ -116,11 +123,21 @@ const handleStudyUpload = () => {
   Object.values(fileData).forEach((file) => fileData.append("files", file));
   fileData.append("title", byweekInputTitle);
   fileData.append("content", byweekInputContent);
-  fileData.append("startDate", startDate);
-  fileData.append("endDate", endDate);
+
+
+
+  fileData.append("startDate", moment(startDate[0]).format("YYYY-MM-DDTHH:mm"));
+  fileData.append("endDate", moment(endDate[1]).format("YYYY-MM-DDTHH:mm"));
   fileData.append("assignmentExists", inputAssignmentExists);
   fileData.append("autoAttendance", inputAutoAttendance);
 
+  for (const key of fileData.keys()){
+    console.log(key);
+  }
+  for (const value of fileData.values()){
+    console.log(value);
+  }
+  console.log(fileData);
 
   authApi.post(`studies/${studyId}/weeks/${week}`,
   fileData,
@@ -128,11 +145,23 @@ const handleStudyUpload = () => {
     "Content-Type" : `multipart/form-data;`
   }}
   ).then((response) => {
-    window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`;
-  }).catch((e) => {
+    // window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`;
+  }).catch((error) => {
     console.log(error);
   })
 }
+
+const handleStartDate = (value) => {
+  const temp = value.format()
+  setStartDate(temp)
+}
+
+const handleEndDate = (value) => {
+  const temp = value.format()
+  setEndDate(temp)
+}
+
+registerLocale("ko", ko);
 
     return (
           <div className={`${styles.right_container}`}>
@@ -147,22 +176,51 @@ const handleStudyUpload = () => {
                 <div className={`${styles.byweek_period_input_contianer}`}>
                   <div>
 
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']}>
-                      <DatePicker className={`${styles.byweek_period_input_start}`} label={'시작 날짜'} value={startDate} onChange={(newValue) => setStartDate(newValue)}/>
-                    </DemoContainer>
-                  </LocalizationProvider>
+                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}> */}
+<DatePicker
+      selectsRange={true}
+      startDate={startDate}
+      endDate={endDate}
+      onChange={(update) => {
+        setDateRange(update);
+      }}
+      withPortal
+    />
+
+                      <DatePicker 
+                      locale="ko"
+                      dateFormat="yyyy-mm-dd'T'HH:mm"
+                      // startDate={startDate}
+                      // endDate={endDate}
+                      className="input-datepicker" 
+                      placeholderText="시작 날짜" 
+                      // className={`${styles.byweek_period_input_start}`} 
+                      label={'시작 날짜'} 
+                      // onChange={(newValue) => setStartDate(newValue)}
+                      selectsRange
+                      inline
+                      />
+                    {/* </DemoContainer>
+                  </LocalizationProvider> */}
                   </div>
 
                   <div className={`${styles.byweek_period_tilde_contianer}`}>
                     <p className={`${styles.byweek_period_tilde}`}>~</p>
                   </div>
                   <div>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']}>
-                      <DatePicker className={`${styles.byweek_period_input_start}`} label={'종료 날짜'} value={endDate} onChange={(newValue) => setEndDate(newValue)}/>
-                    </DemoContainer>
-                  </LocalizationProvider>
+                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}> */}
+                      <DatePicker
+                      locale={ko}
+                      dateFormat="yyyy-mm-dd'T'HH:mm"
+                      className="input-datepicker"
+                      placeholderText="종료 날짜"
+                      // className={`${styles.bywek_period_input_start}`} 
+                      
+                      label={'종료 날짜'} value={endDate} onChange={(newValue) => setEndDate(newValue)}/>
+                    {/* </DemoContainer>
+                  </LocalizationProvider> */}
                   </div>
                 </div>
               </div>

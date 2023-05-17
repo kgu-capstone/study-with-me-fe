@@ -3,7 +3,7 @@ import styles from '../css/UserName.module.css'
 import Profile from './Profile'
 import Report from './Report'
 
-export default function UserName({userNickname}) {
+export default function UserName({userNickname, userId}) {
 
     //드롭다운
 
@@ -44,11 +44,11 @@ export default function UserName({userNickname}) {
         </div>
 
 <div>
-{isview_profile_modal && <Profile closeModal = {setIsview_profile_modal}/>}
+{isview_profile_modal && <Profile closeModal = {setIsview_profile_modal} userId = {userId}/>}
 </div>
 
 <div>
-{isview_report_modal && <Report closeModal = {setIsview_report_modal}/>}
+{isview_report_modal && <Report closeModal = {setIsview_report_modal} reporteeId = {userId}/>}
 </div>
 
     </div>

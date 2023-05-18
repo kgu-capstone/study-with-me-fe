@@ -1,7 +1,7 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useEffect, useState } from 'react'
 import styles from '../../css/StudyWork.module.css';
 import Avatar from "boring-avatars";
-
+import parse from 'html-react-parser';
 
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -27,17 +27,52 @@ import { error, event } from 'jquery';
 
 
 export default function ByWeek(){
-  //접었다 펴기
-  const handleFold = () =>{
-    if(document.getElementsByClassName(`${styles.byweek_each_content_contianer}`)[0].style.display == 'none'){ //접혀있을 때 // 데이터받아올 때 해당 배열값으로 배열 수정필요
-      document.getElementsByClassName(`${styles.byweek_each_content_contianer}`)[0].style.display = 'block';
-    }else{ //펼쳐져있을 때
-      document.getElementsByClassName(`${styles.byweek_each_content_contianer}`)[0].style.display = 'none';
-    }
-    //두번클릭해야하는 오류 수정 필요
 
+//// 스터디 불러오기 ////
+const [weekInfo, setWeekInfo] = useState([]);
+
+useEffect(() => {
+  authApi.get(`studies/${studyId}/weeks`)
+  .then((response) => {
+    console.log(response.data.weeks);
+    setWeekInfo(response.data.weeks);
+
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+
+}, [])
+
+
+// 처음에 불러올 때 메뉴 모두 닫힌상태로 만들기
+const [weekfoldcss, setWeekFoldcss] = useState([]);
+
+useEffect(() => {
+  let tempFoldListcss = [];
+  for(let i = 0; i < weekInfo.length; i++){
+    tempFoldListcss[i] = `${styles.byweek_each_content_contianer_none}`
   }
 
+  setWeekFoldcss(tempFoldListcss)
+}, [weekInfo] )
+
+// 클릭하면 펼치거나 접기
+const handleFold = (index) =>{
+  let tempFoldListcss = [...weekfoldcss];
+  if(tempFoldListcss[index] == ( `${styles.byweek_each_content_contianer_none}`)){
+    tempFoldListcss[index] = ( `${styles.byweek_each_content_contianer_block}`)
+  }else{
+    tempFoldListcss[index] = (`${styles.byweek_each_content_contianer_none}`)
+  }
+
+  setWeekFoldcss(tempFoldListcss)
+}
+
+
+  //// 글쓰기 ////
+
+// 글쓰기 펼치기
   const [viewWriteByweek, setViewWriteByweek] = useState(`${styles.byweek_write_contianer_none}`);
   const [writeOrCloseByweek, setWriteOrCloseByweek] = useState('+ 새 스터디')
   const [isWriteByweek, setIsWriteByweek] = useState(false);
@@ -165,19 +200,22 @@ registerLocale("ko", ko);
 
 
 //파일첨부
+
+
 const handleFileUpload = (e) => {
-  const files = document.getElementById("fileupload").files[0];
-  fileNames = files
-  // setFileNames(files);
+  e.preventDefault();
+
+  const file = e.target.files[0];
+  setFiles([...files, {uploadFile: file}]);
 }
 
 
 
 //업로드
 const studyId = 3;
-let week = 2;
+let week = 5;
 
-let fileNames;
+let [files, setFiles] = useState([]);
 
 const [byweekInputTitle, setByweekInputTitle] = useState('');
 const [byweekInputContent, setByweekInputContent] = useState('');
@@ -188,11 +226,11 @@ const [inputAutoAttendance, setInputAutoAttendance] = useState(true);
 
 
 
-
 const handleStudyUpload = () => {
   const fileData = new FormData();
 
-  Object.values(fileData).forEach((file) => fileData.append("files", file));
+  // Object.values(fileNames).forEach((file) => fileData.append("files", file));
+  fileData.append("files", files.length && files[0].uploadFile);
   fileData.append("title", byweekInputTitle);
   fileData.append("content", byweekInputContent);
   fileData.append("startDate", moment(startDate).format("YYYY-MM-DDTHH:mm"));
@@ -218,6 +256,14 @@ const handleStudyUpload = () => {
   }).catch((error) => {
     console.log(error);
   })
+}
+
+
+
+
+//첨부파일 열기
+const openAttach = (attach, attachName) => {
+  window.open(attach, attachName);
 }
 
 
@@ -314,7 +360,7 @@ const handleStudyUpload = () => {
                     onChange={(e) => handleFileUpload(e)} 
                     multiple></input>
                   <label htmlFor='fileupload' className={`${styles.byweek_file_attech_button_label}`} >파일첨부</label>
-                  <p>{fileNames}</p>
+                  {/* <p>{fileNames}</p> */}
                 </div>
               </div>
 
@@ -353,6 +399,110 @@ const handleStudyUpload = () => {
             </div>
 
 
+              {
+                weekInfo.map((item, index) => {
+                  return(
+                    <>
+                      <div className={`${styles.byweek_each_contianer}`}>
+                        <div className={`${styles.byweek_each_title} ${styles.regular_24}`} onClick={() => handleFold(index)}>
+                            {item.title}
+                          </div>
+                          <div className={`${weekfoldcss[index]}`}>
+                            {/* 내용 */}
+                            <div className={`${styles.byweek_each_content} ${styles.regular_16}`}>
+                              {parse(item.content)}
+                            </div>
+
+                            {/* 첨부파일*/}
+                            <div className={`${styles.byweek_each_attach_list}`}>
+                              <p className={`${styles.byweek_each_attach_title}`}>첨부</p>
+                              {
+                                item.attachments.map((attachs, attachsIndex) => {
+                                  return(
+                                    <>
+                                      <p className={`${styles.bywee_each_attachs}`}
+                                        onClick={() => openAttach(attachs, attachs.split('/')[4].split('-').slice(-1))}
+                                      >
+                                        {/* 파일 이름만 골라내기*/}
+                                        {decodeURI(attachs.split('/')[4].split('-').slice(-1))}&nbsp;&nbsp;</p>
+                                    </>
+                                  )
+                                  
+                                })
+                              }
+                            </div>
+
+                            {/* 과제 입력창*/}
+                            {
+                              item.assignmentExists 
+                              ?
+                              <>
+                              <div>
+                                <div className={`${styles.byweek_each_homework_inputs}`}>
+                                  <buuton type='button' className={`${styles.byweek_each_homework_attach}`}>찾아보기..</buuton>              
+                                  <input type='text' className={`${styles.byweek_each_homework_input}`} placeholder='찾아보기를 눌러 파일을 첨부하거나, 링크를 입력하세요'></input>
+                                  <buuton type='button' className={`${styles.byweek_each_homework_button}`}>과제 등록</buuton>              
+                                </div>
+
+                                {/* 과제들*/}
+                                <div className={`${styles.byweek_each_homework_contianer}`}>
+                                  <div className={`${styles.byweek_each_homework}`}>
+                                    <div className={`${styles.byweek_each_homework_profile}`}>
+                                        <Avatar
+                                          size={40}
+                                          name='닉넴'
+                                          variant="beam"
+                                          colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
+                                        />
+                                    </div>
+                                    <div className={`${styles.byweek_each_homework_nickname}`}>
+                                      <p>닉네임</p>
+                                    </div>
+                                    <div className={`${styles.byweek_each_homework_viewHomework}`}>
+                                      <p>과제보기</p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className={`${styles.byweek_each_homework_contianer}`}>
+                                  <div className={`${styles.byweek_each_homework}`}>
+                                    <div className={`${styles.byweek_each_homework_profile}`}>
+                                        <Avatar
+                                          size={40}
+                                          name='하이'
+                                          variant="beam"
+                                          colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
+                                        />
+                                    </div>
+                                    <div className={`${styles.byweek_each_homework_nickname}`}>
+                                      <p>닉네임</p>
+                                    </div>
+                                    <div className={`${styles.byweek_each_homework_viewHomework}`}>
+                                      <p>과제보기</p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </div>
+                              </>
+                              :
+                              <>
+                              
+                              </>
+
+
+                            
+
+
+
+                            }
+                            
+                          </div>
+                        </div>  
+                    
+                    </>
+                  )
+                })
+              }
 
             <div className={`${styles.byweek_each_contianer}`}>
             <div className={`${styles.byweek_each_title} ${styles.regular_24}`} onClick={() => handleFold()}>

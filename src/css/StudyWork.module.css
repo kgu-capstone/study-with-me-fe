@@ -586,6 +586,7 @@ body{
 }
 
 
+
 .byweek_isHomework_toggle{
     margin: 50px 0 0 30px;
 }
@@ -680,13 +681,22 @@ body{
     padding: 10px 30px;
 }
 
+.byweek_each_content img{
+    max-width: 100%;
+}
+
 .byweek_each_content_contianer{
     padding: 10px 30px;
 }
 
-.byweek_each_content_contianer{
+.byweek_each_content_contianer_none{
     display: none;
 }
+.byweek_each_content_contianer_block{
+    display: block;
+    margin: 10px 30px;
+}
+
 
 
 .byweek_each_attach_list{
@@ -696,6 +706,11 @@ body{
 .byweek_each_attach_title{
     color: #7D7D7D;
     margin: 0 25px 0 0;
+    
+}
+.bywee_each_attachs{
+    word-break: break-all;
+    cursor: pointer;
 }
 
 

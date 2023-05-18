@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { forwardRef, useState } from 'react'
 import styles from '../../css/StudyWork.module.css';
 import Avatar from "boring-avatars";
 
@@ -56,6 +56,79 @@ export default function ByWeek(){
     }
   }
 
+  // 날짜선택
+
+const CutomInputStart = forwardRef(({ value, onClick }, ref) => (
+  <button className={`${styles.byweek_period_input_start}`}  onClick={onClick} ref={ref}>
+    {startDate.getFullYear()}&nbsp;-&nbsp;
+
+    {/* 1의 자리수인 경우 앞에 0 붙이기*/}
+    {startDate.getMonth() < 10
+    ?
+    `0${startDate.getMonth()+1}`
+    :
+      startDate.getMonth()+1
+    }&nbsp;-&nbsp;
+
+    {startDate.getDate() < 10
+    ?
+      `0${startDate.getDate()}`
+    :
+      startDate.getDate()
+    }&nbsp;&nbsp;&nbsp;&nbsp;
+
+    {startDate.getHours() < 10
+    ?
+      `0${startDate.getHours()}`
+    :
+      startDate.getHours()
+    }:
+
+    {startDate.getMinutes() < 10
+    ?
+      `0${startDate.getMinutes()}`
+    :
+      startDate.getMinutes()
+    }
+  </button>
+));
+
+const CutomInputEnd = forwardRef(({ value, onClick }, ref) => (
+  <button className={`${styles.byweek_period_input_end}`}  onClick={onClick} ref={ref}>
+    {endDate.getFullYear()}&nbsp;-&nbsp;
+
+    {endDate.getMonth() < 10
+    ?
+    `0${endDate.getMonth()+1}`
+    :
+    endDate.getMonth()+1
+    }&nbsp;-&nbsp;
+
+    {endDate.getDate() < 10
+    ?
+      `0${endDate.getDate()}`
+    :
+    endDate.getDate()
+    }&nbsp;&nbsp;&nbsp;&nbsp;
+
+    {endDate.getHours() < 10
+    ?
+      `0${endDate.getHours()}`
+    :
+    endDate.getHours()
+    }:
+
+    {endDate.getMinutes() < 10
+    ?
+      `0${endDate.getMinutes()}`
+    :
+    endDate.getMinutes()
+    }
+  </button>
+));
+
+registerLocale("ko", ko);
+
 
   //글쓰기 에디터 관련
 
@@ -102,15 +175,14 @@ const handleFileUpload = (e) => {
 
 //업로드
 const studyId = 3;
-const week = 1;
+let week = 2;
 
 let fileNames;
 
 const [byweekInputTitle, setByweekInputTitle] = useState('');
 const [byweekInputContent, setByweekInputContent] = useState('');
-const [startDate, setStartDate] = useState(dayjs());
-const [endDate, setEndDate] = useState(dayjs());
-// const [endDate, setEndDate] = useState(dayjs().add(7,'day'));
+const [startDate, setStartDate] = useState(new Date());
+const [endDate, setEndDate] = useState(new Date());
 const [inputAssignmentExists, setInputAssignmentExists] = useState(true);
 const [inputAutoAttendance, setInputAutoAttendance] = useState(true);
 
@@ -123,11 +195,8 @@ const handleStudyUpload = () => {
   Object.values(fileData).forEach((file) => fileData.append("files", file));
   fileData.append("title", byweekInputTitle);
   fileData.append("content", byweekInputContent);
-
-
-
-  fileData.append("startDate", moment(startDate[0]).format("YYYY-MM-DDTHH:mm"));
-  fileData.append("endDate", moment(endDate[1]).format("YYYY-MM-DDTHH:mm"));
+  fileData.append("startDate", moment(startDate).format("YYYY-MM-DDTHH:mm"));
+  fileData.append("endDate", moment(endDate).format("YYYY-MM-DDTHH:mm"));
   fileData.append("assignmentExists", inputAssignmentExists);
   fileData.append("autoAttendance", inputAutoAttendance);
 
@@ -145,23 +214,13 @@ const handleStudyUpload = () => {
     "Content-Type" : `multipart/form-data;`
   }}
   ).then((response) => {
-    // window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`;
+    window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`;
   }).catch((error) => {
     console.log(error);
   })
 }
 
-const handleStartDate = (value) => {
-  const temp = value.format()
-  setStartDate(temp)
-}
 
-const handleEndDate = (value) => {
-  const temp = value.format()
-  setEndDate(temp)
-}
-
-registerLocale("ko", ko);
 
     return (
           <div className={`${styles.right_container}`}>
@@ -175,19 +234,6 @@ registerLocale("ko", ko);
                 </div>
                 <div className={`${styles.byweek_period_input_contianer}`}>
                   <div>
-
-                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']}> */}
-<DatePicker
-      selectsRange={true}
-      startDate={startDate}
-      endDate={endDate}
-      onChange={(update) => {
-        setDateRange(update);
-      }}
-      withPortal
-    />
-
                       <DatePicker 
                       locale="ko"
                       dateFormat="yyyy-mm-dd'T'HH:mm"
@@ -195,32 +241,27 @@ registerLocale("ko", ko);
                       // endDate={endDate}
                       className="input-datepicker" 
                       placeholderText="시작 날짜" 
-                      // className={`${styles.byweek_period_input_start}`} 
+                      
+                      customInput={<CutomInputStart />}
                       label={'시작 날짜'} 
-                      // onChange={(newValue) => setStartDate(newValue)}
-                      selectsRange
-                      inline
+                      onChange={(newValue) => setStartDate(newValue)}
+                      showTimeSelect
                       />
-                    {/* </DemoContainer>
-                  </LocalizationProvider> */}
                   </div>
 
                   <div className={`${styles.byweek_period_tilde_contianer}`}>
                     <p className={`${styles.byweek_period_tilde}`}>~</p>
                   </div>
                   <div>
-                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']}> */}
                       <DatePicker
                       locale={ko}
                       dateFormat="yyyy-mm-dd'T'HH:mm"
                       className="input-datepicker"
                       placeholderText="종료 날짜"
-                      // className={`${styles.bywek_period_input_start}`} 
-                      
-                      label={'종료 날짜'} value={endDate} onChange={(newValue) => setEndDate(newValue)}/>
-                    {/* </DemoContainer>
-                  </LocalizationProvider> */}
+                      customInput={<CutomInputEnd/>}
+                      label={'종료 날짜'} value={endDate} onChange={(newValue) => setEndDate(newValue)}
+                      showTimeSelect
+                      />
                   </div>
                 </div>
               </div>

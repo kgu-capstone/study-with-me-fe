@@ -8,6 +8,7 @@ import Foot from "../components/Foot";
 import { useState } from "react";
 
 function Main() {
+  const [selectedOption, setSelectedOption] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [studies, setStudies] = useState([
     // 스터디 데이터 예시
@@ -60,6 +61,7 @@ function Main() {
               sub1="온/오프라인 전체"
               sub2="온라인만"
               sub3="오프라인만"
+              selectedOption={selectedOption} // 현재 선택된 값 전달
               className="some-area"
             />
             <DropDownSort
@@ -67,6 +69,7 @@ function Main() {
               sub1="모집 최신순"
               sub2="찜 많은 순"
               sub3="리뷰많은순"
+              selectedOption={selectedOption}
               className="some-area"
             />
           </span>

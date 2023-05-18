@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { SelectBOX } from "../SelectBOX";
+import React, { useEffect, useState, useRef } from "react";
+import { selectBOX } from "../selectBOX";
 
 const RealEstate = () => {
   useEffect(() => {
-    SelectBOX(); // 시/도/군/구 selectBOX 생성함수를 컴포넌트가 로드 되자마자 실행해준다.
+    selectBOX(); // 시/도/군/구 selectBOX 생성함수를 컴포넌트가 로드 되자마자 실행해준다.
   }, []);
 
   return (

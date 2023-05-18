@@ -24,6 +24,7 @@ import ko from "date-fns/locale/ko";
 
 import { authApi } from '../../services/api';
 import { error, event } from 'jquery';
+import UserName from '../UserName';
 
 
 export default function ByWeek(){
@@ -199,8 +200,8 @@ registerLocale("ko", ko);
 }
 
 
-//파일첨부
-
+// 파일첨부 - 글쓰기
+let [files, setFiles] = useState([]);
 
 const handleFileUpload = (e) => {
   e.preventDefault();
@@ -209,13 +210,23 @@ const handleFileUpload = (e) => {
   setFiles([...files, {uploadFile: file}]);
 }
 
+// 파일첨부 - 과제
+let [homeworksFiles, setHomeworksFiles] = useState([]);
 
+const handleHomworkUpload = (e) => {
+
+ 
+  e.preventDefault();
+
+  const file = e.target.files[0];
+  setHomeworksFiles([...homeworksFiles, {uploadFile: file}]);
+}
 
 //업로드
 const studyId = 3;
 let week = 5;
 
-let [files, setFiles] = useState([]);
+
 
 const [byweekInputTitle, setByweekInputTitle] = useState('');
 const [byweekInputContent, setByweekInputContent] = useState('');
@@ -229,7 +240,7 @@ const [inputAutoAttendance, setInputAutoAttendance] = useState(true);
 const handleStudyUpload = () => {
   const fileData = new FormData();
 
-  // Object.values(fileNames).forEach((file) => fileData.append("files", file));
+  console.log(files[0].uploadFile);
   fileData.append("files", files.length && files[0].uploadFile);
   fileData.append("title", byweekInputTitle);
   fileData.append("content", byweekInputContent);
@@ -259,13 +270,67 @@ const handleStudyUpload = () => {
 }
 
 
-
-
 //첨부파일 열기
 const openAttach = (attach, attachName) => {
   window.open(attach, attachName);
 }
 
+
+
+
+// 과제 제출 타입
+const [homeworkTypeOpen, setHomeworkTypeOpen] = useState(false);
+
+const [homeworkType, setHomeworkType] = useState('file');
+
+// 과제제출 api 파일
+const handleHomeWorkUplaodFile = () => {
+  const fileData = new FormData();
+
+  fileData.append("file", homeworksFiles.length && homeworksFiles[0].uploadFile);
+  fileData.append("type", homeworkType);
+
+  for (const key of fileData.keys()){
+    console.log(key);
+  }
+  for (const value of fileData.values()){
+    console.log(value);
+  }
+  console.log(fileData);
+
+  authApi.post(`studies/${studyId}/weeks/${week}/assignment`,
+  fileData,
+  {headers: {
+    "Content-Type" : `multipart/form-data;`
+  }}
+  ).then((response) => {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`;
+  }).catch((error) => {
+    console.log(error);
+  })
+
+}
+
+// 과제제출 api 링크
+const [homeworkLink, setHomeworkLink] = useState('');
+
+const handleHomeWorkUplaodLink = (week) => {
+  const fileData = new FormData();
+  
+  fileData.append("type", homeworkType);
+  fileData.append("link", homeworkLink);
+
+  authApi.post(`studies/${studyId}/weeks/${week}/assignment`,
+  fileData,
+  {headers: {
+    "Content-Type" : `multipart/form-data;`
+  }}
+  ).then((response) => {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`;
+  }).catch((error) => {
+    console.log(error);
+  })
+}
 
 
     return (
@@ -414,7 +479,10 @@ const openAttach = (attach, attachName) => {
                             </div>
 
                             {/* 첨부파일*/}
-                            <div className={`${styles.byweek_each_attach_list}`}>
+                            {
+                              item.attachments.length > 0
+                              ?
+                              <div className={`${styles.byweek_each_attach_list}`}>
                               <p className={`${styles.byweek_each_attach_title}`}>첨부</p>
                               {
                                 item.attachments.map((attachs, attachsIndex) => {
@@ -431,6 +499,11 @@ const openAttach = (attach, attachName) => {
                                 })
                               }
                             </div>
+                              :
+                              <></>
+
+                            }
+                            
 
                             {/* 과제 입력창*/}
                             {
@@ -439,48 +512,106 @@ const openAttach = (attach, attachName) => {
                               <>
                               <div>
                                 <div className={`${styles.byweek_each_homework_inputs}`}>
-                                  <buuton type='button' className={`${styles.byweek_each_homework_attach}`}>찾아보기..</buuton>              
-                                  <input type='text' className={`${styles.byweek_each_homework_input}`} placeholder='찾아보기를 눌러 파일을 첨부하거나, 링크를 입력하세요'></input>
-                                  <buuton type='button' className={`${styles.byweek_each_homework_button}`}>과제 등록</buuton>              
+                                  
+                                    
+                                    {/* 타입 버튼을 열였느냐 */}
+                                    {homeworkTypeOpen
+                                    ?
+                                    <>  
+                                      <div onClick={() => setHomeworkTypeOpen(!homeworkTypeOpen)} className={`${styles.byweek_each_homework_type_select_ON}`}>
+                                      {homeworkType == 'file'
+                                        ?
+                                        '파일'
+                                        :
+                                        '링크'
+                                      }
+                                        <div className={`${styles.byweek_each_homework_type_contianer}`}>
+                                          <div onClick={() => setHomeworkType('file')} 
+                                            className={`${styles.byweek_each_homework_type_file}`}>
+                                            파일</div>
+                                          <div onClick={() => setHomeworkType('link')}
+                                            className={`${styles.byweek_each_homework_type_link}`}
+                                            >링크</div>
+                                        </div>
+                                      </div>
+                                    </>
+                                      
+                                  : <>
+                                      <div onClick={() => setHomeworkTypeOpen(!homeworkTypeOpen)} className={`${styles.byweek_each_homework_type_select}`}>
+                                      {homeworkType == 'file'
+                                        ?
+                                        '파일'
+                                        :
+                                        '링크'
+                                      }
+                                      </div>
+                                    </>
+                                  
+                                  }
+
+                                  
+                                  {
+                                    homeworkType == 'file'
+                                    ?
+                                    // 파일을 선택했다면 
+                                    <>
+                                       <input type='file' id='homeworkupload' className={`${styles.byweek_file_homeworkAttach_button}`} 
+                                          onChange={(e) => handleHomworkUpload(e)} 
+                                          multiple></input>
+                                        <label htmlFor='homeworkupload' className={`${styles.byweek_file_homeworkAttach_button_label}`} >파일첨부</label>
+
+
+                                        <input type='text' className={`${styles.byweek_each_homework_input_fileON}`}  disabled></input>
+                                        <button type='button' className={`${styles.byweek_each_homework_button}`}
+                                        onClick={()=>handleHomeWorkUplaodFile(item.week)}
+                                      >과제 등록</button>       
+                                    </>
+                                    :
+                                    // 링크를 선택했다면
+                                    <>
+                                      <input type='text' className={`${styles.byweek_each_homework_input}`} value={homeworkLink} onChange={(e) => setHomeworkLink(e.target.value)}></input>
+                                      <button type='button' className={`${styles.byweek_each_homework_button}`}
+                                      onClick={()=>handleHomeWorkUplaodLink(item.week)}
+                                    >과제 등록</button> 
+                                   
+                                    </>
+                                  }
+                                    
+                                  
+                                    
                                 </div>
 
                                 {/* 과제들*/}
-                                <div className={`${styles.byweek_each_homework_contianer}`}>
-                                  <div className={`${styles.byweek_each_homework}`}>
-                                    <div className={`${styles.byweek_each_homework_profile}`}>
-                                        <Avatar
-                                          size={40}
-                                          name='닉넴'
-                                          variant="beam"
-                                          colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
-                                        />
-                                    </div>
-                                    <div className={`${styles.byweek_each_homework_nickname}`}>
-                                      <p>닉네임</p>
-                                    </div>
-                                    <div className={`${styles.byweek_each_homework_viewHomework}`}>
-                                      <p>과제보기</p>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className={`${styles.byweek_each_homework_contianer}`}>
-                                  <div className={`${styles.byweek_each_homework}`}>
-                                    <div className={`${styles.byweek_each_homework_profile}`}>
-                                        <Avatar
-                                          size={40}
-                                          name='하이'
-                                          variant="beam"
-                                          colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
-                                        />
-                                    </div>
-                                    <div className={`${styles.byweek_each_homework_nickname}`}>
-                                      <p>닉네임</p>
-                                    </div>
-                                    <div className={`${styles.byweek_each_homework_viewHomework}`}>
-                                      <p>과제보기</p>
-                                    </div>
-                                  </div>
-                                </div>
+                                {
+                                  item.submits.map((submit, submitindex) => {
+                                    return(
+                                      <>
+                                      <div className={`${styles.byweek_each_homework_contianer}`}>
+                                        <div className={`${styles.byweek_each_homework}`}>
+                                          <div className={`${styles.byweek_each_homework_profile}`}>
+                                              <Avatar
+                                                size={40}
+                                                name={submit.participant.nickname}
+                                                variant="beam"
+                                                colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
+                                              />
+                                          </div>
+                                          <div className={`${styles.byweek_each_homework_nickname_container}`}>
+                                            <div className={`${styles.byweek_each_homework_nickname}`}><UserName userNickname={submit.participant.nickname} userId={submit.participant.id} /></div>
+                                          </div>
+                                          <div className={`${styles.byweek_each_homework_viewHomework}`}>
+                                            <p onClick={() => window.open(submit.submitLink)}>과제보기</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      </>
+
+                                    )
+                                  })
+                                }
+                                
+                                
+                              
 
                               </div>
                               </>
@@ -504,72 +635,7 @@ const openAttach = (attach, attachName) => {
                 })
               }
 
-            <div className={`${styles.byweek_each_contianer}`}>
-            <div className={`${styles.byweek_each_title} ${styles.regular_24}`} onClick={() => handleFold()}>
-                3주차 3월 8일 스터디
-              </div>
-              <div className={`${styles.byweek_each_content_contianer}`}>
-                {/* 내용 */}
-                <div className={`${styles.byweek_each_content} ${styles.regular_16}`}>
-                  3주차 스터디 공지드립니다.<br/>
-                  첨부파일 작성하셔서 가지고 오시면 됩니다.<br/>
-                  이번 스터디는 강남역 스터디룸에서 진행합니다.<br/>
-                  3월 8일 18:00 까지 늦지 않게 도착해주시기 바랍니다.<br/>
-                  <img src={process.env.PUBLIC_URL + '/img/example-image.svg'}/>
-                </div>
-
-                {/* 첨부파일*/}
-                <div className={`${styles.byweek_each_attach_list}`}>
-                  <p className={`${styles.byweek_each_attach_title}`}>첨부</p>
-                  <p>문제.txt &nbsp;&nbsp;예시.hwp</p>
-                </div>
-
-                {/* 과제 입력창*/}
-                <div className={`${styles.byweek_each_homework_inputs}`}>
-                  <buuton type='button' className={`${styles.byweek_each_homework_attach}`}>찾아보기..</buuton>              
-                  <input type='text' className={`${styles.byweek_each_homework_input}`} placeholder='찾아보기를 눌러 파일을 첨부하거나, 링크를 입력하세요'></input>
-                  <buuton type='button' className={`${styles.byweek_each_homework_button}`}>과제 등록</buuton>              
-                </div>
-
-                {/* 과제들*/}
-                <div className={`${styles.byweek_each_homework_contianer}`}>
-                  <div className={`${styles.byweek_each_homework}`}>
-                    <div className={`${styles.byweek_each_homework_profile}`}>
-                        <Avatar
-                          size={40}
-                          name='닉넴'
-                          variant="beam"
-                          colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
-                        />
-                    </div>
-                    <div className={`${styles.byweek_each_homework_nickname}`}>
-                      <p>닉네임</p>
-                    </div>
-                    <div className={`${styles.byweek_each_homework_viewHomework}`}>
-                      <p>과제보기</p>
-                    </div>
-                  </div>
-                </div>
-                <div className={`${styles.byweek_each_homework_contianer}`}>
-                  <div className={`${styles.byweek_each_homework}`}>
-                    <div className={`${styles.byweek_each_homework_profile}`}>
-                        <Avatar
-                          size={40}
-                          name='하이'
-                          variant="beam"
-                          colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
-                        />
-                    </div>
-                    <div className={`${styles.byweek_each_homework_nickname}`}>
-                      <p>닉네임</p>
-                    </div>
-                    <div className={`${styles.byweek_each_homework_viewHomework}`}>
-                      <p>과제보기</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>                        
+                    
           </div>
     )
   

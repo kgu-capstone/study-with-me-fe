@@ -8,14 +8,14 @@ import "@yaireo/tagify/dist/tagify.css" // Tagify CSS
 import { authApi, defaultapi } from '../services/api';
 import StudyProfileChoice from '../components/StudyProfileChoice';
 import { useLocation } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 export default function StudyRevice() {
 
   // 넘어올 정보
   const location = useLocation()
-  const studyId = 3
-  // const studyId = location.state?.studyId
-
+  const stateStudyId = location.state?.studyId
+  const stateStudyName = location.state?.studyName
 
 
   /// 화면 뜰 떄 ///
@@ -30,9 +30,6 @@ export default function StudyRevice() {
     defaultapi.get(`categories`)
     .then((response) => {
         setCategory_list(response.data.result);
-
-
-        //usesate넣기 전 임시 배열
 
         for(let i = 0; i < category_list.length; i++){ //check박스
             category_list[i].isChecked = false;
@@ -51,11 +48,18 @@ export default function StudyRevice() {
     
     useEffect(() => {
       //스터디 정보 조회
-      authApi(`studies/${studyId}`)
+      authApi(`studies/${stateStudyId}`)
       .then((response) => {
+
+        console.log(response.data);
+
         if(response.data.recruitmentStatus == '모집중'){
+          setRecruitOnclass(`${styles.recruit_toggle_on_checked}`);
+          setRecruitOffclass(`${styles.recruit_toggle_off_label}`);
           setStudyRecruit(true);
         }else{
+          setRecruitOnclass(`${styles.recruit_toggle_on_label}`);
+          setRecruitOffclass(`${styles.recruit_toggle_off_checked}`);
           setStudyRecruit(false);
         }
         
@@ -397,10 +401,11 @@ const handleCity = (e) => {
         }
       }
 
-
+      console.log(studyRecruit);
+      console.log(data);
       
       //api 발송
-      authApi.patch(`studies/${studyId}`, data)
+      authApi.patch(`studies/${stateStudyId}`, data)
       .then((response) => {
         
         alert('스터디를 성공적으로 수정했습니다.')
@@ -422,9 +427,8 @@ const handleCity = (e) => {
   // 스터디 종료
   const handleFinishStudy = () => {
     if(window.confirm('정말 종료하시겠습니까?')){
-        authApi.delete(`studies/${studyId}`)
+        authApi.delete(`studies/${stateStudyId}`)
         .then((response) => {
-          console.log(response);
           alert('스터디를 종료하였습니다.')
           window.location.href = `${process.env.REACT_APP_BASE_URL}`;
         }).catch((e)=>{
@@ -448,7 +452,7 @@ const handleCity = (e) => {
           </div>
 
           <div>
-            <p className={styles.title}>스터디 수정</p>
+            <p className={styles.title}><NavLink to='/StudyWork' state={{studydId : stateStudyId}}>{stateStudyName}</NavLink> 수정</p>
           </div>
 
           <div>

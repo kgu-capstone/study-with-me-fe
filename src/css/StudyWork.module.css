@@ -52,6 +52,8 @@ body{
 
 /* 상단 스터디 정보 영역*/
 .infoes{
+    margin: 0 auto;
+    width: 1024px;
 }
 
 .info_container{
@@ -98,8 +100,20 @@ body{
     float: right;
     position: absolute;
     right: 38px;
-    bottom: 8px;
+    bottom: 0px;
 }
+
+.applicantList_button{
+    text-decoration: none;
+    color: #FF5037;
+}
+.studyRevice_button{
+    text-decoration: none;
+}
+.info_button{
+    margin: 5px;
+}
+
 
 /* 여기까지 상단 스터디 정보 영역*/
 
@@ -183,6 +197,9 @@ body{
 .announce_write_title{
     margin: 25px 0 0 30px;
 }
+.announce_revice_title{
+    margin: 0 0 0 30px;
+}
 
 
 
@@ -236,7 +253,9 @@ body{
 
 
 
-
+.announce_contianer{
+    width: 768px;
+}
 
 
 .announce_each_contianer{
@@ -255,28 +274,63 @@ body{
 .announce_each_content{
     padding: 10px 30px;
 }
+.announce_each_content img{
+    max-width: 100%;
+}
+
+
+/*공지사항 수정삭제버튼*/
+.announce_revice_contianer{
+    margin-top: 30px;
+    margin-left: 30px;
+    display: flex;
+    color: #7D7D7D;
+}
+.announce_revice{
+    margin-right: 15px;
+    cursor: pointer;
+}
+.announce_delete{
+    cursor: pointer;
+}
+
+
+
+
+
 
 .announce_each_commnet_continer{
     padding: 10px 30px;
 }
-
 .announce_each_comment_count{
-    padding: 50px 0 0 0;
+    padding: 20px 0 0 0;
 }
 
 .announce_each_comment_inputs{
-    padding: 18px 0;
+    margin: 18px 0;
+    /* border: 1px solid #C5C5C5; */
+    border-radius: 10px 0 0 10px;
+    display: flex;
 }
+
 
 .announce_each_comment_input{
     width: 630px;
+    height: auto;
+    border: 0;
     border: 1px solid #C5C5C5;
     border-radius: 10px 0 0 10px;
     font-size: 16px;
     padding: 13px;
-}
 
+    resize: none;
+}
+.announce_each_comment_input::-webkit-scrollbar{
+    display: none;
+}
 .announce_each_comment_button{
+    /* height: 100px; */
+    height: auto;
     border: 1px solid #FF5037;
     background-color: #FF5037;
     color: white;
@@ -285,6 +339,10 @@ body{
     padding: 13px;
 }
 
+.announce_each_comment_lists{
+    margin-bottom: 25px;
+
+}
 .announce_each_comment_list{
     display: flex;
     margin-top: 3px;
@@ -293,22 +351,69 @@ body{
 .announce_each_comment_list_profile{
     margin: 7px 0;
 }
-
-.announce_each_comment_list_contents{
-    margin: 0 0 0 20px;
+.announce_each_comment_top_container{
+    width: 635px;
+    display: flex;
+    justify-content: space-between;
+    
 }
-
+.announce_each_comment_list_contents{
+    margin: 0 0 20px 20px;
+}
+.announce_each_comment_nickname_contianer{
+    justify-content: space-between;
+}
 .announce_each_comment_list_nickname{
+    
     margin: 0 0 0 0;
 }
+.announce_each_comment_revice_container{
+    display: flex;
+    color: #7D7D7D;
+}
+.announce_each_comment_revice_button{
+    cursor: pointer;
+
+}
+.announce_each_comment_reviceOn_button{
+    cursor: pointer;
+}
+.announce_each_comment_reviceOff_button{
+    cursor: pointer;
+    margin-left: 15px;
+}
+.announce_each_comment_delete_button{
+    cursor: pointer;
+    margin-left: 15px;
+}
+
 
 .announce_each_comment_list_content{
     word-break: break-all;
-    margin: 12px 0 0 0;
+    margin: 5px 0 0 0;
+}
+.announce_each_comment_list_content_revice{
+    width: 100%;
+    word-break: break-all;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 13px;
+    resize: none;
+
+}
+.announce_each_comment_list_content_revice::-webkit-scrollbar{
+    display: none;
 }
 
-.announce_each_content_contianer{
-    display: none;
+
+.announce_each_content_contianer_none{
+    visibility: hidden;
+    height: 0vh;
+    
+}
+.announce_each_content_contianer_block{
+    visibility: visible;
 }
 
 /* 여기까지 공지사항 */

@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { selectBOX } from "../SelectBOX";
-
+import { SelectBOX } from "../SelectBOX";
 
 const RealEstate = (props) => {
   useEffect(() => {

@@ -5,20 +5,48 @@ import DropDownSort from "../components/DropDownSort";
 import RealEstate from "../components/RealEstate";
 import Card from "../components/Card";
 import Foot from "../components/Foot";
-import StudyDetail from "./StudyDetail";
+import { useState } from "react";
 
 function Main() {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [studies, setStudies] = useState([
+    // 스터디 데이터 예시
+    { id: 1, title: "English Study", category: "어학" },
+    { id: 2, title: "Interview Preparation", category: "면접" },
+    { id: 3, title: "Programming Study", category: "프로그래밍" },
+    { id: 4, title: "NCS", category: "인적성 & NCS" },
+    { id: 5, title: "Certificate", category: "자격증" },
+    { id: 6, title: "etc", category: "기타" },
+  ]);
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
+
+  // 필터링된 스터디 데이터 가져오기
+  const filteredStudies = selectedCategory
+    ? studies.filter((study) => study.category === selectedCategory)
+    : studies;
   return (
     <div>
       <div>
         <Ad />
         <div className="category-area">
-          <Category title="어학" />
-          <Category title="면접" />
-          <Category title="프로그래밍" />
-          <Category title="인적성 & NCS" />
-          <Category title="자격증" />
-          <Category title="기타" />
+          <Category title="어학" onClick={() => handleCategoryClick("어학")} />
+          <Category title="면접" onClick={() => handleCategoryClick("면접")} />
+          <Category
+            title="프로그래밍"
+            onClick={() => handleCategoryClick("프로그래밍")}
+          />
+          <Category
+            title="인적성 & NCS"
+            onClick={() => handleCategoryClick("인적성 & NCS")}
+          />
+          <Category
+            title="자격증"
+            onClick={() => handleCategoryClick("자격증")}
+          />
+          <Category title="기타" onClick={() => handleCategoryClick("기타")} />
         </div>
 
         <div className="sort-area">
@@ -43,21 +71,17 @@ function Main() {
             />
           </span>
         </div>
-
+        {/* 필터링된 스터디 데이터를 이용하여 카드 생성 */}
         <div className="card-area">
-          <div></div>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {filteredStudies.slice(0, 4).map((study) => (
+            <Card key={study.id} title={study.title} />
+          ))}
         </div>
 
         <div className="card-area">
-          <div></div>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {filteredStudies.slice(0, 4).map((study) => (
+            <Card key={study.id} title={study.title} />
+          ))}
         </div>
 
         <Foot />

@@ -1,8 +1,7 @@
 // selectBOX.js
-
 import $ from "jquery";
 
-export function SelectBOX() {
+export function selectBOX() {
   // 시/도/군/구 selectBOX 생성함수
   let area0 = [
     "시/도 선택",
@@ -280,15 +279,15 @@ export function SelectBOX() {
   let area16 = ["구/군 선택", "서귀포시", "제주시"];
 
   // 시/도 선택 박스 초기화
-  $("#sido1").each(function (i, item) {
-    if (i == 0) {
-      let $selsido = $(this);
-      $.each(eval(area0), function () {
-        $selsido.append("<option value='" + this + "'>" + this + "</option>");
-      });
-      $selsido.next().append("<option value=''>구/군 선택</option>");
-    }
+  let $selsido = $("#sido1");
+  let $selgugun = $("#gugun1");
+  $selsido.find("option").remove(); // 기존 옵션 제거
+
+  $.each(eval(area0), function (index, value) {
+    $selsido.append("<option value='" + value + "'>" + value + "</option>");
   });
+
+  $selsido.next().append("<option value=''>구/군 선택</option>");
 
   // 시/도 선택시 구/군 설정
   $("select[name^=sido]").change(function (e) {

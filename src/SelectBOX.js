@@ -1,7 +1,7 @@
-// selectBOX.js
+// SelectBOX.js
 import $ from "jquery";
 
-export function selectBOX() {
+export function SelectBOX(props) {
   // 시/도/군/구 selectBOX 생성함수
   let area0 = [
     "시/도 선택",

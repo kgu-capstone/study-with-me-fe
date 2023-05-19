@@ -32,7 +32,7 @@ a {
   display: flex;
   justify-content: center;
   padding: 30px;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .sort-area {
@@ -103,6 +103,7 @@ footer {
   margin-right: 20px;
   color: black;
   text-decoration: none;
+  display: flex;
 }
 .card:active {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16), 0 2px 14px rgba(0, 0, 0, 0.16);
@@ -110,9 +111,13 @@ footer {
 .card-body {
   height: 200px;
   text-align: center;
+  justify-content: center;
 }
 .card-title {
-  margin-top: 50px;
+  margin-top: 20px;
+}
+.card-text {
+  margin: 0px;
 }
 
 .heart {
@@ -231,3 +236,9 @@ input {
   margin-top: 5px;
   margin-bottom: 10px;
 }
+
+.study_card_img_setting {
+  width: 55px;
+  height: 55px;
+}
+

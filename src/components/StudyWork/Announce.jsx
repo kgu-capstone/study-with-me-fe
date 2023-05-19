@@ -91,7 +91,6 @@ export default function Announce(){
 
   
   // 글쓰기 에디터관련
-  const [flag, setFlag] = useState(false);
 
   const customUploadAdapter = (loader) => { // (2)
     return {
@@ -104,8 +103,7 @@ export default function Announce(){
 
                         authApi.post(`image`, formData)
                             .then((res) => {
-                                resolve({
-                                    // default: `${imgLink}/${res.data.filename}`
+                                resolve({                                  
                                     default: `${res.data.result}`
                                 });
                             })

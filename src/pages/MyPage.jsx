@@ -11,7 +11,8 @@ import Button from 'react-bootstrap/Button';*/
 
 function MyPage() {
 // 사용자 id get
-const memberId = localStorage.getItem("id")
+// const memberId = localStorage.getItem("id")
+const memberId = 6
 
 //const axios.get()
 let [memberNickname, setMemberNickname] = useState('');
@@ -34,7 +35,30 @@ useEffect(() => {
     .catch((error) => {
         console.log(error);
     })
-})
+}, [])
+
+// 참여중인 스터디 리스트 변수
+const [participateList, setParticipateList] = useState([]);
+
+// api 함수
+const my_participate = () => {
+    authApi.get(`members/${memberId}/studies/participate`)
+    .then((response) => {
+        setParticipateList(response.data.result); 
+        // return 부분에 participateList.map((item, index) => {return (<><div>item.name</div></> )}) 
+        // 나는 이런식으로 map을 돌려
+        // Announce.jsx 에 map을 엄청많이 사용했거든. 참고할 수 있을거야. (Announce가 좀 많이 복잡해져서 알아보기 힘들어지긴 했지만ㅎㅎ;;)
+
+        // 펼치고 접는거는 밑에 내용을 dislplay: none; 해놓고 클릭하면 css가 block으로 바뀌게 했어.
+        // <div>분리해서 제목이랑 펼쳤을 떄 나오는 내용이랑 분리하면 편할거야.
+
+        // !!읽고 나서 주석은 지워줘!!
+        
+    })
+    .catch((e) => {
+        console.log(e);
+    })
+}
         return(
 
             <><>
@@ -90,13 +114,13 @@ useEffect(() => {
                     </div>
                 
                 <div class="square"></div>
-                    <div>
+                    <div onClick={() => my_participate()}>
                         <label for='id' className='astudy'>활동중인 스터디</label>
                     </div>
                     <div>
                         <label for='id' className='astudyarrow'>^</label>
                     </div>
-                    <div className='astudyprof1'></div>
+                    <div className='astudyprof1'></div>                  
                     <div>
                         <label for='id' className='astudy1'>스터디 이름</label>
                     </div>

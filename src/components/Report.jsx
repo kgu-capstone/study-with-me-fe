@@ -5,11 +5,11 @@ import Avatar from "boring-avatars";
 
 export default function Report({closeModal, reporteeId}) {
 
-  const memberId = localStorage.getItem("id")
+
   let [memberNickname, setMemberNickname] = useState('');
 
   useEffect(() => {
-    authApi.get(`members/${memberId}`)
+    authApi.get(`members/${reporteeId}`)
     .then((response) => {
         setMemberNickname(response.data.nickname);
       })

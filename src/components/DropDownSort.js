@@ -3,6 +3,12 @@ import { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 
 const DropDownSort = (props) => {
+  const [selectedOption, setSelectedOption] = useState(props.title);
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    console.log("선택된 값:", option);
+  };
+
   return (
     <div>
       <div className="sort-area">
@@ -13,22 +19,34 @@ const DropDownSort = (props) => {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            {props.title}
+            {selectedOption}
           </button>
 
           <ul class="dropdown-menu">
             <li>
-              <a class="dropdown-item" href="#">
+              <a
+                class="dropdown-item"
+                href="#"
+                onClick={() => handleOptionSelect(props.sub1)}
+              >
                 {props.sub1}
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a
+                class="dropdown-item"
+                href="#"
+                onClick={() => handleOptionSelect(props.sub2)}
+              >
                 {props.sub2}
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a
+                class="dropdown-item"
+                href="#"
+                onClick={() => handleOptionSelect(props.sub3)}
+              >
                 {props.sub3}
               </a>
             </li>

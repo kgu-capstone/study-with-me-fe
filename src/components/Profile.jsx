@@ -2,9 +2,10 @@ import React, {Component, useEffect, useState} from 'react';
 import styles from '../css/Profile.module.css'
 import { authApi } from '../services/api';
 import Avatar from "boring-avatars";
+import ReactApexChart from "react-apexcharts"; 
 
-export default function Profile({closeModal}) {
-  const memberId = localStorage.getItem("id")
+export default function Profile({closeModal, userId}) {
+
   let [memberNickname, setMemberNickname] = useState('');
   let [memberEmail, setMemberEmail] = useState('');
   let [memberBirth, setMemberBirth] = useState('');
@@ -13,7 +14,7 @@ export default function Profile({closeModal}) {
   let [memberInterest, setMemberInterest] = useState('');
   
   useEffect(() => {
-      authApi.get(`members/${memberId}`)
+      authApi.get(`members/${userId}`)
       .then((response) => {
           setMemberNickname(response.data.nickname);
           setMemberEmail(response.data.email);
@@ -26,6 +27,58 @@ export default function Profile({closeModal}) {
           console.log(error);
       })
   })
+
+  const barData = {
+    series: [{
+      name: '출석',
+      data: [44]
+    }, {
+      name: '지각',
+      data: [44]
+    }, {
+      name: '결석',
+      data: [44]
+    }],
+    
+    options: {
+      chart: {
+
+        toolbar: {
+          show: false, 
+        },
+        type: 'bar',
+        height: 350,
+        stacked: true,
+        stackType: '100%'
+      },
+
+      legend: {
+        position: 'bottom'
+      },
+      responsive: [{
+        breakpoint: 480,
+      }],
+      plotOptions: {
+        bar: {  horizontal: true,
+        
+        }
+      },
+      title: {
+        text: '출석률',
+        align: 'center',
+      },
+      yaxis:{
+        show : false,
+      },
+      xaxis: {
+        axisBorder: { show: false },
+        axisTicks: { show: false },
+        labels: { show: false },
+      },
+    },
+  }
+
+
   return (
     
     <div className={styles.profile_container} onClick={() => closeModal(false)}>
@@ -48,7 +101,7 @@ export default function Profile({closeModal}) {
     <div className={styles.Alabele}>{memberNickname}</div>
     <div className={styles.Blabele}>{memberBirth}</div>
     <div className={styles.Clabele}>{memberGender}</div>
-    <div className={styles.Dlabele}>{memberRegion}</div>
+    <div className={styles.Dlabele}>{memberRegion.province} {memberRegion.city}</div>
     <div className={styles.Elabele}>{memberInterest}</div>
     
     <div className={styles.squareA}></div>
@@ -56,13 +109,22 @@ export default function Profile({closeModal}) {
     <div className={styles.squareB}></div>
     <div className={styles.bstudy}>20자 리뷰</div>
 
-    <div className={styles.percent}>출석률</div>
-    <div className={styles.graph}> 
-    <span>50%</span></div>
-
+    <div>
+    <div id="chart"><div className={styles.graph}> 
+        <ReactApexChart 
+            options={barData.options}
+            series={barData.series}
+            type="bar" 
+            
+        />
+    </div>
+</div>
+</div>
     </div>
     </div>
     
     
   )
 }
+   /* <div className={styles.graph}> 
+    <ChartComponent /> </div>*/

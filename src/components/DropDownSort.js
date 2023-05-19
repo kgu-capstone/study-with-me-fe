@@ -1,12 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { Dropdown } from "react-bootstrap";
+import "../css/Main.css";
 import { authApi } from "../services/api";
 import * as sortManage from "../sortManage";
 
 const DropDownSort = (props) => {
   const [selectedOption, setSelectedOption] = useState(props.title);
-
 
   const handleOptionSelect = (option, sort) => {
     props.setRecru_Sort(sort);
@@ -26,10 +25,6 @@ const DropDownSort = (props) => {
 
     setSelectedOption(option);
     props.setRecruitStatus(sort);
-
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    console.log("선택된 값:", option);
   };
 
   return (
@@ -50,11 +45,7 @@ const DropDownSort = (props) => {
               <a
                 class="dropdown-item"
                 href="#"
-
                 onClick={() => handleOptionSelect(props.sub1, props.sub1_API)}
-
-            
-
               >
                 {props.sub1}
               </a>
@@ -63,11 +54,7 @@ const DropDownSort = (props) => {
               <a
                 class="dropdown-item"
                 href="#"
-
                 onClick={() => handleOptionSelect(props.sub2, props.sub2_API)}
-
-              
-
               >
                 {props.sub2}
               </a>
@@ -76,11 +63,7 @@ const DropDownSort = (props) => {
               <a
                 class="dropdown-item"
                 href="#"
-
                 onClick={() => handleOptionSelect(props.sub3, props.sub3_API)}
-
-       
-
               >
                 {props.sub3}
               </a>
@@ -91,5 +74,4 @@ const DropDownSort = (props) => {
     </div>
   );
 };
-
-export default DropDownSort;
+export { DropDownSort };

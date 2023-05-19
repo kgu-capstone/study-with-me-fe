@@ -1,7 +1,7 @@
 import "../css/Main.css";
 import Ad from "../components/Ad";
 import Category from "../components/Category";
-import DropDownSort from "../components/DropDownSort";
+import { DropDownSort } from "../components/DropDownSort";
 import RealEstate from "../components/RealEstate";
 import Card from "../components/Card";
 import Foot from "../components/Foot";
@@ -13,24 +13,19 @@ import * as sortManage from "../sortManage";
 function Main() {
   const [studyList, setStudyList] = useState([]);
   useEffect(() => {
-    setStudyList(sortManage.sortManage());
-  }, [studyList]);
+    const studyData = sortManage.sortManage();
+    setStudyList(studyData);
+  }, []);
 
   const [province, setProvince] = useState("시/도");
   const [city, setCity] = useState("구/군");
   const [save_Sort_Status, setSaveSortStatus] = useState("date");
   const [save_Category_Status, setSaveCategoryStatus] = useState(1);
   const [recruitStatus, setRecruitStatus] = useState(null);
-
-import { useState } from "react";
-
-function Main() {
-
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [studies, setStudies] = useState([
     // 스터디 데이터 예시
-
     {
       id: 1,
       title: "English Study",
@@ -106,196 +101,142 @@ function Main() {
     },
   ]);
 
-
-    { id: 1, title: "English Study", category: "어학" },
-    { id: 2, title: "Interview Preparation", category: "면접" },
-    { id: 3, title: "Programming Study", category: "프로그래밍" },
-    { id: 4, title: "NCS", category: "인적성 & NCS" },
-    { id: 5, title: "Certificate", category: "자격증" },
-    { id: 6, title: "etc", category: "기타" },
-  ]);
-
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
-
 
   // 필터링된 스터디 데이터 가져오기
   const filteredStudies = selectedCategory
     ? studies.filter((study) => study.category === selectedCategory)
     : studies;
+
   return (
     <div>
-      <div>
-        <Ad />
-        <div className="category-area">
-
-          <Category
-            title="어학"
-            category_num={1}
-            sort_arrange={save_Sort_Status}
-            category_arrange={setSaveCategoryStatus}
-            recruit={recruitStatus}
-          />
-          <Category
-            title="면접"
-            category_num={2}
-            sort_arrange={save_Sort_Status}
-            category_arrange={setSaveCategoryStatus}
-            recruit={recruitStatus}
-          />
-          <Category
-            title="프로그래밍"
-            category_num={3}
-            sort_arrange={save_Sort_Status}
-            category_arrange={setSaveCategoryStatus}
-            recruit={recruitStatus}
-          />
-          <Category
-            title="인적성 & NCS"
-            category_num={4}
-            sort_arrange={save_Sort_Status}
-            category_arrange={setSaveCategoryStatus}
-            recruit={recruitStatus}
-          />
-          <Category
-            title="자격증"
-            category_num={5}
-            sort_arrange={save_Sort_Status}
-            category_arrange={setSaveCategoryStatus}
-            recruit={recruitStatus}
-          />
-          <Category
-            title="기타"
-            category_num={6}
-            sort_arrange={save_Sort_Status}
-            category_arrange={setSaveCategoryStatus}
-            recruit={recruitStatus}
-          />
-
-          <Category title="어학" onClick={() => handleCategoryClick("어학")} />
-          <Category title="면접" onClick={() => handleCategoryClick("면접")} />
-          <Category
-            title="프로그래밍"
-            onClick={() => handleCategoryClick("프로그래밍")}
-          />
-          <Category
-            title="인적성 & NCS"
-            onClick={() => handleCategoryClick("인적성 & NCS")}
-          />
-          <Category
-            title="자격증"
-            onClick={() => handleCategoryClick("자격증")}
-          />
-          <Category title="기타" onClick={() => handleCategoryClick("기타")} />
-
-        </div>
-
-        <div className="sort-area">
-          {recruitStatus == "off" ? (
-            <></>
-          ) : (
-            <span>
-              <RealEstate
-                className="some-area"
-                setProvince={setProvince}
-                setCity={setCity}
-              />
-            </span>
-          )}
-
-          <span className="test">
-            <DropDownSort
-              title="온/오프라인 전체"
-              sub1="온/오프라인 전체"
-              sub2="온라인만"
-              sub3="오프라인만"
-              selectedOption={selectedOption} // 현재 선택된 값 전달
+      <Ad />
+      {/* */}
+      <div className="category-area">
+        <Category
+          title="어학"
+          category_num={1}
+          sort_arrange={save_Sort_Status}
+          category_arrange={setSaveCategoryStatus}
+          recruit={recruitStatus}
+        />
+        <Category
+          title="면접"
+          category_num={2}
+          sort_arrange={save_Sort_Status}
+          category_arrange={setSaveCategoryStatus}
+          recruit={recruitStatus}
+        />
+        <Category
+          title="프로그래밍"
+          category_num={3}
+          sort_arrange={save_Sort_Status}
+          category_arrange={setSaveCategoryStatus}
+          recruit={recruitStatus}
+        />
+        <Category
+          title="인적성 & NCS"
+          category_num={4}
+          sort_arrange={save_Sort_Status}
+          category_arrange={setSaveCategoryStatus}
+          recruit={recruitStatus}
+        />
+        <Category
+          title="자격증"
+          category_num={5}
+          sort_arrange={save_Sort_Status}
+          category_arrange={setSaveCategoryStatus}
+          recruit={recruitStatus}
+        />
+        <Category
+          title="기타"
+          category_num={6}
+          sort_arrange={save_Sort_Status}
+          category_arrange={setSaveCategoryStatus}
+          recruit={recruitStatus}
+        />
+      </div>
+      {/* */}
+      <div className="sort-area">
+        {recruitStatus == "off" ? (
+          <></>
+        ) : (
+          <span>
+            <RealEstate
               className="some-area"
-              sub1_API={null}
-              sub2_API="on"
-              sub3_API="off"
-              fun={sortManage}
-              setRecru_Sort={setRecruitStatus}
-              save_Category_Status={save_Category_Status}
-              save_Sort_Status={save_Sort_Status}
-            />
-            <DropDownSort
-              title="모집 최신순"
-              sub1="모집 최신순"
-              sub2="찜 많은 순"
-              sub3="리뷰많은순"
-
-              sub1_API="date"
-              sub2_API="favorite"
-              sub3_API="review"
-
-              selectedOption={selectedOption}
-              className="some-area"
-              setRecru_Sort={setSaveSortStatus}
-              save_Category_Status={save_Category_Status}
-              save_Sort_Status={recruitStatus}
+              setProvince={setProvince}
+              setCity={setCity}
             />
           </span>
-        </div>
-        {/* 필터링된 스터디 데이터를 이용하여 카드 생성 */}
+        )}
 
-        {/* 스터디 이름, 스터디 소개 내용, 인원, 사진 */}
-        {/* {studyList.map((item) => {
-          return (
-            <div className="card-area">
-              <Card
-                key={item.id}
-                study_active={item.recruitmentStatus}
-                study_title={item.name}
-                study_explanation={item.description}
-                study_people={`${item.currentMembers} / ${item.maxMembers}`}
-                study_image={item.thumbnail}
-              />
-            </div>
-          );
-        })} */}
+        <span className="test">
+          <DropDownSort
+            title="온/오프라인 전체"
+            sub1="온/오프라인 전체"
+            sub2="온라인만"
+            sub3="오프라인만"
+            selectedOption={selectedOption} // 현재 선택된 값 전달
+            className="some-area"
+            sub1_API={null}
+            sub2_API="on"
+            sub3_API="off"
+            fun={sortManage}
+            setRecru_Sort={setRecruitStatus}
+            save_Category_Status={save_Category_Status}
+            save_Sort_Status={save_Sort_Status}
+          />
 
-        <div className="card-area">
-          {filteredStudies.slice(0, 4).map((study) => (
-            <Card
-              key={study.id}
-              title={study.title}
-              study_title={study.study_title}
-              study_explanation={study.study_explanation}
-              study_people={study.study_people}
-              study_image={study.study_image}
-            />
-
-        <div className="card-area">
-          {filteredStudies.slice(0, 4).map((study) => (
-            <Card key={study.id} title={study.title} />
-
-          ))}
-        </div>
-
-        <div className="card-area">
-
-          {filteredStudies.slice(4).map((study) => (
-            <Card
-              key={study.id}
-              title={study.title}
-              study_title={study.study_title}
-              study_explanation={study.study_explanation}
-              study_people={study.study_people}
-              study_image={study.study_image}
-            />
-
-          {filteredStudies.slice(0, 4).map((study) => (
-            <Card key={study.id} title={study.title} />
-
-          ))}
-        </div>
-
-        <Foot />
+          <DropDownSort
+            title="모집 최신순"
+            sub1="모집 최신순"
+            sub2="찜 많은 순"
+            sub3="리뷰많은순"
+            sub1_API="date"
+            sub2_API="favorite"
+            sub3_API="review"
+            selectedOption={selectedOption}
+            className="some-area"
+            setRecru_Sort={setSaveSortStatus}
+            save_Category_Status={save_Category_Status}
+            save_Sort_Status={recruitStatus}
+          />
+        </span>
       </div>
+      {/* sort area 끝 */}
+
+      {/* 스터디 카드 들어갈 공간 */}
+      <div className="card-area">
+        {filteredStudies.slice(0, 4).map((study) => (
+          <Card
+            key={study.id}
+            title={study.title}
+            study_title={study.study_title}
+            study_explanation={study.study_explanation}
+            study_people={study.study_people}
+            study_image={study.study_image}
+          />
+        ))}
+      </div>
+
+      <div className="card-area">
+        {filteredStudies.slice(4).map((study) => (
+          <Card
+            key={study.id}
+            title={study.title}
+            study_title={study.study_title}
+            study_explanation={study.study_explanation}
+            study_people={study.study_people}
+            study_image={study.study_image}
+          />
+        ))}
+      </div>
+
+      <Foot />
     </div>
-  );
+  ); // return 괄호인가/
 }
 
 export default Main;

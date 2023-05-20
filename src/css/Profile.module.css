@@ -160,6 +160,19 @@ main{
     
     }
 
+
+    .graph{
+        position:absolute;
+        left:220px;
+        top:250px;
+        padding:50px;
+        border-radius:40px;
+        width: 400px;
+        height: 300px;
+
+    }
+
+
     .squareB{
         top: 480px;
         left:425px;
@@ -171,22 +184,36 @@ main{
         border-width:1px;
         border-color:#C5C5C5;
         }
-        .bstudy{
+
+    .squareB_top{
+        display: flex;
+        margin-top: 16px;
+        
+    }
+
+    .bstudy{
         font-size:20px;
         position: relative;
-        width: 150px;
-        height: 21.07px;
-        top: 315px;
-        left:561px;
+        margin-left: 120px;
+        /* width: 150px;
+        height: 21.07px; */
+        /* top: 315px;
+        left:543px; */
         }
 
-    .graph{
-        position:absolute;
-        left:220px;
-        top:250px;
-        padding:50px;
-        border-radius:40px;
-        width: 400px;
-        height: 300px;
 
+    .peer_reivew_content_container{
+        margin: 18px 38px 20px 38px;
+    }
+    .peer_review_content{
+        margin: 10px 0;
+    }
+
+    .write_review{
+        padding: 5px;
+        margin-left: 10px;
+        /* margin-left: 683px;
+        margin-top: 298px; */
+        color: #7D7D7D;
+        cursor: pointer;
     }

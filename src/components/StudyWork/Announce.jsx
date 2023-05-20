@@ -12,12 +12,27 @@ import { useLocation } from 'react-router';
 
 export default function Announce(){
 
-  
+  // 사용자 id get
+const memberId = localStorage.getItem("id")
 
     // 넘어올 정보
     const location = useLocation()
     const studyId = 3
     // const studyId = location.state?.studyId
+
+
+    // 유저가 팀장인지 불러오기
+    const [isHost, setIsHost] = useState(false)
+
+    useEffect(() => {
+      authApi.get(`studies/${studyId}`)
+      .then((response) => {
+        if(memberId == response.data.host.id){
+          setIsHost(true)
+        }
+      })
+      .catch(err => console.log(err))
+    }, [])
 
 
   // 공지사항 조회
@@ -321,9 +336,15 @@ const announce_delete = (noticeId) => {
 
     return (
           <div className={`${styles.right_container}`}>
-            <div className={`${styles.announce_writebutton}`} onClick={() => handleAnnounceWrite()}>
+            {
+              isHost?
+              <div className={`${styles.announce_writebutton}`} onClick={() => handleAnnounceWrite()}>
               {writeOrCloseAnnounce}
             </div>
+              :
+              <></>
+            }
+            
             <div className={viewWriteAnnounce}>
               <div>
                 <div className={`${styles.announce_write_title}`}>
@@ -462,34 +483,40 @@ const announce_delete = (noticeId) => {
               </>
               }
               {/* 공지사항 수정 삭제 버튼*/}
-                
+              {isHost && item.writer.id == memberId
+              ?
               <div className={`${styles.announce_revice_contianer}`}>
-                {
-                  //수정상태일 때 버튼 변화
-                  announceReviceOnOff[index]
-                  ?
-                  <>
-                  <p className={`${styles.announce_revice}`}
-                    onClick={() => announceReviceOnoff(index, false, item.title, item.content)}
-                    >
-                    수정취소</p>
-                  <p className={`${styles.announce_revice}`}
-                  onClick={() => handleAnnounceRevice(item.id, announceReivceTitle[index], announceReivceContent[index])}
-                  > 
-                  수정완료</p>
-                  </>
-                  :
-                  <p className={`${styles.announce_revice}`}
-                    onClick={() => announceReviceOnoff(index, true, item.title, item.content)}
-                    >
-                    수정</p>
+              {
+                //수정상태일 때 버튼 변화
+                announceReviceOnOff[index]
+                ?
+                <>
+                <p className={`${styles.announce_revice}`}
+                  onClick={() => announceReviceOnoff(index, false, item.title, item.content)}
+                  >
+                  수정취소</p>
+                <p className={`${styles.announce_revice}`}
+                onClick={() => handleAnnounceRevice(item.id, announceReivceTitle[index], announceReivceContent[index])}
+                > 
+                수정완료</p>
+                </>
+                :
+                <p className={`${styles.announce_revice}`}
+                  onClick={() => announceReviceOnoff(index, true, item.title, item.content)}
+                  >
+                  수정</p>
 
-                }
-                  
-                  <p className={`${styles.announce_delete}`}
-                    onClick={() => announce_delete(item.id)}
-                    >삭제</p>
-                </div>
+              }
+                
+                <p className={`${styles.announce_delete}`}
+                  onClick={() => announce_delete(item.id)}
+                  >삭제</p>
+              </div>
+            :
+            <></>
+            }
+                
+              
 
 
                 <div className={`${styles.announce_each_commnet_continer}`}>

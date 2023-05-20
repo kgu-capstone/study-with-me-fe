@@ -193,6 +193,7 @@ const handleSignUp = (e) => {
             "gender" : `${gender}`,
             "province" : `${city}`,
             "city" : `${town}`,
+            "emailOptIn" : email_check,
             "categories" : categories,
         }
         const config = {"Content-Type": 'application/json'};
@@ -212,6 +213,21 @@ const handleSignUp = (e) => {
     }
 
 
+}
+
+
+// 이메일 수신 동의 체크박스 바꾸기
+const [email_check_css, setEmail_check_css] = useState('email_check_false.png');
+const [email_check , setEmail_check] = useState(false);
+
+const handleEmail_check = () => {
+    if(email_check_css == 'email_check_false.png'){
+        setEmail_check_css('email_check_true.png')
+        setEmail_check(true)
+    }else{
+        setEmail_check_css('email_check_false.png')
+        setEmail_check(false)
+    }
 }
 
 
@@ -343,6 +359,25 @@ const handleSignUp = (e) => {
                                 })}
                                 <p className={styles.validated_message}>{message_category}</p>                    
                             </div>
+                        </div>
+                        <div className={styles.floor}>
+                            <div className={styles.email_check_container}>
+                                <img className={styles.email_check_button} 
+                                    src={process.env.PUBLIC_URL + `/img/${email_check_css}`}
+                                    onClick={() => handleEmail_check()} 
+                                />                                                           
+                                이메일 수신동의
+                            </div>
+                            <div className={styles.email_check_info_container}>
+                                <img className={styles.email_info_circle} 
+                                    src={process.env.PUBLIC_URL + `/img/info-circle.svg`}                                     
+                                />
+                                스터디 관련 이메일이 발신됩니다.
+                            </div>
+                                
+                          
+                            
+                                                                      
                         </div>
                         <div className={styles.floor}>
                             <div className={styles.button_container}>

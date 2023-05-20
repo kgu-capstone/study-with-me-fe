@@ -1,7 +1,9 @@
 import Main from "./pages/Main";
 import { authApi, defaultapi } from "./services/api";
-export const sortManage = async(category, sort, type) =>{
+export const sortManage = async(category, sort, type, province, city) =>{
   let data = {}
+
+  console.log(category, sort, type, province, city);
 
   data["category"] = category
   data["sort"] = sort
@@ -9,9 +11,9 @@ export const sortManage = async(category, sort, type) =>{
   if(type != null){
     data["type"] = type
   }
-  if(type == 'offline'){ // 조건에 offline && 시/도를 선택했을 때도 추가해도 좋을 듯 해요
-    data["province"] = '지역선택 구현하면 어기에 시/도 props 넣기'
-    data["city"] = '지역선택 구현하면 어기에 구/군 props 넣기'
+  if(type == 'offline' && (province != '' || city == '')){
+    data["province"] = province
+    data["city"] = city
   }
 
   return await defaultapi.get(`studies`, {

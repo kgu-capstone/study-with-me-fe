@@ -173,3 +173,21 @@ input::placeholder{
 .validated_message{
     color: #FF5037;
 }
+
+.email_check_container{
+    text-align: center;
+}
+.email_check_button{
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.email_check_info_container{
+    margin-top: 15px;
+    text-align: center;
+    color: #7D7D7D;
+}
+.email_info_circle{
+    margin-right: 7px;
+
+}

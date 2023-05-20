@@ -5,13 +5,20 @@ import { Link, NavLink } from 'react-router-dom';
 
 export default function StudyInfo({studyId}) {
 
+  studyId = 3
+
+  // 사용자 id get
+  const memberId = localStorage.getItem("id")
+
   // 서버에서 스터디 info 받아오기
   const [studyThumbnail, setStudyThumbnail] = useState('');
   const [studyCategory, setStudyCategory] = useState('');
   const [studyName, setStudyName] = useState('');
   const [studyCurrentMembers, setStudyCurrentMembers] = useState(0);
   const [studyMaxMembers, setStudyMaxMembers] = useState(0);
-  studyId = 3
+
+  const [isHost, setIsHost] = useState(false)
+
 
   useEffect(() => {
     authApi.get(`studies/${studyId}`)
@@ -22,6 +29,9 @@ export default function StudyInfo({studyId}) {
       setStudyName(response.data.name);
       setStudyCurrentMembers(response.data.currentMembers);
       setStudyMaxMembers(response.data.maxMembers);
+      if(memberId == response.data.host.id){
+        setIsHost(true)
+      }
 
       document.getElementsByClassName(`${styles.info_container}`)[0].style.backgroundColor = `${response.data.thumbnailBackground}`;
     })
@@ -46,7 +56,8 @@ export default function StudyInfo({studyId}) {
                 <p className={`${styles.bold_24} ${styles.info_studyname}`}>{studyName}</p>
                 <p className={styles.regular_18}>{studyCurrentMembers} / {studyMaxMembers}</p>
               </div>
-              <div className={`${styles.info_right_buttons}`}>
+              {isHost ?
+              <div className={`${styles.info_right_buttons}`}>       
                 <NavLink to="/ApplicantList" studyId={studyId} className={styles.applicantList_button}>
                   <div>
                     <img  src={process.env.PUBLIC_URL + '/img/participate_button.png'}
@@ -60,9 +71,11 @@ export default function StudyInfo({studyId}) {
                   className={styles.info_button}/>스터디정보수정
                   </div>
                 </NavLink>
-
-                
-              </div>
+                </div>
+              :
+              <></>
+              }
+              
             </div>
           </div>
         </div>

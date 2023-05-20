@@ -377,6 +377,7 @@ const handleHomeWorkUplaodLink = (week) => {
                 </div>
               </div>
 
+         
 
               <div>
                 <div className={`${styles.byweek_write_title}`}>
@@ -463,7 +464,7 @@ const handleHomeWorkUplaodLink = (week) => {
 
             </div>
 
-
+            <div className={styles.byweek_contianer}>
               {
                 weekInfo.map((item, index) => {
                   return(
@@ -635,7 +636,7 @@ const handleHomeWorkUplaodLink = (week) => {
                 })
               }
 
-                    
+                    </div>
           </div>
     )
   

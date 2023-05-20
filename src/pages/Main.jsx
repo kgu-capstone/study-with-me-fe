@@ -11,19 +11,44 @@ import { authApi } from "../services/api";
 import * as sortManage from "../sortManage";
 
 function Main() {
-  const [studyList, setStudyList] = useState([]);
-  useEffect(() => {
-    const studyData = sortManage.sortManage();
-    setStudyList(studyData);
-  }, []);
-
+  
   const [province, setProvince] = useState("시/도");
   const [city, setCity] = useState("구/군");
   const [save_Sort_Status, setSaveSortStatus] = useState("date");
-  const [save_Category_Status, setSaveCategoryStatus] = useState(1);
+  const [save_Category_Status, setSaveCategoryStatus] = useState(3);
   const [recruitStatus, setRecruitStatus] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+
+
+  const [studyList, setStudyList] = useState([]);
+  const getData = () => {
+    sortManage.sortManage(save_Category_Status, save_Sort_Status, recruitStatus).then((list) => {   
+      setStudyList(list)
+    })
+  }
+
+  useEffect(() => {
+    getData();
+
+  }, []);
+
+
+  useEffect(() => {
+    getData();
+
+  }, [save_Category_Status]);
+
+  useEffect(() => {
+    getData();
+
+  }, [save_Sort_Status]);
+
+  useEffect(() => {
+    getData();
+
+  }, [recruitStatus]);
+
   const [studies, setStudies] = useState([
     // 스터디 데이터 예시
     {
@@ -208,6 +233,21 @@ function Main() {
       {/* sort area 끝 */}
 
       {/* 스터디 카드 들어갈 공간 */}
+      {studyList && studyList.map((item, index) => {
+        return(
+        <div className="card-area">
+          <Card
+            key={item.id}
+            study_title={item.name}
+            study_explanation={item.description}
+            study_people={`${item.currentMembers} / ${item.maxMembers}`}
+            study_image={item.thumbnail}
+          />
+        </div>
+        )
+      })}
+      
+
       <div className="card-area">
         {filteredStudies.slice(0, 4).map((study) => (
           <Card

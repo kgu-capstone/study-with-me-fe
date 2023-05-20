@@ -24,7 +24,6 @@ const DropDownSort = (props) => {
     }
 
     setSelectedOption(option);
-    props.setRecruitStatus(sort);
   };
 
   return (

@@ -367,8 +367,8 @@ const handleCity = (e) => {
               <div>온/오프라인 유무</div>
               <div>
                 <div className={styles.selects}>                
-                  <input type="radio" name="onoff" id="on" className={styles.radios} value='ON' onClick={(e) => setStudyOnoff(e.target.value)}/><label htmlFor="on" className={styles.rightMargin}>온라인</label>
-                  <input type="radio" name="onoff" id="off" className={styles.radios} value='OFF' onClick={(e) => setStudyOnoff(e.target.value)} /><label htmlFor="off">오프라인</label>
+                  <input type="radio" name="onoff" id="on" className={styles.radios} value='online' onClick={(e) => setStudyOnoff(e.target.value)}/><label htmlFor="on" className={styles.rightMargin}>온라인</label>
+                  <input type="radio" name="onoff" id="off" className={styles.radios} value='offline' onClick={(e) => setStudyOnoff(e.target.value)} /><label htmlFor="off">오프라인</label>
                 </div>
               </div>
               <p className={styles.studyWarning}>{studyOnoffWarning}</p>
@@ -376,7 +376,7 @@ const handleCity = (e) => {
 
 
             {
-              studyOnoff == 'OFF'
+              studyOnoff == 'offline'
               ?
               <>
                 <div className={styles.citychoice_container}>

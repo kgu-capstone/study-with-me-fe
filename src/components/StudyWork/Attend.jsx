@@ -9,7 +9,7 @@ export default function Attend() {
   
   // 넘어올 정보
   const location = useLocation()
-  const studyId = 1
+  const studyId = 3
   // const studyId = location.state?.studyId
 
 

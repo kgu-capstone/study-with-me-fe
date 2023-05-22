@@ -6,18 +6,24 @@ const Category = (props) => {
     props.category_arrange(props.category_num);
     sortManage.sortManage(category, props.sort_arrange, props.recruit);
 
-    console.log("카테고리 클릭");
+    //카테고리 클릭했을 때 css 바꾸기
+    let css_temp = [...props.category_css]
+    for(let i = 0; i < css_temp.length; i++){
+      css_temp[i] = 'category'
+    }
+    css_temp[props.category_num-1] = 'category_clicked';
+    props.category_css_set(css_temp)
   };
+
 
   return (
     <div>
-      <a
-        className="category"
-        href="#"
+      <div
+        className={props.category_css[props.category_num-1]}
         onClick={() => handleCategoryClick(props.category_num)}
       >
         {props.title}
-      </a>
+      </div>
     </div>
   );
 };

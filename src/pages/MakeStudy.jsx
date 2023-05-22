@@ -250,7 +250,7 @@ const handleCity = (e) => {
 
 
       //온라인 data
-      if(studyOnoff == 'ON'){
+      if(studyOnoff == 'online'){
         data = {
           "name" : studyName,
           "description" : studyInfo,
@@ -280,6 +280,7 @@ const handleCity = (e) => {
         }
       }
 
+      console.log(data);
       // api 발송
       authApi.post(`study`, data)
       .then((response) => {

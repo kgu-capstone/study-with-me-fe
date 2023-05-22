@@ -7,7 +7,7 @@ const RealEstate = (props) => {
   });
 
   return (
-    <div className="some-area">
+    <div>
       <select
         name="sido1"
         id="sido1"

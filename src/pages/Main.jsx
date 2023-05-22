@@ -12,43 +12,166 @@ import * as sortManage from "../sortManage";
 
 function Main() {
   
+  const memberId = localStorage.getItem("id")
+
+
   const [province, setProvince] = useState("시/도");
   const [city, setCity] = useState("구/군");
   const [save_Sort_Status, setSaveSortStatus] = useState("date");
-  const [save_Category_Status, setSaveCategoryStatus] = useState(3);
+  const [save_Category_Status, setSaveCategoryStatus] = useState(1);
+  const [save_category_css, setSave_category_css] = useState(["category_clicked", "category", "category", "category", "category", "category"]);
   const [recruitStatus, setRecruitStatus] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
+//만들어놓은 변수
+  const [save_province_status, setSave_province_status] = useState('');
+  const [save_city_status, setSave_city_status] = useState('');
 
-  const [studyList, setStudyList] = useState([]);
-  const getData = () => {
-    sortManage.sortManage(save_Category_Status, save_Sort_Status, recruitStatus).then((list) => {   
-      setStudyList(list)
-    })
-  }
+  const [studyList, setStudyList] = useState([{
+    "id" : 1,
+    "name" : "Spring 스터디",
+    "description" : "Spring 스터디입니다",
+    "category" : "프로그래밍",
+    "thumbnail" : "programming_Java.png",
+    "thumbnailBackground" : "#FF0000",
+    "type" : "온라인",
+    "recruitmentStatus" : "모집중",
+    "currentMembers" : 2,
+    "maxMembers" : 10,
+    "registerDate" : "2023-05-06T15:44:55.6582435",
+    "hashtags" : [ "스프링", "Spring", "프로그래밍", "김영한" ],
+    "favoriteMarkingMembers" : [ 94, 21, 50, 72, 22 ]
+  }, {
+    "id" : 2,
+    "name" : "JPA 스터디",
+    "description" : "JPA 스터디입니다",
+    "category" : "프로그래밍",
+    "thumbnail" : "programming_Java.png",
+    "thumbnailBackground" : "#FF0000",
+    "type" : "온라인",
+    "recruitmentStatus" : "모집중",
+    "currentMembers" : 5,
+    "maxMembers" : 4,
+    "registerDate" : "2023-05-05T15:44:55.6582435",
+    "hashtags" : [ "Hibernate", "JPA", "프로그래밍", "김영한" ],
+    "favoriteMarkingMembers" : [ 10, 40, 40 ]
+  }, {
+    "id" : 3,
+    "name" : "Real MySQL 스터디",
+    "description" : "programming_C.png",
+    "category" : "프로그래밍",
+    "thumbnail" : "programming_HTML.png",
+    "thumbnailBackground" : "#FF0000",
+    "type" : "오프라인",
+    "recruitmentStatus" : "모집중",
+    "currentMembers" : 5,
+    "maxMembers" : 10,
+    "registerDate" : "2023-05-04T15:44:55.6582435",
+    "hashtags" : [ "DBA", "Real MySQL", "DB" ],
+    "favoriteMarkingMembers" : [ ]
+  }, {
+    "id" : 4,
+    "name" : "코틀린 스터디",
+    "description" : "aptitude_ncs_003.png",
+    "category" : "프로그래밍",
+    "thumbnail" : "programming_Baekjoon.png",
+    "thumbnailBackground" : "#FF0000",
+    "type" : "온라인",
+    "recruitmentStatus" : "모집중",
+    "currentMembers" : 2,
+    "maxMembers" : 10,
+    "registerDate" : "2023-05-03T15:44:55.6582435",
+    "hashtags" : [ "코틀린", "프로그래밍", "Kotlin" ],
+    "favoriteMarkingMembers" : [ 52, 91, 43, 21 ]
+  }, {
+    "id" : 5,
+    "name" : "네트워크 스터디",
+    "description" : "네트워크 스터디입니다",
+    "category" : "프로그래밍",
+    "thumbnail" : "language_TEPS.png",
+    "thumbnailBackground" : "#FF0000",
+    "type" : "온라인",
+    "recruitmentStatus" : "모집중",
+    "currentMembers" : 2,
+    "maxMembers" : 7,
+    "registerDate" : "2023-05-02T15:44:55.6582435",
+    "hashtags" : [ "네트워크", "인프라", "OSI 7 Layer", "TCP/IP" ],
+    "favoriteMarkingMembers" : [ 46, 13, 50, 89 ]
+  }, {
+    "id" : 6,
+    "name" : "이펙티브 자바 스터디",
+    "description" : "이펙티브 자바 스터디입니다",
+    "category" : "프로그래밍",
+    "thumbnail" : "interview_samsung.png",
+    "thumbnailBackground" : "#FF0000",
+    "type" : "온라인",
+    "recruitmentStatus" : "모집중",
+    "currentMembers" : 5,
+    "maxMembers" : 8,
+    "registerDate" : "2023-05-01T15:44:55.6582435",
+    "hashtags" : [ "자바", "프로그래밍", "이펙티브 자바" ],
+    "favoriteMarkingMembers" : [ 61, 12, 77, 85 ]
+  }, {
+    "id" : 7,
+    "name" : "AWS 스터디",
+    "description" : "AWS 스터디입니다",
+    "category" : "프로그래밍",
+    "thumbnail" : "language_TOEIC.png",
+    "thumbnailBackground" : "#FF0000",
+    "type" : "오프라인",
+    "recruitmentStatus" : "모집중",
+    "currentMembers" : 0,
+    "maxMembers" : 10,
+    "registerDate" : "2023-04-30T15:44:55.6582435",
+    "hashtags" : [ "클라우드 플랫폼", "배포", "AWS" ],
+    "favoriteMarkingMembers" : [ 6, 49, 65, 17 ]
+  }, {
+    "id" : 8,
+    "name" : "Docker 스터디",
+    "description" : "Docker 스터디입니다",
+    "category" : "프로그래밍",
+    "thumbnail" : "language_TOEFL.png",
+    "thumbnailBackground" : "#FF0000",
+    "type" : "온라인",
+    "recruitmentStatus" : "모집중",
+    "currentMembers" : 2,
+    "maxMembers" : 6,
+    "registerDate" : "2023-04-29T15:44:55.6582435",
+    "hashtags" : [ "컨테이너", "Docker" ],
+    "favoriteMarkingMembers" : [ 3, 73 ]
+  }]);
 
-  useEffect(() => {
-    getData();
 
-  }, []);
+  // const getData = () => {
+  //   sortManage.sortManage(save_Category_Status, save_Sort_Status, recruitStatus, save_province_status, save_city_status).then((list) => {   
+  //     setStudyList(list)
+  //   })
+  // }
+
+  // useEffect(() => {
+  //   getData();
+
+  // }, []);
 
 
-  useEffect(() => {
-    getData();
+  // useEffect(() => {
+  //   getData();
 
-  }, [save_Category_Status]);
+  // }, [save_Category_Status]);
 
-  useEffect(() => {
-    getData();
+  // useEffect(() => {
+  //   getData();
 
-  }, [save_Sort_Status]);
+  // }, [save_Sort_Status]);
 
-  useEffect(() => {
-    getData();
+  // useEffect(() => {
+  //   getData();
 
-  }, [recruitStatus]);
+  // }, [recruitStatus]);
 
+
+  
   const [studies, setStudies] = useState([
     // 스터디 데이터 예시
     {
@@ -136,7 +259,7 @@ function Main() {
     : studies;
 
   return (
-    <div>
+    <div className='main_main'>
       <Ad />
       {/* */}
       <div className="category-area">
@@ -145,6 +268,8 @@ function Main() {
           category_num={1}
           sort_arrange={save_Sort_Status}
           category_arrange={setSaveCategoryStatus}
+          category_css={save_category_css}
+          category_css_set={setSave_category_css}
           recruit={recruitStatus}
         />
         <Category
@@ -152,6 +277,8 @@ function Main() {
           category_num={2}
           sort_arrange={save_Sort_Status}
           category_arrange={setSaveCategoryStatus}
+          category_css={save_category_css}
+          category_css_set={setSave_category_css}
           recruit={recruitStatus}
         />
         <Category
@@ -159,6 +286,8 @@ function Main() {
           category_num={3}
           sort_arrange={save_Sort_Status}
           category_arrange={setSaveCategoryStatus}
+          category_css={save_category_css}
+          category_css_set={setSave_category_css}
           recruit={recruitStatus}
         />
         <Category
@@ -166,6 +295,8 @@ function Main() {
           category_num={4}
           sort_arrange={save_Sort_Status}
           category_arrange={setSaveCategoryStatus}
+          category_css={save_category_css}
+          category_css_set={setSave_category_css}
           recruit={recruitStatus}
         />
         <Category
@@ -173,6 +304,8 @@ function Main() {
           category_num={5}
           sort_arrange={save_Sort_Status}
           category_arrange={setSaveCategoryStatus}
+          category_css={save_category_css}
+          category_css_set={setSave_category_css}
           recruit={recruitStatus}
         />
         <Category
@@ -180,101 +313,91 @@ function Main() {
           category_num={6}
           sort_arrange={save_Sort_Status}
           category_arrange={setSaveCategoryStatus}
+          category_css={save_category_css}
+          category_css_set={setSave_category_css}
           recruit={recruitStatus}
         />
       </div>
       {/* */}
-      <div className="sort-area">
-        {recruitStatus == "off" ? (
-          <></>
-        ) : (
-          <span>
-            <RealEstate
-              className="some-area"
-              setProvince={setProvince}
-              setCity={setCity}
-            />
-          </span>
-        )}
+      <div className='sort_area_container'>
 
-        <span className="test">
-          <DropDownSort
-            title="온/오프라인 전체"
-            sub1="온/오프라인 전체"
-            sub2="온라인만"
-            sub3="오프라인만"
-            selectedOption={selectedOption} // 현재 선택된 값 전달
-            className="some-area"
-            sub1_API={null}
-            sub2_API="on"
-            sub3_API="off"
-            fun={sortManage}
-            setRecru_Sort={setRecruitStatus}
-            save_Category_Status={save_Category_Status}
-            save_Sort_Status={save_Sort_Status}
-          />
+        <div className='sort_area_inner'>
+          <div className="sort-area">
+            {recruitStatus == "off" ? (
+              <span className="some-area some_area_dummy">더미</span> /* 꼼수.. */
+            ) : (
+              <span className="some-area">
+                <RealEstate
+                  setProvince={setProvince}
+                  setCity={setCity}
+                />
+              </span>
+            )}
 
-          <DropDownSort
-            title="모집 최신순"
-            sub1="모집 최신순"
-            sub2="찜 많은 순"
-            sub3="리뷰많은순"
-            sub1_API="date"
-            sub2_API="favorite"
-            sub3_API="review"
-            selectedOption={selectedOption}
-            className="some-area"
-            setRecru_Sort={setSaveSortStatus}
-            save_Category_Status={save_Category_Status}
-            save_Sort_Status={recruitStatus}
-          />
-        </span>
+            <span className="test">
+              <DropDownSort
+                title="온/오프라인 전체"
+                sub1="온/오프라인 전체"
+                sub2="온라인만"
+                sub3="오프라인만"
+                selectedOption={selectedOption} // 현재 선택된 값 전달
+                className="some-area"
+                sub1_API={null}
+                sub2_API="on"
+                sub3_API="off"
+                fun={sortManage}
+                setRecru_Sort={setRecruitStatus}
+                save_Category_Status={save_Category_Status}
+                save_Sort_Status={save_Sort_Status}
+              />
+
+              <DropDownSort
+                title="모집 최신순"
+                sub1="모집 최신순"
+                sub2="찜 많은 순"
+                sub3="리뷰많은순"
+                sub1_API="date"
+                sub2_API="favorite"
+                sub3_API="review"
+                selectedOption={selectedOption}
+                className="some-area"
+                setRecru_Sort={setSaveSortStatus}
+                save_Category_Status={save_Category_Status}
+                save_Sort_Status={recruitStatus}
+              />
+            </span>
+          </div>
+        </div>
       </div>
       {/* sort area 끝 */}
 
-      {/* 스터디 카드 들어갈 공간 */}
-      {studyList && studyList.map((item, index) => {
-        return(
-        <div className="card-area">
-          <Card
-            key={item.id}
-            study_title={item.name}
-            study_explanation={item.description}
-            study_people={`${item.currentMembers} / ${item.maxMembers}`}
-            study_image={item.thumbnail}
-          />
+      <div className='card_area_container'>
+        <div className='card_area_inner'>
+          {/* 스터디 카드 들어갈 공간 */}
+          {studyList && studyList.map((item, index) => {
+            let favorite_true = item.favoriteMarkingMembers.indexOf(memberId)
+            return(
+            <div className="card-area">
+              <Card
+                key={item.id}
+                study_title={item.name}
+                study_explanation={item.description}
+                study_people={`${item.currentMembers} / ${item.maxMembers}`}
+                study_image={`/img/studyprofiles/${item.thumbnail}`}
+                study_recruit={item.recruitmentStatus}
+                study_favorite={favorite_true}
+                study_category={item.category}
+              />
+            </div>
+            )
+          })}
         </div>
-        )
-      })}
+       </div>
+    
+      <div>
+        <Foot />
+      </div>
       
-
-      <div className="card-area">
-        {filteredStudies.slice(0, 4).map((study) => (
-          <Card
-            key={study.id}
-            title={study.title}
-            study_title={study.study_title}
-            study_explanation={study.study_explanation}
-            study_people={study.study_people}
-            study_image={study.study_image}
-          />
-        ))}
-      </div>
-
-      <div className="card-area">
-        {filteredStudies.slice(4).map((study) => (
-          <Card
-            key={study.id}
-            title={study.title}
-            study_title={study.study_title}
-            study_explanation={study.study_explanation}
-            study_people={study.study_people}
-            study_image={study.study_image}
-          />
-        ))}
-      </div>
-
-      <Foot />
     </div>
   ); // return 괄호인가/
 }

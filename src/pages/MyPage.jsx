@@ -11,8 +11,8 @@ import Button from 'react-bootstrap/Button';*/
 
 function MyPage() {
 // 사용자 id get
-// const memberId = localStorage.getItem("id")
-const memberId = 6
+const memberId = localStorage.getItem("id")
+
 
 //const axios.get()
 let [memberNickname, setMemberNickname] = useState('');

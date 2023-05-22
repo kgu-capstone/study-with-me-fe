@@ -1,3 +1,18 @@
+
+@font-face {
+  font-family: 'Pretendard-regular';
+  src: url(../fonts/Pretendard-Regular.woff);
+}
+
+@font-face{
+  font-family: 'Pretendard-Bold';
+  src: url(../fonts/Pretendard-Bold.woff);
+}
+
+.main_main{
+  align-items:flex-start;
+}
+
 .carousel-item {
   height: 200px;
 }
@@ -6,6 +21,7 @@
   height: 100%;
   background-size: cover;
   width: 100%;
+  object-fit: cover;
 }
 
 a {
@@ -18,9 +34,23 @@ a {
   background-color: white;
   margin-left: 15px;
   margin-right: 20px;
+  margin-top: 10px;
   text-decoration: none;
+  padding: 9px 25px;
+  cursor: pointer;
+}
+.category_clicked{
+  border-radius: 10px;
+  border: 1px solid #ff5037;
+  background-color: #ff5037;
+  color: white;
+  margin-left: 15px;
+  margin-right: 20px;
+  margin-top: 10px;
+  text-decoration: none;
+  padding: 9px 25px;
+  cursor: pointer;
 
-  padding: 5px;
 }
 
 .category:active {
@@ -35,33 +65,41 @@ a {
   font-size: 20px;
 }
 
+
+.sort_area_container{
+  width: 1024px;
+  margin: 50px auto  auto;
+  position: relative;
+}
+.sort_area_inner{
+  margin: 0 40px;
+  display: flex;
+}
 .sort-area {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  padding: 15px;
+  font-size: 16px;
 }
 
 .some-area {
-  margin-left: 30px;
-  margin-right: 30px;
+  left: 40px;
+  padding-top: 7px;
   font: 20px;
-  position: relative;
-  right: 85px;
+}
+.some_area_dummy{
+  color: #ffffff;
 }
 
 .test {
+  position: absolute;
+  top: 0;
+  right: 40px;
   display: flex;
-  position: relative;
-  left: 85px;
-  margin-left: 30px;
-  margin-right: 30px;
 }
 
 footer {
   height: 300px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -86,6 +124,7 @@ footer {
 }
 
 .footer-second-line {
+  display: flex;
   font-size: 18px;
   margin-top: 80px;
 }
@@ -98,9 +137,10 @@ footer {
 }
 
 .card {
-  width: 150px;
-  margin-left: 15px;
-  margin-right: 20px;
+  width: 230px;  
+  height: 350px;
+  margin-left: 7px;
+  margin-right: 7px;
   color: black;
   text-decoration: none;
   display: flex;
@@ -109,37 +149,102 @@ footer {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16), 0 2px 14px rgba(0, 0, 0, 0.16);
 }
 .card-body {
-  height: 200px;
   text-align: center;
   justify-content: center;
 }
 .card-title {
-  margin-top: 20px;
+  margin-top: 24px;
+  font-size: 20px;
+  font-family: 'Pretendard-Bold';
 }
-.card-text {
-  margin: 0px;
+.card-explanation{
+  margin-top: 15px;
+  font-size: 16px;
+  margin-top: px;
+  width: 196px;
+  white-space: nowrap;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.card-study_favorite {
+  margin-top: 24px;
+}
+.card-people{
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+.card_category{
+  color: #7D7D7D;
+  margin-top: 5px;
 }
 
 .heart {
-  float: right;
+  position: absolute;;
+  right: 20px;
   font-size: 12px;
 }
-
-.card-area {
+.card_area_container{
+  margin: 50px auto 50px auto;
+  width: 1024px;
   display: flex;
-  float: inline;
+}
+
+
+@media (max-width: 1024px){
+  .category-area{
+    width: 100%;
+  }
+
+  .sort_area_container{
+    width: 100%;
+  }
+
+  .card_area_container{
+    margin: 0 auto 0 auto;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+  }
+}
+
+@media (max-width: 580px){
+  .category-area{
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+}
+
+
+.card_area_inner{
+  margin: 0 20px;
+}
+.card-area {
+  float: left;
   justify-content: center;
-  margin-top: 40px;
-  margin-bottom: 2px;
+  margin-bottom: 15px;
 }
 link {
   color: black;
   text-decoration: none;
 }
-
+.studyDetail_contianer{
+  margin-bottom: 100px;
+}
 .StudyProfileArea {
-  height: 250px;
+  height: 225px;
   background-color: #e6e6e6;
+}
+.studydDetail_area_container{
+  width: 650px;
+  margin: 0px auto;
+}
+
+@media (max-width: 1024px) {
+  .sutydDetail_area_container{
+    width: 100%;
+  }
 }
 
 .container {
@@ -149,31 +254,44 @@ link {
 
 .StudyDetail-first-line {
   display: flex;
-  justify-content: space-around;
-  margin-top: 15px;
+  position: relative;
 }
+.studyDetail_recruit_status{
+  display: flex;
+  margin-top: 10px;
+  margin-left: 10px;
 
+}
+.studyDetail_recruit_status_text{
+}
+.studyDetail_heart{
+  top: 10px;
+  right: 10px;
+  position: absolute;
+}
 .StudyDetail-img {
-  width: 130px;
-  height: 130px;
+  margin-left: 100px;
   border-radius: 70%;
 }
 
 .StudyDetail-second-line {
   display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
+  position: relative;
 }
 
 .items-detail {
-  position: relative;
-  right: 430px;
+  margin-left: 80px;
+  
+}
+.studyDetail_study_name{
+  font-family: 'Pretendard-Bold';
+  font-size: 24px;
 }
 
 .apply-button-area {
-  float: right;
-  position: relative;
-  right: 300px;
+  right: 0; 
+  bottom: 0;
+  position: absolute;
 }
 
 .apply-button {
@@ -187,14 +305,46 @@ link {
 }
 
 .contents {
-  display: flex;
-  justify-content: center;
+  width: 650px;
+  margin: 50px auto;
   height: 700px;
+}
+.contents_inner{
+  margin: 0 40px;
+}
+@media (max-width: 650px) {
+  .contents {
+    width: 100%;
+  }
+  .contents_inner{
+    margin: 0;
+  }
 }
 
 .contents-area {
   margin-top: 15px;
   margin-bottom: 300px;
+}
+.studyDetail_study_contents_title{
+  font-family: 'Pretendard-Bold';
+  font-size: 24px;
+}
+.studyDetail_study_age_title{
+  font-family: 'Pretendard-Bold';
+  font-size: 24px;
+}
+.studyDetail_study_review_title_contianer{
+  display: flex;
+  position: relative;
+}
+.studyDetail_study_review_title{
+  font-family: 'Pretendard-Bold';
+  font-size: 24px;
+}
+.studyDetail_study_graduaion{
+  right: 0;
+  position: absolute;
+  padding-top: 7px;
 }
 
 .btn-secondary {
@@ -238,7 +388,40 @@ input {
 }
 
 .study_card_img_setting {
-  width: 55px;
-  height: 55px;
+  width: 120px;
+  height: 120px;
 }
 
+.study_card_img_contianer{
+  margin-top: 15px;
+  display: block;
+}
+
+.card_top_container{
+  display: flex
+  
+}
+
+.card_recruit_status_img{
+  margin-top: 8px;
+  margin-left: 6px;
+  margin-right: 10px;
+}
+
+
+
+.studyDetail_review_each_container{
+  border: 1px solid #E1E1E1;
+  border-radius: 10px;
+  padding: 21px;
+  margin-bottom: 100px;
+}
+
+.studyDetail_review_top{
+  display: flex;
+}
+.studyDetail_review_nick{
+  font-family: 'Pretendard-Bold';
+  font-size: 16px;
+  margin: 5px 0 5px 15px;
+}

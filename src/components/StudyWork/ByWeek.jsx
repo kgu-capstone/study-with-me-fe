@@ -28,6 +28,23 @@ import UserName from '../UserName';
 
 
 export default function ByWeek(){
+// 사용자 id get
+const memberId = localStorage.getItem("id")
+
+// 팀장인지 불러오기
+const [isHost, setIsHost] = useState(false)
+
+useEffect(() => {
+  authApi.get(`studies/${studyId}`)
+  .then((response) => {
+    if(memberId == response.data.host.id){
+      setIsHost(true)
+    }
+  })
+  .catch(err => console.log(err))
+}, [])
+
+
 
 //// 스터디 불러오기 ////
 const [weekInfo, setWeekInfo] = useState([]);
@@ -93,7 +110,6 @@ const handleFold = (index) =>{
   }
 
   // 날짜선택
-
 const CutomInputStart = forwardRef(({ value, onClick }, ref) => (
   <button className={`${styles.byweek_period_input_start}`}  onClick={onClick} ref={ref}>
     {startDate.getFullYear()}&nbsp;-&nbsp;
@@ -165,7 +181,6 @@ const CutomInputEnd = forwardRef(({ value, onClick }, ref) => (
 
 registerLocale("ko", ko);
 
-
   //글쓰기 에디터 관련
 
   const customUploadAdapter = (loader) => { // (2)
@@ -208,23 +223,39 @@ const handleFileUpload = (e) => {
 
   const file = e.target.files[0];
   setFiles([...files, {uploadFile: file}]);
+
+  console.log(files);
+}
+
+const handlefileUploadCancle = (index) => {
+  const temp = [...files]
+  temp.splice(index, 1);
+  setFiles(temp)
 }
 
 // 파일첨부 - 과제
 let [homeworksFiles, setHomeworksFiles] = useState([]);
+const [HomewworkdFileName, setHomeworkFileName] = useState([]);
 
-const handleHomworkUpload = (e) => {
 
- 
+const handleHomworkUpload = (e, index) => {
+  // 파일
   e.preventDefault();
 
   const file = e.target.files[0];
   setHomeworksFiles([...homeworksFiles, {uploadFile: file}]);
+
+  
+  // 파일 이름만
+  const temp = [...HomewworkdFileName];
+  temp[index] = homeworksFiles[homeworksFiles.length-1] && homeworksFiles[homeworksFiles.length-1].uploadFile.name
+  setHomeworkFileName(temp)
 }
+
 
 //업로드
 const studyId = 3;
-let week = 5;
+let week = 3;
 
 
 
@@ -240,8 +271,9 @@ const [inputAutoAttendance, setInputAutoAttendance] = useState(true);
 const handleStudyUpload = () => {
   const fileData = new FormData();
 
-  console.log(files[0].uploadFile);
-  fileData.append("files", files.length && files[0].uploadFile);
+  files.map((item) => {
+    fileData.append("files", files.length && item.uploadFile);
+  })
   fileData.append("title", byweekInputTitle);
   fileData.append("content", byweekInputContent);
   fileData.append("startDate", moment(startDate).format("YYYY-MM-DDTHH:mm"));
@@ -284,10 +316,10 @@ const [homeworkTypeOpen, setHomeworkTypeOpen] = useState(false);
 const [homeworkType, setHomeworkType] = useState('file');
 
 // 과제제출 api 파일
-const handleHomeWorkUplaodFile = () => {
+const handleHomeWorkUplaodFile = (week) => {
   const fileData = new FormData();
 
-  fileData.append("file", homeworksFiles.length && homeworksFiles[0].uploadFile);
+  fileData.append("file", homeworksFiles[homeworksFiles.length-1] && homeworksFiles[homeworksFiles.length-1].uploadFile);
   fileData.append("type", homeworkType);
 
   for (const key of fileData.keys()){
@@ -333,134 +365,166 @@ const handleHomeWorkUplaodLink = (week) => {
 }
 
 
+
+
+// 주차 삭제 api
+const handleStudyWeekDelete = (week_value) => {
+  if(window.confirm('해당 주차를 삭제하시겠습니까?')){
+  authApi.delete(`studies/${studyId}/weeks/${week_value}`)
+  .then(res => window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`)
+  .catch(err => console.log(err))
+  }
+}
+
+
+
+
+
     return (
           <div className={`${styles.right_container}`}>
+            {isHost?
             <div className={`${styles.byweek_writebutton}`} onClick={() => handleByweekWrite()}>
-              {writeOrCloseByweek}
+            {writeOrCloseByweek}
             </div>
+            :<></>}
+            
             <div className={viewWriteByweek}>
-              <div>
-                <div className={`${styles.byweek_period}`}>
-                  스터디 기간
-                </div>
-                <div className={`${styles.byweek_period_input_contianer}`}>
-                  <div>
-                      <DatePicker 
-                      locale="ko"
-                      dateFormat="yyyy-mm-dd'T'HH:mm"
-                      // startDate={startDate}
-                      // endDate={endDate}
-                      className="input-datepicker" 
-                      placeholderText="시작 날짜" 
-                      
-                      customInput={<CutomInputStart />}
-                      label={'시작 날짜'} 
-                      onChange={(newValue) => setStartDate(newValue)}
-                      showTimeSelect
-                      />
-                  </div>
-
-                  <div className={`${styles.byweek_period_tilde_contianer}`}>
-                    <p className={`${styles.byweek_period_tilde}`}>~</p>
-                  </div>
-                  <div>
-                      <DatePicker
-                      locale={ko}
-                      dateFormat="yyyy-mm-dd'T'HH:mm"
-                      className="input-datepicker"
-                      placeholderText="종료 날짜"
-                      customInput={<CutomInputEnd/>}
-                      label={'종료 날짜'} value={endDate} onChange={(newValue) => setEndDate(newValue)}
-                      showTimeSelect
-                      />
-                  </div>
-                </div>
-              </div>
-
-         
-
-              <div>
-                <div className={`${styles.byweek_write_title}`}>
-                  <p>제목</p>
-                </div>
                 <div>
-                  <input type='text' className={`${styles.byweek_write_title_input}`} onChange={(e) => setByweekInputTitle(e.target.value)}></input>
-                </div>
-              </div>
+                  <div className={`${styles.byweek_period}`}>
+                    스터디 기간
+                  </div>
+                  <div className={`${styles.byweek_period_input_contianer}`}>
+                    <div>
+                        <DatePicker 
+                        locale="ko"
+                        dateFormat="yyyy-mm-dd'T'HH:mm"
+                        // startDate={startDate}
+                        // endDate={endDate}
+                        className="input-datepicker" 
+                        placeholderText="시작 날짜" 
+                        
+                        customInput={<CutomInputStart />}
+                        label={'시작 날짜'} 
+                        onChange={(newValue) => setStartDate(newValue)}
+                        showTimeSelect
+                        />
+                    </div>
 
-              <div>
-                <div className={`${styles.byweek_write_contents}`}>
-                  <p>내용</p>
+                    <div className={`${styles.byweek_period_tilde_contianer}`}>
+                      <p className={`${styles.byweek_period_tilde}`}>~</p>
+                    </div>
+                    <div>
+                        <DatePicker
+                        locale={ko}
+                        dateFormat="yyyy-mm-dd'T'HH:mm"
+                        className="input-datepicker"
+                        placeholderText="종료 날짜"
+                        customInput={<CutomInputEnd/>}
+                        label={'종료 날짜'} value={endDate} onChange={(newValue) => setEndDate(newValue)}
+                        showTimeSelect
+                        />
+                    </div>
+                  </div>
                 </div>
-                <div className={`${styles.byweek_write_contents_input_container}`}>
-                  {/* <input type='text' className={`${styles.byweek_write_contents_input}`}></input> */}
-                  <CKEditor
-                    editor={ ClassicEditor }
-                    config={{ // (4)
-                        extraPlugins: [uploadPlugin]
-                    }}
-                    data="<p></p>"
-                    onReady={ editor => {
-                        // You can store the "editor" and use when it is needed.
-                        console.log( 'Editor is ready to use!', editor );
-                    } }
-                    onChange={ ( event, editor ) => {
-                        const data = editor.getData();
-                        // console.log( { event, editor, data } );
-                        setByweekInputContent(data);
-                    } }
-                    onBlur={ ( event, editor ) => {
-                        // console.log( 'Blur.', editor );
-                    } }
-                    onFocus={ ( event, editor ) => {
-                        // console.log( 'Focus.', editor );
-                    } }
-                  />    
-                </div>
-              </div>
 
-              <div>           
+          
+
                 <div>
-                  {/* <button type='button' key='byweek_attach' className={`${styles.byweek_file_attech_button}`}>파일 첨부</button> */}
-                  <input type='file' id='fileupload' className={`${styles.byweek_file_attech_button}`} 
-                    onChange={(e) => handleFileUpload(e)} 
-                    multiple></input>
-                  <label htmlFor='fileupload' className={`${styles.byweek_file_attech_button_label}`} >파일첨부</label>
-                  {/* <p>{fileNames}</p> */}
+                  <div className={`${styles.byweek_write_title}`}>
+                    <p>제목</p>
+                  </div>
+                  <div>
+                    <input type='text' className={`${styles.byweek_write_title_input}`} onChange={(e) => setByweekInputTitle(e.target.value)}></input>
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <div className={`${styles.byweek_isHomework_toggle}`}>
-                  <p>과제 여부</p>
+                <div>
+                  <div className={`${styles.byweek_write_contents}`}>
+                    <p>내용</p>
+                  </div>
+                  <div className={`${styles.byweek_write_contents_input_container}`}>
+                    {/* <input type='text' className={`${styles.byweek_write_contents_input}`}></input> */}
+                    <CKEditor
+                      editor={ ClassicEditor }
+                      config={{ // (4)
+                          extraPlugins: [uploadPlugin]
+                      }}
+                      data="<p></p>"
+                      onReady={ editor => {
+                          // You can store the "editor" and use when it is needed.
+                          console.log( 'Editor is ready to use!', editor );
+                      } }
+                      onChange={ ( event, editor ) => {
+                          const data = editor.getData();
+                          // console.log( { event, editor, data } );
+                          setByweekInputContent(data);
+                      } }
+                      onBlur={ ( event, editor ) => {
+                          // console.log( 'Blur.', editor );
+                      } }
+                      onFocus={ ( event, editor ) => {
+                          // console.log( 'Focus.', editor );
+                      } }
+                    />    
+                  </div>
                 </div>
-                <div className={`${styles.byweek_toggles_contianer}`}>
-                  <input type='radio' name='isHomework' id='yesHomework' className={`${styles.byweek_toggle_on}`} onClick={() => setInputAssignmentExists(true)} defaultChecked/><label htmlFor='yesHomework'>ON</label>
-                  <input type='radio' name='isHomework' id='notHomework' className={`${styles.byweek_toggle_off}`} onClick={() => setInputAssignmentExists(false)} /><label htmlFor='notHomework'>OFF</label>
-                </div>
-              </div>
 
-              {inputAssignmentExists ?
-              <div>
-                <div className={`${styles.byweek_isAutoAtten_toggle}`}>
-                  과제 제출에 따라 자동으로 출석 처리합니다.
+                <div>           
+                  <div className={`${styles.byweek_file_container}`}>
+                    {/* <button type='button' key='byweek_attach' className={`${styles.byweek_file_attech_button}`}>파일 첨부</button> */}
+                    <input type='file' id='fileupload' className={`${styles.byweek_file_attech_button}`} 
+                      onChange={(e) => handleFileUpload(e)} 
+                      multiple></input>
+                    <label htmlFor='fileupload' className={`${styles.byweek_file_attech_button_label}`} >
+                      파일첨부</label>
+                      <div className={`${styles.byweek_file_names}`}>
+                      {
+                        files.map((fileItem, fileIndex) => {
+                          return(
+                            <p className={`${styles.byweek_file_name}`}                            
+                            >{fileItem.uploadFile.name}<span className={styles.byweek_file_name_cancel} onClick={() => handlefileUploadCancle(fileIndex)}>x</span></p>
+                          )
+                        })
+                      }
+                    </div>
+                  </div>
                 </div>
-                <div className={`${styles.byweek_toggles_contianer}`}>
-                  <input type='radio' name='isAutoAttend' id='yesAutoAttend' className={`${styles.byweek_toggle_on}`} value={true}  onClick={() => setInputAutoAttendance(true)} defaultChecked/><label htmlFor='yesAutoAttend'>ON</label>
-                  <input type='radio' name='isAutoAttend' id='notAutoAttend' className={`${styles.byweek_toggle_off}`} value={false} onClick={() => setInputAutoAttendance(false)} /><label htmlFor='notAutoAttend'>OFF</label>
+
+                <div>
+                  <div className={`${styles.byweek_isHomework_toggle}`}>
+                    <p>과제 여부</p>
+                  </div>
+                  <div className={`${styles.byweek_toggles_contianer}`}>
+                    <input type='radio' name='isHomework' id='yesHomework' className={`${styles.byweek_toggle_on}`} onClick={() => setInputAssignmentExists(true)} defaultChecked/><label htmlFor='yesHomework'>ON</label>
+                    <input type='radio' name='isHomework' id='notHomework' className={`${styles.byweek_toggle_off}`} onClick={() => setInputAssignmentExists(false)} /><label htmlFor='notHomework'>OFF</label>
+                  </div>
                 </div>
-              </div>
-              :
-              <div></div>
-              }
+
+                {inputAssignmentExists ?
+                <div>
+                  <div className={`${styles.byweek_isAutoAtten_toggle}`}>
+                    과제 제출에 따라 자동으로 출석 처리합니다.
+                  </div>
+                  <div className={`${styles.byweek_toggles_contianer}`}>
+                    <input type='radio' name='isAutoAttend' id='yesAutoAttend' className={`${styles.byweek_toggle_on}`} value={true}  onClick={() => setInputAutoAttendance(true)} defaultChecked/><label htmlFor='yesAutoAttend'>ON</label>
+                    <input type='radio' name='isAutoAttend' id='notAutoAttend' className={`${styles.byweek_toggle_off}`} value={false} onClick={() => setInputAutoAttendance(false)} /><label htmlFor='notAutoAttend'>OFF</label>
+                  </div>
+                </div>
+                :
+                <div></div>
+                }
+                
+
+
+                <div className={`${styles.upload_button_container}`}>
+                  <button type='button' key='byweekUpload' className={`${styles.upload_button}`} 
+                      onClick={() => handleStudyUpload()}
+                  >등록</button>
+                </div>
+
               
-
-
-              <div className={`${styles.upload_button_container}`}>
-                <button type='button' key='byweekUpload' className={`${styles.upload_button}`} 
-                    onClick={() => handleStudyUpload()}
-                >등록</button>
-              </div>
+              
+              
 
             </div>
 
@@ -472,42 +536,24 @@ const handleHomeWorkUplaodLink = (week) => {
                       <div className={`${styles.byweek_each_contianer}`}>
                         <div className={`${styles.byweek_each_title} ${styles.regular_24}`} onClick={() => handleFold(index)}>
                             {item.title}
-                          </div>
-                          <div className={`${weekfoldcss[index]}`}>
-                            {/* 내용 */}
-                            <div className={`${styles.byweek_each_content} ${styles.regular_16}`}>
-                              {parse(item.content)}
+                        </div>
+                        <div className={`${weekfoldcss[index]}`}>     
+                        {
+                          isHost
+                          ?
+                            <div className={styles.byweek_revice_container}>                           
+                                
+                              <p className={styles.byweek_delete_button} 
+                                onClick={() => handleStudyWeekDelete(item.week)}
+                              >삭제</p>
                             </div>
+                          :
+                          <></>
+                        }
 
-                            {/* 첨부파일*/}
-                            {
-                              item.attachments.length > 0
-                              ?
-                              <div className={`${styles.byweek_each_attach_list}`}>
-                              <p className={`${styles.byweek_each_attach_title}`}>첨부</p>
-                              {
-                                item.attachments.map((attachs, attachsIndex) => {
-                                  return(
-                                    <>
-                                      <p className={`${styles.bywee_each_attachs}`}
-                                        onClick={() => openAttach(attachs, attachs.split('/')[4].split('-').slice(-1))}
-                                      >
-                                        {/* 파일 이름만 골라내기*/}
-                                        {decodeURI(attachs.split('/')[4].split('-').slice(-1))}&nbsp;&nbsp;</p>
-                                    </>
-                                  )
-                                  
-                                })
-                              }
-                            </div>
-                              :
-                              <></>
-
-                            }
-                            
-
-                            {/* 과제 입력창*/}
-                            {
+                        
+                        {/* 과제 입력창*/}
+                        { 
                               item.assignmentExists 
                               ?
                               <>
@@ -557,12 +603,12 @@ const handleHomeWorkUplaodLink = (week) => {
                                     // 파일을 선택했다면 
                                     <>
                                        <input type='file' id='homeworkupload' className={`${styles.byweek_file_homeworkAttach_button}`} 
-                                          onChange={(e) => handleHomworkUpload(e)} 
-                                          multiple></input>
+                                          onChange={(e) => handleHomworkUpload(e, index)}
+                                          ></input>
                                         <label htmlFor='homeworkupload' className={`${styles.byweek_file_homeworkAttach_button_label}`} >파일첨부</label>
 
 
-                                        <input type='text' className={`${styles.byweek_each_homework_input_fileON}`}  disabled></input>
+                                        <input type='text' className={`${styles.byweek_each_homework_input_fileON}`} value={HomewworkdFileName}  disabled></input>
                                         <button type='button' className={`${styles.byweek_each_homework_button}`}
                                         onClick={()=>handleHomeWorkUplaodFile(item.week)}
                                       >과제 등록</button>       
@@ -583,6 +629,7 @@ const handleHomeWorkUplaodLink = (week) => {
                                 </div>
 
                                 {/* 과제들*/}
+                                <div className={styles.byweek_homework_container}>                                
                                 {
                                   item.submits.map((submit, submitindex) => {
                                     return(
@@ -610,7 +657,7 @@ const handleHomeWorkUplaodLink = (week) => {
                                     )
                                   })
                                 }
-                                
+                                </div>
                                 
                               
 
@@ -621,15 +668,10 @@ const handleHomeWorkUplaodLink = (week) => {
                               
                               </>
 
-
-                            
-
-
-
                             }
-                            
-                          </div>
+                        
                         </div>  
+                        </div>
                     
                     </>
                   )

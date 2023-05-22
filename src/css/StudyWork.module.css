@@ -115,6 +115,12 @@ body{
 }
 
 
+
+
+
+
+
+
 /* 여기까지 상단 스터디 정보 영역*/
 
 /* info 아래 영역*/
@@ -161,9 +167,29 @@ body{
     margin-right: 15px;
 }
 
-.sidebar:hover{
-    
+.study_list_container{
+    display: flex;
 }
+.study_total_list_line{
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.study_list_line_each_contianer{
+    display: flex;
+    flex-direction: row;
+}
+.study_list_line{
+    margin-top: 12px;
+    margin-right: 5px;
+}
+.study_list_line_contianer{
+    font-size: 16px;
+    margin-top: 20px;
+}
+.sidebar_each_study{
+    cursor: pointer;
+}
+
 
 /* 여기까지 사이드 바 */
 
@@ -468,6 +494,7 @@ body{
 
 
 /* 스터디 */
+
 .byweek_writebutton{
     text-align: center;
 }
@@ -475,7 +502,9 @@ body{
     cursor: pointer;
     color: #FF5037;
 }
-
+.byweek_wirte_container_inner{
+    margin-left: 30px;
+}
 .byweek_write_contianer_none{
     display: none;
     width: 768px;
@@ -492,15 +521,16 @@ body{
     border: 1px solid #C5C5C5;
     border-radius: 10px;
     transition-duration: 4s;
+    padding-left: 30px;
 }
 
 .byweek_period{
-    margin: 25px 0 0 30px;
+    margin: 25px 0 0 0px;
 }
 
 .byweek_period_input_contianer{
     display: flex;
-    margin: 10px 0 0 30px;
+    margin: 10px 0 0 0px;
 }
 .byweek_period_input_start{
     width: 307px;
@@ -530,13 +560,12 @@ body{
 
 
 .byweek_write_title{
-    margin: 25px 0 0 30px;
+    margin: 25px 0 0 0px;
 }
 
 .byweek_write_title_input{
     width: 698px;
     height: 60px;
-    margin: 0 0 0 30px;
     padding: 10px;
     border: solid 1px #C5C5C5;
     border-radius: 3px;
@@ -546,17 +575,16 @@ body{
 }
 
 .byweek_write_contents{
-    margin: 25px 0 0 30px;
+    margin: 25px 0 0 0px;
 }
 .byweek_write_contents_input_container{
-    margin: 0 40px 0 30px;
-    
+    margin: 0 40px 0 0px;
     border-radius: 10px;
 }
 .byweek_write_contents_input{
     width: 698px;
     height: 200px;
-    margin: 0 0 0 30px;
+    margin: 0 0 0 0px;
     padding: 15px;
     border: solid 1px #C5C5C5;
     border-radius: 10px;
@@ -564,29 +592,49 @@ body{
 
 
 
+.byweek_file_container{
+    display: flex;
+}
+
 .byweek_file_attech_button{
     display: none;
 }
 .byweek_file_attech_button_label{
-    margin: 15px 27px 0 30px;
+    margin: 15px 27px 0 0px;
     border: solid 1px #C5C5C5;
     border-radius: 3px;
     background-color: white;
     color: black;
-    padding: 10px 30px;
+    padding: 12px 30px;
+    width: 120px;
+    height: 50px;
 }
 .byweek_file_attech_button_label:hover{
+    cursor: pointer;
+}
+.byweek_file_names{
+    margin: 28px 27px 0 0px;
+    width: 547px;
+    display: flex;
+    overflow: scroll;
+    word-break: normal;
+}
+.byweek_file_name{
+    margin-right: 20px;
+}
+.byweek_file_name_cancel{
+    margin-left: 10px;
     cursor: pointer;
 }
 
 
 
 .byweek_isHomework_toggle{
-    margin: 50px 0 0 30px;
+    margin: 50px 0 0 0px;
 }
 
 .byweek_toggles_contianer{
-    margin: 25px 0 0 30px;
+    margin: 25px 0 0 0px;
 }
 
 /* 토글 선택창 구현 */
@@ -642,7 +690,7 @@ body{
 
 
 .byweek_isHomework_yes{
-    margin: 25px 0 0 30px;
+    margin: 25px 0 0 0px;
 
 }
 
@@ -650,7 +698,7 @@ body{
 
 
 .byweek_isAutoAtten_toggle{
-    margin: 25px 0 0 30px;
+    margin: 25px 0 0 0px;
 }
 
 
@@ -709,9 +757,31 @@ body{
     
 }
 .bywee_each_attachs{
-    word-break: break-all;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.byweek_each_attach_contianer{
+    display: flex;
+    width: 645px;
+    overflow: scroll;
+}
+
+
+
+
+.byweek_revice_container{
+    display: flex;
+    color: #7D7D7D;
+    margin: 20px 0 10px 0;
+}
+.byweek_revice_on_button{
+    cursor: pointer;
+    margin-right: 10px;
+}
+.byweek_delete_button{
     cursor: pointer;
 }
+
 
 
 
@@ -837,11 +907,13 @@ body{
     font-size: 16px;
     padding: 13px 20px;
 }
-
+.byweek_homework_container{
+    margin: 10px 0 30px 0;
+}
 
 
 .byweek_each_homework_contianer{
-    margin: 12px 0 30px 0;
+    margin: 12px 0 10px 0;
 }
 
 .byweek_each_homework{
@@ -860,7 +932,7 @@ body{
     align-items: center;
 }
 .byweek_each_homework_nickname{
-    margin-top: 7px;
+    margin-top: 16px;
 }
 
 .byweek_each_homework_nickname > p{
@@ -878,4 +950,7 @@ body{
     color: #7D7D7D;
     text-decoration: underline;
 }
+
+
+
 /* 여기까지 스터디 */

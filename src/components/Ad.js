@@ -25,11 +25,11 @@ const Ad = () => {
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="./img/banner1.png" class="d-block ad-img" alt="..." />
+            <img height={200} src="./img/banner1.png" class="d-block ad-img" alt="..." />
           </div>
 
           <div class="carousel-item">
-            <img src="./img/banner2.png" class="d-block ad-img" alt="..." />
+            <img height={200} src="./img/banner2.png" class="d-block ad-img" alt="..." />
           </div>
         </div>
         <button

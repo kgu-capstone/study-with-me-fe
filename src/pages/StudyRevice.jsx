@@ -51,7 +51,6 @@ export default function StudyRevice() {
       authApi(`studies/${stateStudyId}`)
       .then((response) => {
 
-        console.log(response.data);
 
         if(response.data.recruitmentStatus == '모집중'){
           setRecruitOnclass(`${styles.recruit_toggle_on_checked}`);
@@ -85,11 +84,11 @@ export default function StudyRevice() {
 
         if(response.data.type == "온라인"){
           setOnclass(`${styles.check_radios}`)
-          setStudyOnoff('ON')
+          setStudyOnoff('online')
         }
         else if(response.data.type == "오프라인"){
           setOffclass(`${styles.check_radios}`)
-          setStudyOnoff('OFF')
+          setStudyOnoff('offline')
           setCity(response.data.location.province);
           setTown(response.data.location.city)
         }
@@ -168,8 +167,8 @@ const handleCategory = (id) => {
 
   // 온 오프
   const handleOnoff = (value) => {
-    setStudyRecruit(value)
-    if(value == 'ON'){
+    setStudyOnoff(value)
+    if(value == 'online'){
       setOnclass(`${styles.check_radios}`);
       setOffclass(`${styles.radios}`);
     }else{
@@ -401,9 +400,6 @@ const handleCity = (e) => {
         }
       }
 
-      console.log(studyRecruit);
-      console.log(data);
-      
       //api 발송
       authApi.patch(`studies/${stateStudyId}`, data)
       .then((response) => {
@@ -519,8 +515,8 @@ const handleCity = (e) => {
               <div>온/오프라인 유무</div>
               <div>
                 <div className={styles.selects}>                
-                  <input type="radio" name="onoff" id="on"  value='ON' onClick={(e) => handleOnoff(e.target.value)} /><label htmlFor="on" className={`${onclass} ${styles.rightMargin}`}>온라인</label>
-                  <input type="radio" name="onoff" id="off"  value='OFF' onClick={(e) => handleOnoff(e.target.value)} /><label htmlFor="off" className={offclass}>오프라인</label>
+                  <input type="radio" name="onoff" id="online"  value='online' onClick={(e) => handleOnoff(e.target.value)} /><label htmlFor="online" className={`${onclass} ${styles.rightMargin}`}>온라인</label>
+                  <input type="radio" name="onoff" id="offline"  value='offline' onClick={(e) => handleOnoff(e.target.value)} /><label htmlFor="offline" className={offclass}>오프라인</label>
                 </div>
               </div>
               <p className={styles.studyWarning}>{studyOnoffWarning}</p>
@@ -528,7 +524,7 @@ const handleCity = (e) => {
 
 
             {
-              studyOnoff == 'OFF'
+              studyOnoff == 'offline'
               ?
               <>
                 <div className={styles.citychoice_container}>

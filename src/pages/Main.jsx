@@ -9,167 +9,252 @@ import Foot from "../components/Foot";
 import { useEffect, useState } from "react";
 import { authApi } from "../services/api";
 import * as sortManage from "../sortManage";
+import { te } from 'date-fns/locale';
+
+
+import { useInView } from 'react-intersection-observer';
+
 
 function Main() {
   
-  const memberId = localStorage.getItem("id")
+  
 
 
-  const [province, setProvince] = useState("시/도");
-  const [city, setCity] = useState("구/군");
   const [save_Sort_Status, setSaveSortStatus] = useState("date");
   const [save_Category_Status, setSaveCategoryStatus] = useState(1);
   const [save_category_css, setSave_category_css] = useState(["category_clicked", "category", "category", "category", "category", "category"]);
   const [recruitStatus, setRecruitStatus] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [save_page_status, setSave_page_status] = useState(0);
 
-//만들어놓은 변수
-  const [save_province_status, setSave_province_status] = useState('');
-  const [save_city_status, setSave_city_status] = useState('');
+  const [save_province_status, setSave_province_status] = useState('시/도 선택');
+  const [save_city_status, setSave_city_status] = useState('구/군 선택');
 
-  const [studyList, setStudyList] = useState([{
-    "id" : 1,
-    "name" : "Spring 스터디",
-    "description" : "Spring 스터디입니다",
-    "category" : "프로그래밍",
-    "thumbnail" : "programming_Java.png",
-    "thumbnailBackground" : "#FF0000",
-    "type" : "온라인",
-    "recruitmentStatus" : "모집중",
-    "currentMembers" : 2,
-    "maxMembers" : 10,
-    "registerDate" : "2023-05-06T15:44:55.6582435",
-    "hashtags" : [ "스프링", "Spring", "프로그래밍", "김영한" ],
-    "favoriteMarkingMembers" : [ 94, 21, 50, 72, 22 ]
-  }, {
-    "id" : 2,
-    "name" : "JPA 스터디",
-    "description" : "JPA 스터디입니다",
-    "category" : "프로그래밍",
-    "thumbnail" : "programming_Java.png",
-    "thumbnailBackground" : "#FF0000",
-    "type" : "온라인",
-    "recruitmentStatus" : "모집중",
-    "currentMembers" : 5,
-    "maxMembers" : 4,
-    "registerDate" : "2023-05-05T15:44:55.6582435",
-    "hashtags" : [ "Hibernate", "JPA", "프로그래밍", "김영한" ],
-    "favoriteMarkingMembers" : [ 10, 40, 40 ]
-  }, {
-    "id" : 3,
-    "name" : "Real MySQL 스터디",
-    "description" : "programming_C.png",
-    "category" : "프로그래밍",
-    "thumbnail" : "programming_HTML.png",
-    "thumbnailBackground" : "#FF0000",
-    "type" : "오프라인",
-    "recruitmentStatus" : "모집중",
-    "currentMembers" : 5,
-    "maxMembers" : 10,
-    "registerDate" : "2023-05-04T15:44:55.6582435",
-    "hashtags" : [ "DBA", "Real MySQL", "DB" ],
-    "favoriteMarkingMembers" : [ ]
-  }, {
-    "id" : 4,
-    "name" : "코틀린 스터디",
-    "description" : "aptitude_ncs_003.png",
-    "category" : "프로그래밍",
-    "thumbnail" : "programming_Baekjoon.png",
-    "thumbnailBackground" : "#FF0000",
-    "type" : "온라인",
-    "recruitmentStatus" : "모집중",
-    "currentMembers" : 2,
-    "maxMembers" : 10,
-    "registerDate" : "2023-05-03T15:44:55.6582435",
-    "hashtags" : [ "코틀린", "프로그래밍", "Kotlin" ],
-    "favoriteMarkingMembers" : [ 52, 91, 43, 21 ]
-  }, {
-    "id" : 5,
-    "name" : "네트워크 스터디",
-    "description" : "네트워크 스터디입니다",
-    "category" : "프로그래밍",
-    "thumbnail" : "language_TEPS.png",
-    "thumbnailBackground" : "#FF0000",
-    "type" : "온라인",
-    "recruitmentStatus" : "모집중",
-    "currentMembers" : 2,
-    "maxMembers" : 7,
-    "registerDate" : "2023-05-02T15:44:55.6582435",
-    "hashtags" : [ "네트워크", "인프라", "OSI 7 Layer", "TCP/IP" ],
-    "favoriteMarkingMembers" : [ 46, 13, 50, 89 ]
-  }, {
-    "id" : 6,
-    "name" : "이펙티브 자바 스터디",
-    "description" : "이펙티브 자바 스터디입니다",
-    "category" : "프로그래밍",
-    "thumbnail" : "interview_samsung.png",
-    "thumbnailBackground" : "#FF0000",
-    "type" : "온라인",
-    "recruitmentStatus" : "모집중",
-    "currentMembers" : 5,
-    "maxMembers" : 8,
-    "registerDate" : "2023-05-01T15:44:55.6582435",
-    "hashtags" : [ "자바", "프로그래밍", "이펙티브 자바" ],
-    "favoriteMarkingMembers" : [ 61, 12, 77, 85 ]
-  }, {
-    "id" : 7,
-    "name" : "AWS 스터디",
-    "description" : "AWS 스터디입니다",
-    "category" : "프로그래밍",
-    "thumbnail" : "language_TOEIC.png",
-    "thumbnailBackground" : "#FF0000",
-    "type" : "오프라인",
-    "recruitmentStatus" : "모집중",
-    "currentMembers" : 0,
-    "maxMembers" : 10,
-    "registerDate" : "2023-04-30T15:44:55.6582435",
-    "hashtags" : [ "클라우드 플랫폼", "배포", "AWS" ],
-    "favoriteMarkingMembers" : [ 6, 49, 65, 17 ]
-  }, {
-    "id" : 8,
-    "name" : "Docker 스터디",
-    "description" : "Docker 스터디입니다",
-    "category" : "프로그래밍",
-    "thumbnail" : "language_TOEFL.png",
-    "thumbnailBackground" : "#FF0000",
-    "type" : "온라인",
-    "recruitmentStatus" : "모집중",
-    "currentMembers" : 2,
-    "maxMembers" : 6,
-    "registerDate" : "2023-04-29T15:44:55.6582435",
-    "hashtags" : [ "컨테이너", "Docker" ],
-    "favoriteMarkingMembers" : [ 3, 73 ]
-  }]);
-
-
-  // const getData = () => {
-  //   sortManage.sortManage(save_Category_Status, save_Sort_Status, recruitStatus, save_province_status, save_city_status).then((list) => {   
-  //     setStudyList(list)
-  //   })
+  const [studyList, setStudyList] = useState([
+  //   {
+  //   "id" : 1,
+  //   "name" : "Spring 스터디",
+  //   "description" : "Spring 스터디입니다",
+  //   "category" : "프로그래밍",
+  //   "thumbnail" : "programming_Java.png",
+  //   "thumbnailBackground" : "#FF0000",
+  //   "type" : "온라인",
+  //   "recruitmentStatus" : "모집중",
+  //   "currentMembers" : 2,
+  //   "maxMembers" : 10,
+  //   "registerDate" : "2023-05-06T15:44:55.6582435",
+  //   "hashtags" : [ "스프링", "Spring", "프로그래밍", "김영한" ],
+  //   "favoriteMarkingMembers" : [ 94, 21, 50, 72, 22 ]
+  // }, {
+  //   "id" : 2,
+  //   "name" : "JPA 스터디",
+  //   "description" : "JPA 스터디입니다",
+  //   "category" : "프로그래밍",
+  //   "thumbnail" : "programming_Java.png",
+  //   "thumbnailBackground" : "#FF0000",
+  //   "type" : "온라인",
+  //   "recruitmentStatus" : "모집중",
+  //   "currentMembers" : 5,
+  //   "maxMembers" : 4,
+  //   "registerDate" : "2023-05-05T15:44:55.6582435",
+  //   "hashtags" : [ "Hibernate", "JPA", "프로그래밍", "김영한" ],
+  //   "favoriteMarkingMembers" : [ 10, 40, 40 ]
+  // }, {
+  //   "id" : 3,
+  //   "name" : "Real MySQL 스터디",
+  //   "description" : "programming_C.png",
+  //   "category" : "프로그래밍",
+  //   "thumbnail" : "programming_HTML.png",
+  //   "thumbnailBackground" : "#FF0000",
+  //   "type" : "오프라인",
+  //   "recruitmentStatus" : "모집중",
+  //   "currentMembers" : 5,
+  //   "maxMembers" : 10,
+  //   "registerDate" : "2023-05-04T15:44:55.6582435",
+  //   "hashtags" : [ "DBA", "Real MySQL", "DB" ],
+  //   "favoriteMarkingMembers" : [ ]
+  // }, {
+  //   "id" : 4,
+  //   "name" : "코틀린 스터디",
+  //   "description" : "aptitude_ncs_003.png",
+  //   "category" : "프로그래밍",
+  //   "thumbnail" : "programming_Baekjoon.png",
+  //   "thumbnailBackground" : "#FF0000",
+  //   "type" : "온라인",
+  //   "recruitmentStatus" : "모집중",
+  //   "currentMembers" : 2,
+  //   "maxMembers" : 10,
+  //   "registerDate" : "2023-05-03T15:44:55.6582435",
+  //   "hashtags" : [ "코틀린", "프로그래밍", "Kotlin" ],
+  //   "favoriteMarkingMembers" : [ 52, 91, 43, 21 ]
+  // }, {
+  //   "id" : 5,
+  //   "name" : "네트워크 스터디",
+  //   "description" : "네트워크 스터디입니다",
+  //   "category" : "프로그래밍",
+  //   "thumbnail" : "language_TEPS.png",
+  //   "thumbnailBackground" : "#FF0000",
+  //   "type" : "온라인",
+  //   "recruitmentStatus" : "모집중",
+  //   "currentMembers" : 2,
+  //   "maxMembers" : 7,
+  //   "registerDate" : "2023-05-02T15:44:55.6582435",
+  //   "hashtags" : [ "네트워크", "인프라", "OSI 7 Layer", "TCP/IP" ],
+  //   "favoriteMarkingMembers" : [ 46, 13, 50, 89 ]
+  // }, {
+  //   "id" : 6,
+  //   "name" : "이펙티브 자바 스터디",
+  //   "description" : "이펙티브 자바 스터디입니다",
+  //   "category" : "프로그래밍",
+  //   "thumbnail" : "interview_samsung.png",
+  //   "thumbnailBackground" : "#FF0000",
+  //   "type" : "온라인",
+  //   "recruitmentStatus" : "모집중",
+  //   "currentMembers" : 5,
+  //   "maxMembers" : 8,
+  //   "registerDate" : "2023-05-01T15:44:55.6582435",
+  //   "hashtags" : [ "자바", "프로그래밍", "이펙티브 자바" ],
+  //   "favoriteMarkingMembers" : [ 61, 12, 77, 85 ]
+  // }, {
+  //   "id" : 7,
+  //   "name" : "AWS 스터디",
+  //   "description" : "AWS 스터디입니다",
+  //   "category" : "프로그래밍",
+  //   "thumbnail" : "language_TOEIC.png",
+  //   "thumbnailBackground" : "#FF0000",
+  //   "type" : "오프라인",
+  //   "recruitmentStatus" : "모집중",
+  //   "currentMembers" : 0,
+  //   "maxMembers" : 10,
+  //   "registerDate" : "2023-04-30T15:44:55.6582435",
+  //   "hashtags" : [ "클라우드 플랫폼", "배포", "AWS" ],
+  //   "favoriteMarkingMembers" : [ 6, 49, 65, 17 ]
+  // }, {
+  //   "id" : 8,
+  //   "name" : "Docker 스터디",
+  //   "description" : "Docker 스터디입니다",
+  //   "category" : "프로그래밍",
+  //   "thumbnail" : "language_TOEFL.png",
+  //   "thumbnailBackground" : "#FF0000",
+  //   "type" : "온라인",
+  //   "recruitmentStatus" : "모집중",
+  //   "currentMembers" : 2,
+  //   "maxMembers" : 6,
+  //   "registerDate" : "2023-04-29T15:44:55.6582435",
+  //   "hashtags" : [ "컨테이너", "Docker" ],
+  //   "favoriteMarkingMembers" : [ 3, 73 ]
   // }
+]);
 
-  // useEffect(() => {
-  //   getData();
+  //로그인 한 사용자라면 정보 불러오기
+  const memberId = localStorage.getItem("id")
 
-  // }, []);
+  useEffect(() => {
+    if(memberId){
+      authApi.get(`members/${memberId}`)
+      .then((response) => {
+        if(response.data.interests[0] == '어학'){
+          setSaveCategoryStatus(1)
+        }else if(response.data.interests[0] == '면접'){
+          setSaveCategoryStatus(2)
+        }else if(response.data.interests[0] == '프로그래밍'){
+          setSaveCategoryStatus(3)
+        }else if(response.data.interests[0] == '인적성&NCS'){
+          setSaveCategoryStatus(4)
+        }else if(response.data.interests[0] == '자격증'){
+          setSaveCategoryStatus(5)
+        }else{
+          setSaveCategoryStatus(6)
+        }
+        setSave_province_status(response.data.province)
+        setSave_city_status(response.data.city)
+
+      })
+      .catch(err => console.log(err))
+    }
+  }, [])
 
 
-  // useEffect(() => {
-  //   getData();
 
-  // }, [save_Category_Status]);
+ //스터디 불러오는 함수 호출 후 리스트 병합
+  const getData = () => {
+    sortManage.sortManage(save_Category_Status, save_Sort_Status, save_page_status, recruitStatus, save_province_status, save_city_status).then((list) => { 
 
-  // useEffect(() => {
-  //   getData();
+      //페이지가 0일때는 처음부터임으로 리스트를 넣음
+      if(save_page_status == 0){
+        setStudyList(list)
+      }
+      //페이지가 0이 아닐때는 추가해야함으로 배열 병함
+      else{
+        let temp = [...studyList] 
+        temp = temp.concat(list);
+        setStudyList(temp)
+      }
+      
+    })
+  }
 
-  // }, [save_Sort_Status]);
+ // 정렬들 페이지가 0이라서 변화가 없다면 함수를 아예 불러주고
+ // 0이나닐때는 페이지를 0으로 바꿔서 무한스크롤 함수에서 api함수를 호출하도록 함
+  useEffect(() => {
+    if(save_page_status == 0){
+      getData();
+    }
+    else{
+      setSave_page_status(0)
+    }
+  }, [save_Category_Status]);
 
-  // useEffect(() => {
-  //   getData();
+  useEffect(() => {
+    if(save_page_status == 0){
+      getData();
+    }
+    else{
+      setSave_page_status(0)
+    }
+  }, [save_Sort_Status]);
 
-  // }, [recruitStatus]);
+  useEffect(() => {
+    if(save_page_status == 0){
+      getData();
+    }
+    else{
+      setSave_page_status(0)
+    }
+  }, [recruitStatus]);
 
+  useEffect(() => {
+    if(save_page_status == 0){
+      getData();
+    }
+    else{
+      setSave_page_status(0)
+    }
+ 
+  }, [save_province_status])
+
+  useEffect(() => {
+    if(save_page_status == 0){
+      getData();
+    }
+    else{
+      setSave_page_status(0)
+    }
+  }, [save_city_status])
+
+    //무한스크롤
+    const [ref, inView] = useInView();
+
+    useEffect(() => {
+      if(inView){
+        setSave_page_status(save_page_status + 1)
+      }
+    }, [inView])
+
+    useEffect(() => {
+      getData();
+    }, [save_page_status])
 
   
   const [studies, setStudies] = useState([
@@ -253,10 +338,8 @@ function Main() {
     setSelectedCategory(category);
   };
 
-  // 필터링된 스터디 데이터 가져오기
-  const filteredStudies = selectedCategory
-    ? studies.filter((study) => study.category === selectedCategory)
-    : studies;
+
+
 
   return (
     <div className='main_main'>
@@ -328,8 +411,11 @@ function Main() {
             ) : (
               <span className="some-area">
                 <RealEstate
-                  setProvince={setProvince}
-                  setCity={setCity}
+                  setProvince={setSave_province_status}
+                  setCity={setSave_city_status}
+                  province={save_province_status}
+                  city={save_city_status}
+            
                 />
               </span>
             )}
@@ -343,12 +429,9 @@ function Main() {
                 selectedOption={selectedOption} // 현재 선택된 값 전달
                 className="some-area"
                 sub1_API={null}
-                sub2_API="on"
-                sub3_API="off"
-                fun={sortManage}
+                sub2_API="online"
+                sub3_API="offline"
                 setRecru_Sort={setRecruitStatus}
-                save_Category_Status={save_Category_Status}
-                save_Sort_Status={save_Sort_Status}
               />
 
               <DropDownSort
@@ -362,8 +445,6 @@ function Main() {
                 selectedOption={selectedOption}
                 className="some-area"
                 setRecru_Sort={setSaveSortStatus}
-                save_Category_Status={save_Category_Status}
-                save_Sort_Status={recruitStatus}
               />
             </span>
           </div>
@@ -393,7 +474,10 @@ function Main() {
           })}
         </div>
        </div>
-    
+
+       {/* 무한 스크롤 */}
+       <div ref={ref}></div>
+
       <div>
         <Foot />
       </div>

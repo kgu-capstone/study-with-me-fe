@@ -11,9 +11,16 @@ const RealEstate = (props) => {
       <select
         name="sido1"
         id="sido1"
-        onChange={console.log(props.sido1)}
+        value={props.province}
+        onChange={(e) => props.setProvince(e.target.value)}
+        className='main_province_choice'
       ></select>
-      <select name="gugun1" id="gugun1"></select>
+      <select 
+        name="gugun1" 
+        id="gugun1"
+        value={props.city}
+        onChange={(e) => props.setCity(e.target.value)}
+      ></select>
     </div>
   );
 };

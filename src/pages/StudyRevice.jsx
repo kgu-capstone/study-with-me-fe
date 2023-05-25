@@ -50,6 +50,7 @@ export default function StudyRevice() {
       //스터디 정보 조회
       authApi(`studies/${stateStudyId}`)
       .then((response) => {
+        console.log(response.data);
 
 
         if(response.data.recruitmentStatus == '모집중'){
@@ -316,7 +317,7 @@ const handleCity = (e) => {
 
 
 
-  // 스터디 만들기 버튼
+  // 스터디 수정 버튼
   const handleReviceStudy = () => {
 
     let data = {}
@@ -368,7 +369,7 @@ const handleCity = (e) => {
 
 
       //온라인 data
-      if(studyOnoff == 'ON'){
+      if(studyOnoff == 'online'){
         data = {
           "name" : studyName,
           "description" : studyInfo,
@@ -399,6 +400,8 @@ const handleCity = (e) => {
           "hashtags" : hashtagarr,
         }
       }
+
+      console.log(data);
 
       //api 발송
       authApi.patch(`studies/${stateStudyId}`, data)
@@ -500,16 +503,7 @@ const handleCity = (e) => {
               <p className={styles.studyWarning}>{studyCategroryWarning}</p>
             </div>
 
-            <div className={styles.number}>
-              <div>참여 인원
-                <img src='./img/info-circle.svg' className={styles.info_circle} /><p className={styles.info_warning}> 2명 - 10명 사이로 입력해주세요.</p>
-              </div>
-              <input id='membernumber' type="text" min={2} max={10} className={styles.study_number_input} 
-                onChange={(e) => handleNumberMax(e.target.value)}
-                value={studyNumber}
-                />
-              <p className={styles.studyWarning}>{studyNumberWarning}</p>
-            </div>
+            
 
             <div id='locationonoff' className={styles.on_offline}>
               <div>온/오프라인 유무</div>
@@ -551,6 +545,17 @@ const handleCity = (e) => {
               :
               <></>
             }
+            
+            <div className={styles.number}>
+              <div>참여 인원
+                <img src='./img/info-circle.svg' className={styles.info_circle} /><p className={styles.info_warning}> 2명 - 10명 사이로 입력해주세요.</p>
+              </div>
+              <input id='membernumber' type="text" min={2} max={10} className={styles.study_number_input} 
+                onChange={(e) => handleNumberMax(e.target.value)}
+                value={studyNumber}
+                />
+              <p className={styles.studyWarning}>{studyNumberWarning}</p>
+            </div>
 
             {remainingOpportunityToUpdateGraduationPolicy > 0 
             ?

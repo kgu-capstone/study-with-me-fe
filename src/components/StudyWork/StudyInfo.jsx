@@ -18,6 +18,7 @@ export default function StudyInfo({studyId}) {
   const [studyMaxMembers, setStudyMaxMembers] = useState(0);
 
   const [isHost, setIsHost] = useState(false)
+  const [isRecruit, setIsRecruit] = useState(false);
 
 
   useEffect(() => {
@@ -29,11 +30,19 @@ export default function StudyInfo({studyId}) {
       setStudyName(response.data.name);
       setStudyCurrentMembers(response.data.currentMembers);
       setStudyMaxMembers(response.data.maxMembers);
+      document.getElementsByClassName(`${styles.info_container}`)[0].style.backgroundColor = `${response.data.thumbnailBackground}`;
+      
+      //팀장인가
       if(memberId == response.data.host.id){
         setIsHost(true)
       }
 
-      document.getElementsByClassName(`${styles.info_container}`)[0].style.backgroundColor = `${response.data.thumbnailBackground}`;
+      //모집중인가
+      if("모집중" == response.data.recruitmentStatus){
+        setIsRecruit(true);
+      }
+
+      
     })
     .catch((e) => {
       console.log(e)
@@ -56,26 +65,28 @@ export default function StudyInfo({studyId}) {
                 <p className={`${styles.bold_24} ${styles.info_studyname}`}>{studyName}</p>
                 <p className={styles.regular_18}>{studyCurrentMembers} / {studyMaxMembers}</p>
               </div>
-              {isHost ?
-              <div className={`${styles.info_right_buttons}`}>       
+              <div className={`${styles.info_right_buttons}`}>  
+              {isHost && isRecruit ? 
+                
                 <NavLink to="/ApplicantList" studyId={studyId} className={styles.applicantList_button}>
                   <div>
                     <img  src={process.env.PUBLIC_URL + '/img/participate_button.png'}
                     className={styles.info_button}/>신청한 사람 보기
                   </div>
                 </NavLink>
-
+                :
+                <></>}
+                {isHost ?         
                 <NavLink to="/StudyRevice" state={{studyId : studyId, studyName : studyName}} className={styles.studyRevice_button}>
                   <div>
                   <img  src={process.env.PUBLIC_URL + '/img/setting_button.png'}
                   className={styles.info_button}/>스터디정보수정
                   </div>
-                </NavLink>
-                </div>
+                </NavLink>              
               :
               <></>
               }
-              
+              </div>
             </div>
           </div>
         </div>

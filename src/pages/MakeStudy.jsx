@@ -353,16 +353,7 @@ const handleCity = (e) => {
               <p className={styles.studyWarning}>{studyCategroryWarning}</p>
             </div>
 
-            <div className={styles.number}>
-              <div>참여 인원
-                <img src='./img/info-circle.svg' className={styles.info_circle} /><p className={styles.info_warning}> 2명 - 10명 사이로 입력해주세요.</p>
-              </div>
-              <input id='membernumber' type="text" min={2} max={10} className={styles.study_number_input} 
-                onChange={(e) => handleNumberMax(e.target.value)}
-                value={studyNumber}
-                />
-              <p className={styles.studyWarning}>{studyNumberWarning}</p>
-            </div>
+            
 
             <div id='locationonoff' className={styles.on_offline}>
               <div>온/오프라인 유무</div>
@@ -404,6 +395,17 @@ const handleCity = (e) => {
               :
               <></>
             }
+            
+            <div className={styles.number}>
+              <div>참여 인원
+                <img src='./img/info-circle.svg' className={styles.info_circle} /><p className={styles.info_warning}> 2명 - 10명 사이로 입력해주세요.</p>
+              </div>
+              <input id='membernumber' type="text" min={2} max={10} className={styles.study_number_input} 
+                onChange={(e) => handleNumberMax(e.target.value)}
+                value={studyNumber}
+                />
+              <p className={styles.studyWarning}>{studyNumberWarning}</p>
+            </div>
 
             <div className={styles.number}>
               <div>졸업 최소 출석 수

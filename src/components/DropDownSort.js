@@ -10,17 +10,9 @@ const DropDownSort = (props) => {
   const handleOptionSelect = (option, sort) => {
     props.setRecru_Sort(sort);
     if (props.title == "모집 최신순") {
-      sortManage.sortManage(
-        props.save_Category_Status,
-        sort,
-        props.save_Sort_Status
-      );
+      props.setRecru_Sort(sort)
     } else {
-      sortManage.sortManage(
-        props.save_Category_Status,
-        props.save_Sort_Status,
-        sort
-      );
+      props.setRecru_Sort(sort)
     }
 
     setSelectedOption(option);

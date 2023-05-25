@@ -6,7 +6,7 @@ import Avatar from "boring-avatars";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Rechart from "../Rechart";
-
+import "../css/Main.css";
 export default function StudyDetail({ studyId }) {
   // 희민님 여기에 스터디 기본 정보 불러오는거 구현하시면 됩니다!
 
@@ -22,6 +22,12 @@ export default function StudyDetail({ studyId }) {
     "열정적으로 활동할 스티디원 모집합니다."
   );
   const [age, setAge] = useState(0);
+
+  // 찜 버튼 구현부분
+  const [like, setLike] = useState(false);
+  const handleToggleLike = () => {
+    setLike((prevLike) => !prevLike);
+  };
 
   useEffect(
     (studyId) => {
@@ -78,8 +84,12 @@ export default function StudyDetail({ studyId }) {
               )}
               <p className="studyDetail_recruit_status_text">모집여부</p>
             </span>
-            <span className="studyDetail_heart">
-              <FontAwesomeIcon icon={faHeart} />
+            <span>
+              <FontAwesomeIcon
+                icon={faHeart}
+                onClick={handleToggleLike}
+                className={`studyDetail_heart ${like ? "liked" : ""}`}
+              />
             </span>
           </div>
 

@@ -267,9 +267,14 @@ link {
   top: 10px;
   right: 10px;
   position: absolute;
-  font-size: 10px;
-  color: #ff5037;
+  font-size: 17px;
+  color: white;
 }
+
+.studyDetail_heart.liked {
+  color: #ff5037; /* or any other color you want for the liked state */
+}
+
 .StudyDetail-img {
   margin-left: 100px;
   border-radius: 70%;
@@ -425,6 +430,6 @@ input {
 
 /* Bar 차트의 막대 색상 변경 */
 
-path {
+path.recharts-rectangle {
   fill: #ff5037;
 }

@@ -8,9 +8,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Rechart from "../Rechart";
 import "../css/Main.css";
 export default function StudyDetail({ studyId }) {
-  // 희민님 여기에 스터디 기본 정보 불러오는거 구현하시면 됩니다!
-
-  const [study_recruit, setStudy_recruit] = useState("모집중"); // 모집중 변수담아주세요
+  const [study_recruit, setStudy_recruit] = useState(true); // 모집중 변수담아주세요
   const [hostName, setHostName] = useState("콩콩이"); // 방장닉네임 담아주세요.
   const [hostid, setHostId] = useState(1); // 방장아이디 담아주세요.
   const [reviews, setReviews] = useState([]);
@@ -22,6 +20,7 @@ export default function StudyDetail({ studyId }) {
     "열정적으로 활동할 스티디원 모집합니다."
   );
   const [age, setAge] = useState(0);
+  const [studyName, setStudyName] = useState("");
 
   // 찜 버튼 구현부분
   const [like, setLike] = useState(false);
@@ -39,6 +38,12 @@ export default function StudyDetail({ studyId }) {
         setPeopleNow(response.data.currentMembers);
         setDescription(response.data.description);
         setAge(response.data.participants.age);
+        setHostId(response.data.host.nickname);
+        setStudy_recruit(
+          response.data.recruitmentStatus ? "모집중" : "모집마감"
+        );
+
+        setStudyName(response.data.name);
 
         document.getElementsByClassName(
           `StudyProfileArea`
@@ -57,15 +62,13 @@ export default function StudyDetail({ studyId }) {
     [studyId]
   );
 
-  //---------------
-
   return (
     <div className="studyDetail_contianer">
       <div className="StudyProfileArea">
         <div className="studydDetail_area_container">
           <div className="StudyDetail-first-line">
             <span className="studyDetail_recruit_status">
-              {study_recruit == "모집중" ? (
+              {study_recruit == true ? (
                 <img
                   width={5}
                   height={5}
@@ -82,7 +85,7 @@ export default function StudyDetail({ studyId }) {
                   alt={study_recruit}
                 />
               )}
-              <p className="studyDetail_recruit_status_text">모집여부</p>
+              <p className="studyDetail_recruit_status_text">{study_recruit}</p>
             </span>
             <span>
               <FontAwesomeIcon
@@ -103,7 +106,7 @@ export default function StudyDetail({ studyId }) {
             <div className="items-detail">
               <div>#{hashtag}</div>
 
-              <p className="studyDetail_study_name"></p>
+              <p className="studyDetail_study_name">{studyName}</p>
               <div>
                 {people_now} / {people}
               </div>

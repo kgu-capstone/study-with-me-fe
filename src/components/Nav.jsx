@@ -68,7 +68,7 @@ export default class Nav extends Component {
               <div>
                 <div className={styles.nav_detail}>
                   <NavLink
-                    to="/SignIn"
+                    to="/sign-in"
                     className={`${styles.nav_detail} ${styles.nav_links}`}
                   >
                     로그인

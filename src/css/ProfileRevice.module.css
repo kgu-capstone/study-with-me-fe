@@ -134,7 +134,7 @@ input::placeholder {
 
 
 
-.selects input[type=checkbox] {
+.category_input {
     display: none;
 }
 

@@ -157,38 +157,29 @@ main {
   padding-top: 10px;
 }
 
+.squarebutton_container {
+
+  margin-top: 100px;
+  float: right;
+}
 
 .squarebutton {
-  left: 965px;
-  width: 204px;
-  height: 53px;
-  border-radius: 15px;
-  position: absolute;
+  border-radius: 10px;
   border-style: solid;
   border-width: 1px;
   border-color: #FF5037;
-  top: 865px;
+  color: #FF5037;
+  background-color: white;
+  padding: 10px 35px;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .squarebutton:hover {
   cursor: pointer;
 }
 
-.createbutton {
-  font-size: 19px;
-  position: relative;
-  width: 147.75px;
-  height: 21.07px;
-  left: 1016px;
-  top: -32px;
 
-  color: #FF5037;
-
-}
-
-.createbutton:hover {
-  cursor: pointer;
-}
 
 .mypage_brush {
   clear: both;

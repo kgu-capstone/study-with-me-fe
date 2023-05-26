@@ -38,6 +38,7 @@ a {
   padding: 9px 25px;
   cursor: pointer;
 }
+
 .category_clicked {
   border-radius: 10px;
   border: 1px solid #ff5037;
@@ -72,10 +73,12 @@ a {
   margin: 50px auto auto;
   position: relative;
 }
+
 .sort_area_inner {
   margin: 0 40px;
   display: flex;
 }
+
 .sort-area {
   display: flex;
   font-size: 16px;
@@ -86,6 +89,7 @@ a {
   padding-top: 7px;
   font: 20px;
 }
+
 .some_area_dummy {
   color: #ffffff;
 }
@@ -147,18 +151,22 @@ footer {
   text-decoration: none;
   display: flex;
 }
+
 .card:active {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16), 0 2px 14px rgba(0, 0, 0, 0.16);
 }
+
 .card-body {
   text-align: center;
   justify-content: center;
 }
+
 .card-title {
   margin-top: 24px;
   font-size: 20px;
   font-family: "Pretendard-Bold";
 }
+
 .card-explanation {
   margin-top: 15px;
   font-size: 16px;
@@ -169,13 +177,16 @@ footer {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
 .card-study_favorite {
   margin-top: 24px;
 }
+
 .card-people {
   margin-top: 5px;
   margin-bottom: 0;
 }
+
 .card_category {
   color: #7d7d7d;
   margin-top: 5px;
@@ -186,6 +197,7 @@ footer {
   right: 20px;
   font-size: 12px;
 }
+
 .card_area_container {
   margin: 50px auto 50px auto;
   width: 1024px;
@@ -220,22 +232,27 @@ footer {
 .card_area_inner {
   margin: 0 20px;
 }
+
 .card-area {
   float: left;
   justify-content: center;
   margin-bottom: 15px;
 }
+
 link {
   color: black;
   text-decoration: none;
 }
+
 .studyDetail_contianer {
-  margin-bottom: 100px;
+  padding-bottom: 500px;
 }
+
 .StudyProfileArea {
   height: 225px;
   background-color: #e6e6e6;
 }
+
 .studydDetail_area_container {
   width: 650px;
   margin: 0px auto;
@@ -256,14 +273,15 @@ link {
   display: flex;
   position: relative;
 }
+
 .studyDetail_recruit_status {
   display: flex;
   margin-top: 10px;
   margin-left: 10px;
 }
-.studyDetail_recruit_status_text {
-}
+
 .studyDetail_heart {
+  cursor: pointer;
   top: 10px;
   right: 10px;
   position: absolute;
@@ -272,7 +290,8 @@ link {
 }
 
 .studyDetail_heart.liked {
-  color: #ff5037; /* or any other color you want for the liked state */
+  color: #ff5037;
+  /* or any other color you want for the liked state */
 }
 
 .StudyDetail-img {
@@ -286,16 +305,27 @@ link {
 }
 
 .items-detail {
-  margin-left: 80px;
+  margin-left: 60px;
 }
+
+.studyDetail_hashtag {
+  color: #7d7d7d;
+}
+
 .studyDetail_study_name {
   font-family: "Pretendard-Bold";
   font-size: 24px;
+  margin-bottom: 0;
+}
+
+.studyDetail_second_bottom {
+  position: absolute;
+  bottom: -35px;
 }
 
 .apply-button-area {
   right: 0;
-  bottom: 0;
+  bottom: -15px;
   position: absolute;
 }
 
@@ -314,13 +344,16 @@ link {
   margin: 50px auto;
   height: 700px;
 }
+
 .contents_inner {
   margin: 0 40px;
 }
+
 @media (max-width: 650px) {
   .contents {
     width: 100%;
   }
+
   .contents_inner {
     margin: 0;
   }
@@ -330,22 +363,27 @@ link {
   margin-top: 15px;
   margin-bottom: 100px;
 }
+
 .studyDetail_study_contents_title {
   font-family: "Pretendard-Bold";
   font-size: 24px;
 }
+
 .studyDetail_study_age_title {
   font-family: "Pretendard-Bold";
   font-size: 24px;
 }
+
 .studyDetail_study_review_title_contianer {
   display: flex;
   position: relative;
 }
+
 .studyDetail_study_review_title {
   font-family: "Pretendard-Bold";
   font-size: 24px;
 }
+
 .studyDetail_study_graduaion {
   right: 0;
   position: absolute;
@@ -422,6 +460,7 @@ input {
 .studyDetail_review_top {
   display: flex;
 }
+
 .studyDetail_review_nick {
   font-family: "Pretendard-Bold";
   font-size: 16px;

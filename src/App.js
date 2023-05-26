@@ -19,6 +19,7 @@ import MakeStudy from "./pages/MakeStudy";
 import StudyDetail from "./pages/StudyDetail";
 import StudyRevice from './pages/StudyRevice';
 import ApplicantList from './pages/ApplicantList';
+import ProfileRevice from './pages/ProfileRevice';
 
 const router = createBrowserRouter([
   {
@@ -29,12 +30,14 @@ const router = createBrowserRouter([
       { path: "SignIn", element: <SignIn /> },
       { path: "SignUp", element: <SignUp /> },
       { path: "MyPage", element: <MyPage /> },
+      { path: "ProfileRevice", element: <ProfileRevice /> },
       { path: "StudyDetail", element: <StudyDetail /> },
 
       { path: "MakeStudy", element: <MakeStudy /> },
 
-      { path: "StudyRevice", element: <StudyRevice />},
-      { path: "ApplicantList", element: <ApplicantList />},
+      { path: "StudyRevice", element: <StudyRevice /> },
+      { path: "ApplicantList", element: <ApplicantList /> },
+
 
     ],
   },

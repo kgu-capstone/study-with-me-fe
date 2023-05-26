@@ -13,46 +13,47 @@ const Card = ({
   card_function,
   study_recruit,
   study_favorite,
-  study_category
+  study_category,
 }) => {
   return (
     <div>
       <Link to="/StudyDetail" style={{ textDecoration: "none" }} studyId={key}>
         <div className="card">
           <div className="card-body">
-            <div className='card_top_container'>
-              {
-                study_recruit == '모집중' ?
-                <img width={5} height={5}
-                className='card_recruit_status_img'
-                src={process.env.PUBLIC_URL + `/img/recruit_on.png`}     
-                alt={study_recruit}
-              />
-              :
-              <img width={5} height={5}
-                className='card_recruit_status_img'
-                src={process.env.PUBLIC_URL + `/img/recruit_off.png`}     
-                alt={study_recruit}
-              />
-              }              
+            <div className="card_top_container">
+              {study_recruit == "모집중" ? (
+                <img
+                  width={5}
+                  height={5}
+                  className="card_recruit_status_img"
+                  src={process.env.PUBLIC_URL + `/img/recruit_on.png`}
+                  alt={study_recruit}
+                />
+              ) : (
+                <img
+                  width={5}
+                  height={5}
+                  className="card_recruit_status_img"
+                  src={process.env.PUBLIC_URL + `/img/recruit_off.png`}
+                  alt={study_recruit}
+                />
+              )}
               {study_recruit}
-              {
-                study_favorite != -1
-                ?
-                  <div className="heart" >
-                    <FontAwesomeIcon icon={faHeart} />
-                  </div>
-                :
-                  <div className="heart" >
-                    <FontAwesomeIcon icon={faHeart} /> {/* 여기에 빈하트 아이콘 넣기 */}
-                  </div>
-              }
-              <div className="heart" >
+              {study_favorite != -1 ? (
+                <div className="heart">
+                  <FontAwesomeIcon icon={faHeart} />
+                </div>
+              ) : (
+                <div className="heart">
+                  <FontAwesomeIcon icon={faHeart} />{" "}
+                  {/* 여기에 빈하트 아이콘 넣기 */}
+                </div>
+              )}
+              <div className="heart">
                 <FontAwesomeIcon icon={faHeart} />
               </div>
-              
             </div>
-            <div className='study_card_img_contianer'>
+            <div className="study_card_img_contianer">
               <img
                 className="study_card_img_setting"
                 src={study_image} // 이미지 주소를 src 속성에 설정
@@ -63,11 +64,9 @@ const Card = ({
             <div className="card-explanation">
               <p>{study_explanation}</p>
             </div>
-           
+
             <p className="card-people">{study_people}</p>
-            <p className='card_category'>{study_category}</p>
-            
-           
+            <p className="card_category">{study_category}</p>
           </div>
         </div>
       </Link>

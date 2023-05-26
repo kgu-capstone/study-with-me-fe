@@ -1,0 +1,211 @@
+/* font */
+
+@font-face {
+    font-family: 'Pretnedard-regular';
+    src: url(../fonts/Pretendard-Regular.woff);
+}
+
+
+/* 여기까지 font  */
+
+body {
+    font-family: 'Pretnedard-regular';
+    margin: 0px;
+}
+
+
+.main_container {
+    width: 415px;
+    margin: 0 auto;
+}
+
+.floor {
+    margin-bottom: 47px;
+}
+
+.logos {
+    margin-top: 90px;
+    margin-bottom: 40px;
+    width: 303px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.description {
+    margin-bottom: 60px;
+    font-size: 24px;
+}
+
+.description>p {
+    text-align: center;
+    font-weight: bold;
+}
+
+.profile {
+    width: 133px;
+    margin: 0 auto 60px auto;
+}
+
+.labels {
+    margin-bottom: 10px;
+}
+
+.inputs {
+    padding: 15px 22px;
+    font-size: 16px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+    height: 50px;
+}
+
+input::placeholder {
+    color: #C5C5C5;
+}
+
+.inputs_readonly {
+    padding: 15px 22px;
+    font-size: 16px;
+    color: #7D7D7D;
+    border: 0;
+    border-radius: 10px;
+}
+
+.inputs_one {
+    width: 415px;
+}
+
+.inputs_two {
+    width: 197px;
+}
+
+.inputs_margin {
+    margin-right: 21px;
+}
+
+.inputs_three {
+    width: 124px;
+}
+
+.button_container {
+    display: flex;
+}
+
+.buttons {
+    justify-self: center;
+    padding: 9px 20px;
+    width: 165px;
+    height: 50px;
+    background-color: #FF5037;
+    border-radius: 10px;
+    color: #FFFFFF;
+    border: 0;
+    font-size: 24px;
+    margin: 30px auto;
+}
+
+.selects input[type=radio] {
+    display: none;
+}
+
+.selects input[type=radio]+label {
+    font-size: 16px;
+    display: inline-block;
+    cursor: pointer;
+    width: 195px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+
+
+.selects input[type=radio]+label {
+    background-color: #ffffff;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+    color: #000000;
+}
+
+.selects input[type=radio]:checked+label {
+    background-color: #FF5037;
+    border-radius: 10px;
+    border: 1px solid #FF5037;
+    color: #FFFFFF;
+}
+
+
+
+.selects input[type=checkbox] {
+    display: none;
+}
+
+.category_display {
+    font-size: 16px;
+    display: inline-block;
+    cursor: pointer;
+    padding-left: 22px;
+    padding-right: 22px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    margin-bottom: 17px;
+    margin-right: 17px;
+
+    background-color: #ffffff;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+    color: #000000;
+}
+
+
+.category_display_checked {
+    font-size: 16px;
+    display: inline-block;
+    cursor: pointer;
+    padding-left: 22px;
+    padding-right: 22px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    margin-bottom: 17px;
+    margin-right: 17px;
+
+    background-color: #FF5037;
+    border-radius: 10px;
+    border: 1px solid #FF5037;
+    color: #FFFFFF;
+}
+
+.info_circle {
+    margin-bottom: 2px;
+}
+
+.info_nick {
+    font-size: 16px;
+    color: #7D7D7D;
+    display: inline;
+    text-align: center;
+}
+
+.validated_message {
+    color: #FF5037;
+}
+
+.email_check_container {
+    text-align: center;
+}
+
+.email_check_button {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.email_check_info_container {
+    margin-top: 15px;
+    text-align: center;
+    color: #7D7D7D;
+}
+
+.email_info_circle {
+    margin-right: 7px;
+
+}

@@ -9,6 +9,11 @@ import { authApi, defaultapi } from '../services/api';
 import StudyProfileChoice from '../components/StudyProfileChoice';
 import { useLocation } from 'react-router';
 
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+
+
 const MakeStudy = () => {
 
   const { pathname } = useLocation();
@@ -23,6 +28,40 @@ const MakeStudy = () => {
 
 
   
+  // 글쓰기 에디터관련
+
+  const customUploadAdapter = (loader) => { // (2)
+    return {
+        upload(){
+            return new Promise ((resolve, reject) => {
+                const formData = new FormData();
+                 loader.file.then( (file) => {
+                        formData.append("filename", file.name);
+                        formData.append("file", file);
+
+                        authApi.post(`image`, formData)
+                            .then((res) => {
+                                resolve({                                  
+                                    default: `${res.data.result}`
+                                });
+                            })
+                            .catch((err)=>{
+                              console.log(err);
+                              reject(err)
+                            });
+                    })
+            })
+        }
+    }
+}
+
+  function uploadPlugin (editor){ // (3)
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+        return customUploadAdapter(loader);
+    }
+}
+
+
 
 
   //카테고리 조회
@@ -334,7 +373,33 @@ const handleCity = (e) => {
 
             <div className={styles.study_info_area}>
               <div>스터디 설명</div>
-              <textarea type="text" id='info' className={styles.study_info_input_box} value={studyInfo} onChange={(e) => setStudyInfo(e.target.value)} />
+              <div className={styles.study_info_input_box}>
+                <CKEditor
+                      
+                      editor={ ClassicEditor }
+                      config={{ // (4)
+                          extraPlugins: [uploadPlugin]
+                      }}
+                      data="<p></p>"
+                      onReady={ editor => {
+                          // You can store the "editor" and use when it is needed.
+                          // console.log( 'Editor is ready to use!', editor );
+                      } }
+                      onChange={ ( event, editor ) => {
+                          const data = editor.getData();
+                          // console.log( { event, editor, data } );
+                          setStudyInfo(data);
+                      } }
+                      onBlur={ ( event, editor ) => {
+                          // console.log( 'Blur.', editor );
+                      } }
+                      onFocus={ ( event, editor ) => {
+                          // console.log( 'Focus.', editor );
+                      } }
+                    />  
+              </div>
+              {/* <textarea type="text" id='info' className={styles.study_info_input_box} value={studyInfo} onChange={(e) => setStudyInfo(e.target.value)} /> */}
+               
               <p className={styles.studyWarning}>{studyInfoWarning}</p>
             </div>
 

@@ -1,0 +1,70 @@
+.reivew_container {
+
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.modal_container {
+    z-index: 1000;
+    position: absolute;
+    width: 824px;
+    height: 493px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.thumbnail {
+    margin-top: 50px;
+}
+
+.title {
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+.input_title {
+    width: 635px;
+    margin: 30px auto 0 auto;
+    text-align: left;
+}
+
+@font-face {
+    font-family: 'Pretnedard-bold';
+    src: url(../fonts/Pretendard-Bold.woff);
+}
+
+
+.span {
+    font-family: 'Pretnedard-bold';
+    margin-right: 10px;
+}
+
+.input {
+    width: 635px;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px;
+    margin-top: 10px;
+    height: 100px;
+    vertical-align: top;
+    padding: 15px;
+    resize: none;
+}
+
+.button {
+    background-color: #FF5037;
+    color: white;
+    border: 0;
+    border-radius: 10px;
+    font-size: 24px;
+    padding: 5px 35px;
+    margin-top: 50px;
+}

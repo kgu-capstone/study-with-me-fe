@@ -268,7 +268,7 @@ function Main() {
               return (
                 <div className="card-area">
                   <Card
-                    key={item.id}
+                    study_id={item.id}
                     study_title={item.name}
                     study_explanation={item.description}
                     study_people={`${item.currentMembers} / ${item.maxMembers}`}

@@ -2,10 +2,11 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import parse from 'html-react-parser';
 
 const Card = ({
   title,
-  key,
+  study_id,
   study_title,
   study_explanation,
   study_people,
@@ -17,7 +18,7 @@ const Card = ({
 }) => {
   return (
     <div>
-      <Link to="/StudyDetail" style={{ textDecoration: "none" }} studyId={key}>
+      <Link to="/StudyDetail" style={{ textDecoration: "none" }} state={{ studyId: study_id }}>
         <div className="card">
           <div className="card-body">
             <div className="card_top_container">
@@ -62,7 +63,7 @@ const Card = ({
             </div>
             <h5 className="card-title">{study_title}</h5>
             <div className="card-explanation">
-              <p>{study_explanation}</p>
+              <p>{parse(study_explanation)}</p>
             </div>
 
             <p className="card-people">{study_people}</p>

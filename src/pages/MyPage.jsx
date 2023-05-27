@@ -72,31 +72,7 @@ function MyPage() {
     // api 함수
 
     // 참여중인 스터디
-    const [participateList, setParticipateList] = useState([{
-        "id": 1,
-        "name": "Spring 스터디",
-        "category": "프로그래밍",
-        "thumbnail": "programming_C.png",
-        "thumbnailBackground": "#F0F5FF"
-    }, {
-        "id": 2,
-        "name": "JPA 스터디",
-        "category": "프로그래밍",
-        "thumbnail": "programming_Java.png",
-        "thumbnailBackground": "#FFF2F2"
-    }, {
-        "id": 3,
-        "name": "Toss 면접 스터디",
-        "category": "면접",
-        "thumbnail": "interview_samsung.png",
-        "thumbnailBackground": "#E3EDFF"
-    }, {
-        "id": 4,
-        "name": "AWS 스터디",
-        "category": "프로그래밍",
-        "thumbnail": "programming_Python.png",
-        "thumbnailBackground": "#EAF1FF"
-    }]);
+    const [participateList, setParticipateList] = useState([]);
 
     const open_active_study = () => {
         openAndClose(0)
@@ -161,210 +137,190 @@ function MyPage() {
 
     return (
 
-        <><div className='mypage_container'>
-            <div>
-                <label for='id' className='nicknameProfile'>{memberNickname}님 프로필</label>
-            </div>
-            <div className='biprof'>
-
-                <div className='biprof_left'>
-                    <div className='avatar_profile'>
-                        <Avatar
-                            size={158}
-                            name={memberNickname}
-                            variant="beam"
-                            colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
-                        />
-                    </div>
+        <>
+            <div className='mypage_container'>
+                <div>
+                    <label for='id' className='nicknameProfile'>{memberNickname}님 프로필</label>
                 </div>
+                <div className='biprof'>
 
-                <div className='biprof_right'>
-                    <div>
-                        <div>
-                            <label for='id' className='label'>닉네임</label>
-                        </div>
-                        <div>
-                            <label for='id' className='label'>이메일</label>
-                        </div>
-                        <div>
-                            <label for='id' className='label'>생년월일</label>
-                        </div>
-                        <div>
-                            <label for='id' className='label'>성별</label>
-                        </div>
-                        <div>
-                            <label for='id' className='label'>지역</label>
-                        </div>
-                        <div>
-                            <label for='id' className='label'>관심사</label>
+                    <div className='biprof_left'>
+                        <div className='avatar_profile'>
+                            <Avatar
+                                size={158}
+                                name={memberNickname}
+                                variant="beam"
+                                colors={["#FF3D1F", "#FFEA52", "#FF5037", "#1FFF98", "#4D2BFF"]}
+                            />
                         </div>
                     </div>
-                    <div className='mypage_labele'>
-                        <div>
-                            <label for='id' className='labele'>{memberNickname}</label>
-                        </div>
-                        <div>
-                            <label for='id' className='labele'>{memberEmail}</label>
-                        </div>
-                        <div>
-                            <label for='id' className='labele'>{memberBirth}</label>
-                        </div>
-                        <div>
-                            <label for='id' className='labele'>{memberGender}</label>
-                        </div>
-                        <div>
-                            <label for='id' className='labele'>{memberRegion.province} {memberRegion.city}</label>
-                        </div>
-                        <div>
-                            <label for='id' className='labele'>{memberInterest}</label>
-                        </div>
 
+                    <div className='biprof_right'>
+                        <div>
+                            <div>
+                                <label for='id' className='label'>닉네임</label>
+                            </div>
+                            <div>
+                                <label for='id' className='label'>이메일</label>
+                            </div>
+                            <div>
+                                <label for='id' className='label'>생년월일</label>
+                            </div>
+                            <div>
+                                <label for='id' className='label'>성별</label>
+                            </div>
+                            <div>
+                                <label for='id' className='label'>지역</label>
+                            </div>
+                            <div>
+                                <label for='id' className='label'>관심사</label>
+                            </div>
+                        </div>
+                        <div className='mypage_labele'>
+                            <div>
+                                <label for='id' className='labele'>{memberNickname}</label>
+                            </div>
+                            <div>
+                                <label for='id' className='labele'>{memberEmail}</label>
+                            </div>
+                            <div>
+                                <label for='id' className='labele'>{memberBirth}</label>
+                            </div>
+                            <div>
+                                <label for='id' className='labele'>{memberGender}</label>
+                            </div>
+                            <div>
+                                <label for='id' className='labele'>{memberRegion.province} {memberRegion.city}</label>
+                            </div>
+                            <div>
+                                <label for='id' className='labele'>{
+                                    memberInterest && memberInterest.map((item, index) => {
+                                        return (
+                                            <>  {
+                                                index + 1 === memberInterest.length
+                                                    ?
+                                                    <>{item}</>
+                                                    :
+                                                    <>{item},&nbsp;&nbsp;</>
+                                            }
+
+                                            </>
+                                        )
+                                    })}</label>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
 
-            </div>
-            <Link to="/ProfileRevice" state={{ memberId: memberId }} className='mypage_revice_navlink'>
-                <div className='mypage_brush'>
-                    <img src={process.env.PUBLIC_URL + '/img/brush-2.png'} />
-                    &nbsp;&nbsp;프로필 수정
                 </div>
-            </Link>
-            <div className='mypage_study_container'>
+                <Link to="/ProfileRevice" state={{ memberId: memberId }} className='mypage_revice_navlink'>
+                    <div className='mypage_brush'>
+                        <img src={process.env.PUBLIC_URL + '/img/brush-2.png'} />
+                        &nbsp;&nbsp;프로필 수정
+                    </div>
+                </Link>
+                <div className='mypage_study_container'>
 
-                <div className="mypage_square">
-                    <div className='astudy' onClick={() => open_active_study()}>활동중인 스터디 <img className='astudyarrow' src={`${process.env.PUBLIC_URL}/img/${arrow_img[0]}.png`} /></div>
-                    <div className={astudy_isopen_css[0]}>
-                        {
-                            participateList && participateList.map((item) => {
+                    <div className="mypage_square">
+                        <div className='astudy' onClick={() => open_active_study()}>활동중인 스터디 <img className='astudyarrow' src={`${process.env.PUBLIC_URL}/img/${arrow_img[0]}.png`} /></div>
+                        <div className={astudy_isopen_css[0]}>
+                            {
+                                participateList && participateList.map((item) => {
+                                    return (
+
+                                        <div className='astudy_element'>
+                                            <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
+                                            <NavLink to="/StudyWork" studyId={item.id} className='astudy_navlink'>
+                                                <p className='astudy_name'>{item.name}</p>
+                                            </NavLink>
+                                            <p className='astudy_category'>{item.category}</p>
+                                        </div>
+
+                                    )
+                                })
+                            }
+
+                        </div>
+                    </div>
+
+                    <div className="mypage_square">
+                        <div className='astudy' onClick={() => open_closed_study()}>졸업한 스터디 <img className='astudyarrow' src={`${process.env.PUBLIC_URL}/img/${arrow_img[1]}.png`} /></div>
+                        <div className={astudy_isopen_css[1]}>
+                            {
+                                closedList && closedList.map((item) => {
+                                    return (
+                                        <>
+                                            <div className='astudy_element'>
+                                                <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
+                                                <NavLink to="/StudyWork" studyId={item.id} className='astudy_navlink'>
+                                                    <p className='astudy_name'>{item.name}</p>
+                                                </NavLink>
+                                                <p className='astudy_review' onClick={() => setReview_modal_on(true)}>리뷰쓰기</p>
+                                                <div>
+                                                    {review_modal_on && <StudyReview closeModal={setReview_modal_on} studyId={item.id} studyName={item.name} studyThumbnail={item.thumbnail}></StudyReview>}
+                                                </div>
+                                                <p className='astudy_category'>{item.category}</p>
+
+
+                                            </div>
+
+                                        </>
+
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+
+                    <div className="mypage_square">
+                        <div className='astudy' onClick={() => open_apply_study()}>신청한 스터디 <img className='astudyarrow' src={`${process.env.PUBLIC_URL}/img/${arrow_img[2]}.png`} /></div>
+                        <div className={astudy_isopen_css[2]}>
+                            {applyStudy && applyStudy.map((item) => {
                                 return (
 
                                     <div className='astudy_element'>
                                         <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
-                                        <NavLink to="/StudyWork" studyId={item.id} className='astudy_navlink'>
+                                        <NavLink to="/StudyDetail" studyId={item.id} className='astudy_navlink'>
+                                            <p className='astudy_name'>{item.name}</p>
+                                        </NavLink>
+                                        <p className='astudy_category'>{item.category}</p>
+                                    </div>
+                                )
+                            })}
+
+                        </div>
+                    </div>
+
+                    <div className="mypage_square">
+                        <div className='astudy' onClick={() => open_favorite_study()}>찜한 스터디 <img className='astudyarrow' src={`${process.env.PUBLIC_URL}/img/${arrow_img[3]}.png`} /></div>
+                        <div className={astudy_isopen_css[3]}>
+                            {favoriteStudy && favoriteStudy.map((item) => {
+                                return (
+                                    <div className='astudy_element'>
+                                        <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
+                                        <NavLink to="/StudyDetail" studyId={item.id} className='astudy_navlink'>
                                             <p className='astudy_name'>{item.name}</p>
                                         </NavLink>
                                         <p className='astudy_category'>{item.category}</p>
                                     </div>
 
                                 )
-                            })
-                        }
-
-                    </div>
-                </div>
-
-                <div className="mypage_square">
-                    <div className='astudy' onClick={() => open_closed_study()}>졸업한 스터디 <img className='astudyarrow' src={`${process.env.PUBLIC_URL}/img/${arrow_img[1]}.png`} /></div>
-                    <div className={astudy_isopen_css[1]}>
-                        {
-                            closedList && closedList.map((item) => {
-                                return (
-                                    <>
-                                        <div className='astudy_element'>
-                                            <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
-                                            <NavLink to="/StudyWork" studyId={item.id} className='astudy_navlink'>
-                                                <p className='astudy_name'>{item.name}</p>
-                                            </NavLink>
-                                            <p className='astudy_review' onClick={() => setReview_modal_on(true)}>리뷰쓰기</p>
-                                            <div>
-                                                {review_modal_on && <StudyReview closeModal={setReview_modal_on} studyId={item.id} studyName={item.name} studyThumbnail={item.thumbnail}></StudyReview>}
-                                            </div>
-                                            <p className='astudy_category'>{item.category}</p>
-
-
-                                        </div>
-
-                                    </>
-
-                                )
-                            })
-                        }
-                    </div>
-                </div>
-
-                <div className="mypage_square">
-                    <div className='astudy' onClick={() => open_apply_study()}>신청한 스터디 <img className='astudyarrow' src={`${process.env.PUBLIC_URL}/img/${arrow_img[2]}.png`} /></div>
-                    <div className={astudy_isopen_css[2]}>
-                        {applyStudy && applyStudy.map((item) => {
-                            return (
-
-                                <div className='astudy_element'>
-                                    <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
-                                    <NavLink to="/StudyDetail" studyId={item.id} className='astudy_navlink'>
-                                        <p className='astudy_name'>{item.name}</p>
-                                    </NavLink>
-                                    <p className='astudy_category'>{item.category}</p>
-                                </div>
-                            )
-                        })}
-
-                    </div>
-                </div>
-
-                <div className="mypage_square">
-                    <div className='astudy' onClick={() => open_favorite_study()}>찜한 스터디 <img className='astudyarrow' src={`${process.env.PUBLIC_URL}/img/${arrow_img[3]}.png`} /></div>
-                    <div className={astudy_isopen_css[3]}>
-                        {favoriteStudy && favoriteStudy.map((item) => {
-                            return (
-                                <div className='astudy_element'>
-                                    <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
-                                    <NavLink to="/StudyDetail" studyId={item.id} className='astudy_navlink'>
-                                        <p className='astudy_name'>{item.name}</p>
-                                    </NavLink>
-                                    <p className='astudy_category'>{item.category}</p>
-                                </div>
-
-                            )
-                        })}
-                    </div>
-                </div>
-            </div>
-
-        </div >
-
-            {/* <div class="square"></div>
-                    <div onClick={() => my_participate()}>
-                        <label for='id' className='astudy'>활동중인 스터디</label>
-                    </div>
-                    <div>
-                        <label for='id' className='astudyarrow'>^</label>
-                    </div>
-                    <div className='astudyprof1'></div>                  
-                    <div>
-                        <label for='id' className='astudy1'>스터디 이름</label>
-                    </div>
-                    <div>
-                        <label for='id' className='astudy11'>#분야</label>
-                    </div>
-                    <div className='astudyprof2'></div>
-                    <div>
-                        <label for='id' className='astudy2'>스터디 이름</label>
-                    </div>
-                    <div>
-                        <label for='id' className='astudy22'>#분야</label>
-                    </div>
-                    <div class="square1"></div>
-                    <div>
-                        <label for='id' className='bstudy'>활동이 끝난 스터디</label>
-                    </div>
-                    <div>
-                        <label for='id' className='bstudyarrow'>v</label>
-                    </div>
-                    <div class="square2"></div>
-                    <div>
-                        <label for='id' className='cstudy'>찜한 스터디</label>
-                    </div>
-                    <div>
-                        <label for='id' className='cstudyarrow'>v</label>
-                    </div> */}
-            {/* <div>
-                    <Link to="/MakeStudy">
-                        <div class='squarebutton'></div>
-                        <div>
-                            <label for='id' className='createbutton'>스터디 만들기</label>
+                            })}
                         </div>
-                    </Link>
-            </div> */}
+                    </div>
+
+
+
+                    <div>
+                        <Link to="/MakeStudy">
+                            <div className='squarebutton_container'>
+                                <button class='squarebutton'>스터디 만들기</button>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+
+            </div>
         </>
 
 

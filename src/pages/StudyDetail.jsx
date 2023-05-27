@@ -7,10 +7,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Rechart from "../Rechart";
 import "../css/Main.css";
-export default function StudyDetail({ studyId }) {
-  const [study_recruit, setStudy_recruit] = useState(true); // 모집중 변수담아주세요
+import { useLocation } from 'react-router';
+export default function StudyDetail() {
+
+  // 넘어올 정보
+  const location = useLocation()
+  const studyId = location.state?.studyId
+
+
+  const [study_recruit, setStudy_recruit] = useState("모집중"); // 모집중 변수담아주세요
   const [hostName, setHostName] = useState("콩콩이"); // 방장닉네임 담아주세요.
   const [hostid, setHostId] = useState(1); // 방장아이디 담아주세요.
+
+  const [thumbnail, setThumbnail] = useState('');
   const [reviews, setReviews] = useState([]);
   const [graduateCount, setGraduateCount] = useState(0);
   const [hashtag, setHashtag] = useState();
@@ -29,7 +38,7 @@ export default function StudyDetail({ studyId }) {
   };
 
   useEffect(
-    (studyId) => {
+    () => {
       // 기본정보 api
       authApi.get(`studies/${studyId}`).then((response) => {
         // 희민 TODO... 나머지 정보들 useState에 저장 후 보이도록 설정
@@ -38,13 +47,16 @@ export default function StudyDetail({ studyId }) {
         setPeopleNow(response.data.currentMembers);
         setDescription(response.data.description);
         setAge(response.data.participants.age);
-        setHostId(response.data.host.nickname);
+
+        setHostName(response.data.host.nickname)
+        setHostId(response.data.host.id);
         setStudy_recruit(
           response.data.recruitmentStatus ? "모집중" : "모집마감"
         );
 
         setStudyName(response.data.name);
 
+        setThumbnail(response.data.thumbnail);
         document.getElementsByClassName(
           `StudyProfileArea`
         )[0].style.backgroundColor = `${response.data.thumbnailBackground}`;
@@ -68,7 +80,7 @@ export default function StudyDetail({ studyId }) {
         <div className="studydDetail_area_container">
           <div className="StudyDetail-first-line">
             <span className="studyDetail_recruit_status">
-              {study_recruit == true ? (
+              {study_recruit === "모집중" ? (
                 <img
                   width={5}
                   height={5}
@@ -100,19 +112,27 @@ export default function StudyDetail({ studyId }) {
             <img
               width={132}
               height={132}
-              src="../img/FFFFFF.png"
+              src={process.env.PUBLIC_URL + `/img/studyprofiles/${thumbnail}`}
               className="StudyDetail-img"
             />
             <div className="items-detail">
-              <div>#{hashtag}</div>
-
               <p className="studyDetail_study_name">{studyName}</p>
-              <div>
-                {people_now} / {people}
+              <div className='studyDetail_hashtag'>{hashtag && hashtag.map((item) => {
+                return (
+                  <>#{item}&nbsp;&nbsp;
+                  </>
+                )
+              })}</div>
+
+              <div className='studyDetail_second_bottom'>
+                <div>
+                  {people_now} / {people}
+                </div>
+                <div>
+                  <UserName userNickname={hostName} userId={hostid} />
+                </div>
               </div>
-              <div>
-                <UserName userNickname={hostName} userId={hostid} />
-              </div>
+
             </div>
             <div className="apply-button-area">
               <button className="apply-button ">지원하기</button>
@@ -146,62 +166,39 @@ export default function StudyDetail({ studyId }) {
             </div>
 
             <div>
-              {reviews.map((review) => {
-                <div className="studyDetail_review_each_container">
-                  <div className="studyDetail_review_top">
+              {reviews && reviews.map((review) => {
+                return (
+                  <div className="studyDetail_review_each_container">
+                    <div className="studyDetail_review_top">
+                      <div>
+                        <Avatar
+                          size={40}
+                          name={review.reviewer.nickname}
+                          variant="beam"
+                          colors={[
+                            "#FF3D1F",
+                            "#FFEA52",
+                            "#FF5037",
+                            "#1FFF98",
+                            "#4D2BFF",
+                          ]}
+                        />
+                      </div>
+                      <div className="studyDetail_review_nick">
+                        <UserName
+                          userNickname={review.reviewer.nickname}
+                          userId={review.reviewer.hostid}
+                        />
+                      </div>
+                    </div>
                     <div>
-                      <Avatar
-                        size={40}
-                        name={review.reviewer.nickname}
-                        variant="beam"
-                        colors={[
-                          "#FF3D1F",
-                          "#FFEA52",
-                          "#FF5037",
-                          "#1FFF98",
-                          "#4D2BFF",
-                        ]}
-                      />
-                    </div>
-                    <div className="studyDetail_review_nick">
-                      <UserName
-                        userNickname={review.reviewer.nickname}
-                        userId={review.reviewer.hostid}
-                      />
+                      {review.content}
                     </div>
                   </div>
-                  <div>
-                    리뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰
-                  </div>
-                </div>;
+                )
               })}
 
-              {/* ---------------최종 올릴 때 아래 내용은 지울 것--------------*/}
-              <div className="studyDetail_review_each_container">
-                <div className="studyDetail_review_top">
-                  <div>
-                    <Avatar
-                      size={40}
-                      name="더미"
-                      variant="beam"
-                      colors={[
-                        "#FF3D1F",
-                        "#FFEA52",
-                        "#FF5037",
-                        "#1FFF98",
-                        "#4D2BFF",
-                      ]}
-                    />
-                  </div>
-                  <div className="studyDetail_review_nick">
-                    <UserName userNickname={"더미"} userId={1} />
-                  </div>
-                </div>
-                <div>
-                  리뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰뷰
-                </div>
-              </div>
-              {/* -----------------------------------------------------*/}
+
             </div>
           </div>
         </div>

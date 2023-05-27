@@ -11,43 +11,7 @@ export default function ProfileRevice(props) {
     let location = useLocation();
     const memberId = location.state.memberId
 
-    //const axios.get()
-    let [memberName, setMemberName] = useState('');
-    let [memberNickname, setMemberNickname] = useState('');
-    let [memberEmail, setMemberEmail] = useState('');
-    let [memberPhone, setmemberPhone] = useState('');
-    let [memberBirth, setMemberBirth] = useState('');
-    let [memberGender, setMemberGender] = useState('');
-    let [memberRegion, setMemberRegion] = useState('');
-    let [memberInterest, setMemberInterest] = useState('');
 
-
-    useEffect(() => {
-        authApi.get(`members/${memberId}`)
-            .then((response) => {
-                setMemberName(response.data.name);
-                setMemberNickname(response.data.nickname);
-                setMemberEmail(response.data.email);
-                setmemberPhone(response.data.phone)
-                setMemberBirth(response.data.birth);
-                setMemberGender(response.data.gender);
-                setMemberRegion(response.data.region);
-                setMemberInterest(response.data.interests);
-                handleCity(response.data.region.province);
-                setTown(response.data.region.city);
-                response.data.interests.map((item, index) => {
-                    handelCategory(item, category_list[index].isChecked)
-                })
-
-                if (response.data.emailOptIn) {
-                    setEmail_check_css('email_check_true.png');
-                    setEmail_check(true)
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }, [])
 
 
     // 닉네임 + 프로필바꾸기
@@ -114,58 +78,6 @@ export default function ProfileRevice(props) {
         setTown(townList[citys.indexOf(e)][0]);
     }
 
-
-    // 관심분야 카테고리
-
-    //카테고리 조회
-    let [category_list, setCategory_list] = useState([]);
-    const category_find = () => {
-        let tempcss = [...cateogoryCss]
-        defaultapi.get(`categories`)
-            .then((response) => {
-                setCategory_list(response.data.result);
-
-                for (let i = 0; i < category_list.length; i++) { //check박스
-                    category_list[i].isChecked = false;
-                    tempcss[i] = 'category_display'
-                }
-
-                setCateGoryCss(tempcss)
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-    }
-    //사용자 관심분야 넣기
-    const [categories, setCategories] = useState([]);
-
-    const [message_nick, setMessage_nick] = useState('');
-    const [message_tel, setMessage_tel] = useState('');
-    const [message_gender, setMessage_gender] = useState('');
-    const [message_category, setMessage_category] = useState('');
-
-
-    const [cateogoryCss, setCateGoryCss] = useState([]);
-
-    const handelCategory = (e, checked, index) => { // 카테고리 배열에
-        if (categories.includes(parseInt(e))) { // 있으면 삭제
-            setCategories(categories.filter(categories => categories !== parseInt(e)));
-            let temp = [...cateogoryCss]
-            temp[index] = 'category_display'
-            setCateGoryCss(temp);
-        } else { // 없으면 추가
-            categories.push(parseInt(e));
-            checked = true; //checkbox
-            let temp = [...cateogoryCss]
-            temp[index] = 'category_display_checked'
-            setCateGoryCss(temp);
-        }
-        categories.sort();
-
-    }
-
-    useEffect(category_find, []);
-
     // 이메일 수신 동의 체크박스 바꾸기
     const [email_check_css, setEmail_check_css] = useState('email_check_false.png');
     const [email_check, setEmail_check] = useState(false);
@@ -179,6 +91,132 @@ export default function ProfileRevice(props) {
             setEmail_check(false)
         }
     }
+
+
+
+
+
+    // 관심분야 카테고리
+
+
+    //카테고리 조회
+    let [category_list, setCategory_list] = useState([]);
+    let [category_css, setCategory_css] = useState([]);
+
+    //카테고리 css 임시배열
+    let tempcss = []
+
+    const category_find = () => {
+        defaultapi.get(`categories`)
+            .then((response) => {
+                setCategory_list(response.data.result);
+
+                for (let i = 0; i < category_list.length; i++) { //check박스
+
+                    tempcss[i] = styles.category_display
+
+                }
+                setCategory_css(tempcss)
+                console.log(tempcss);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    useEffect(() => {
+        category_find()
+        console.log('카테고리가 바뀌는건 아니잖아');
+    }, [])
+
+
+    //사용자 관심분야 넣기
+    const [categories, setCategories] = useState([]);
+
+    const [message_nick, setMessage_nick] = useState('');
+    const [message_tel, setMessage_tel] = useState('');
+    const [message_gender, setMessage_gender] = useState('');
+    const [message_category, setMessage_category] = useState('');
+
+
+
+
+    const handelCategory = (e, index) => { // 카테고리 배열에
+
+        let tempcss = [...category_css]
+        let tempvalue = [...categories]
+        if (tempvalue.includes(parseInt(e))) { // 있으면 삭제
+            tempvalue = tempvalue.filter(tempvalue => tempvalue !== parseInt(e))
+
+            //css영역
+            tempcss[index] = styles.category_display
+        } else { // 없으면 추가
+
+            tempvalue.push(parseInt(e))
+
+            //css영역
+            tempcss[index] = styles.category_display_checked
+
+        }
+        tempvalue.sort();
+
+        setCategories(tempvalue)
+        setCategory_css(tempcss)
+
+
+    }
+
+
+
+
+
+
+    //const axios.get()
+    let [memberName, setMemberName] = useState('');
+    let [memberNickname, setMemberNickname] = useState('');
+    let [memberEmail, setMemberEmail] = useState('');
+    let [memberPhone, setmemberPhone] = useState('');
+    let [memberBirth, setMemberBirth] = useState('');
+    let [memberGender, setMemberGender] = useState('');
+    let [memberRegion, setMemberRegion] = useState('');
+    let [memberInterest, setMemberInterest] = useState('');
+
+
+    useEffect(() => {
+        authApi.get(`members/${memberId}`)
+            .then((response) => {
+                setMemberName(response.data.name);
+                setMemberNickname(response.data.nickname);
+                setMemberEmail(response.data.email);
+                setmemberPhone(response.data.phone)
+                setMemberBirth(response.data.birth);
+                setMemberGender(response.data.gender);
+                setMemberRegion(response.data.region);
+                setMemberInterest(response.data.interests);
+                handleCity(response.data.region.province);
+                setTown(response.data.region.city);
+
+                const category = response.data.interests
+                let tempvalue = [...categories]
+                category_list.map((item) => {
+                    if (category.includes(item.name)) {
+                        tempvalue.push(parseInt(item.id)) // 진짜 값
+                        setCategories(tempvalue)
+
+                        tempcss[item.id - 1] = styles.category_display_checked //css
+                        setCategory_css(tempcss)
+
+                    }
+                })
+                if (response.data.emailOptIn) {
+                    setEmail_check_css('email_check_true.png');
+                    setEmail_check(true)
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, [category_list])
 
 
     return (
@@ -276,9 +314,11 @@ export default function ProfileRevice(props) {
                             관심분야
                         </div>
                         <div className={styles.selects}>
-                            {category_list.map((data, category_index) => {
+                            {category_list.map((data, index) => {
                                 return (
-                                    <><input type='checkbox' name='category' id={data.id} className={`${styles.checkboxs} ${cateogoryCss[category_index]}`} value={data.id} key={data.id} checked={data.isChecked} onClick={(e) => handelCategory(e.target.value, data.isChecked, category_index)} /><label htmlFor={data.id}>{data.name}</label></>
+                                    <><input type='checkbox' name='category' id={data.id} className={styles.category_input} value={data.id} key={data.id} checked={data.isChecked}
+                                        onClick={(e) => handelCategory(e.target.value, index)} />
+                                        <label className={`${styles.category_display} ${category_css[index]}`} htmlFor={data.id}>{data.name}</label ></>
                                 );
                             })}
                             <p className={styles.validated_message}>{message_category}</p>
@@ -311,6 +351,6 @@ export default function ProfileRevice(props) {
                 </div>
 
             </div>
-        </div>
+        </div >
     )
 }

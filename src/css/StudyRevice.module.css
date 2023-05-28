@@ -1,36 +1,37 @@
-
 /* font */
 
 @font-face {
-    font-family: 'Pretnedard-regular';
-    src: url(../fonts/Pretendard-Regular.woff);
+  font-family: 'Pretnedard-regular';
+  src: url(../fonts/Pretendard-Regular.woff);
 }
 
-@font-face{
-    font-family: 'Pretendard-Bold';
-    src: url(../fonts/Pretendard-Bold.woff);
+@font-face {
+  font-family: 'Pretendard-Bold';
+  src: url(../fonts/Pretendard-Bold.woff);
 }
-body{
+
+body {
   margin: 0 auto;
-  
+
 }
-body:no-scroll{
+
+body:no-scroll {
   overflow: hidden;
 }
 
-.logos{
-    margin-top: 50px;
+.logos {
+  margin-top: 50px;
 }
 
-.title{
-    font-family: 'Pretendard-Bold';
-    margin-top: 40px;
-    font-size: 24px;
+.title {
+  font-family: 'Pretendard-Bold';
+  margin-top: 40px;
+  font-size: 24px;
 }
 
-.thumbnail{
-    margin-top: 60px;
-    cursor: pointer;
+.thumbnail {
+  margin-top: 60px;
+  cursor: pointer;
 
 }
 
@@ -45,22 +46,23 @@ body:no-scroll{
 
 
 
-.recruit_title{
+.recruit_title {
   margin-top: 50px;
   margin-bottom: 20px;
   color: #FF5037;
 }
 
-.recruit_toggles_contianer{
- margin-top: 10px; 
+.recruit_toggles_contianer {
+  margin-top: 10px;
 }
 
 /* 토글 선택창 구현 */
 
-.recruit_toggles_input{
+.recruit_toggles_input {
   display: none;
 }
-.recruit_toggle_on_label{
+
+.recruit_toggle_on_label {
   cursor: pointer;
   width: 98px;
   height: 50px;
@@ -75,7 +77,8 @@ body:no-scroll{
   color: #000000;
 
 }
-.recruit_toggle_on_checked{
+
+.recruit_toggle_on_checked {
   cursor: pointer;
   width: 98px;
   height: 50px;
@@ -89,7 +92,7 @@ body:no-scroll{
   box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.25);
 }
 
-.recruit_toggle_off_label{
+.recruit_toggle_off_label {
   cursor: pointer;
   width: 98px;
   height: 50px;
@@ -104,7 +107,8 @@ body:no-scroll{
   color: #000000;
 
 }
-.recruit_toggle_off_checked{
+
+.recruit_toggle_off_checked {
   cursor: pointer;
   width: 98px;
   height: 50px;
@@ -127,25 +131,26 @@ body:no-scroll{
   font-size: 16px;
 }
 
-.study_name_input{
-    margin-top: 10px;
-    padding: 15px 22px;
-    font-size: 16px;
-    border: 1px solid #C5C5C5;
-    border-radius: 10px;
-    height: 50px;
-    width: 415px;
+.study_name_input {
+  margin-top: 10px;
+  padding: 15px 22px;
+  font-size: 16px;
+  border: 1px solid #C5C5C5;
+  border-radius: 10px;
+  height: 50px;
+  width: 415px;
 }
 
-.info_circle{
-    margin-bottom: 2px;
-    margin-left: 12px;
+.info_circle {
+  margin-bottom: 2px;
+  margin-left: 12px;
 }
-.info_warning{
-    font-size: 16px;
-    color: #7D7D7D;
-    display: inline;
-    text-align: center;
+
+.info_warning {
+  font-size: 16px;
+  color: #7D7D7D;
+  display: inline;
+  text-align: center;
 }
 
 .study_info_area {
@@ -154,14 +159,11 @@ body:no-scroll{
 }
 
 .study_info_input_box {
-    width: 415px;
-    height: 140px;
-    margin-top: 10px;
-    padding: 17px 22px;
-    font-size: 16px;
-    border: 1px solid #C5C5C5;
-    border-radius: 10px;
-    resize: none;
+  width: 415px;
+  margin-top: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  resize: none;
 }
 
 .number {
@@ -169,24 +171,24 @@ body:no-scroll{
   margin-top: 40px;
 }
 
-.study_number_input{
-    margin-top: 10px;
-    padding: 15px 22px;
-    font-size: 16px;
-    border: 1px solid #C5C5C5;
-    border-radius: 10px;
-    height: 50px;
-    width: 415px;
+.study_number_input {
+  margin-top: 10px;
+  padding: 15px 22px;
+  font-size: 16px;
+  border: 1px solid #C5C5C5;
+  border-radius: 10px;
+  height: 50px;
+  width: 415px;
 }
 
-.study_category_area{
+.study_category_area {
   text-align: left;
   margin-top: 40px;
   width: 415px;
 }
 
 
-.category_input{
+.category_input {
   display: none;
 }
 
@@ -218,7 +220,7 @@ body:no-scroll{
   color: #FFFFFF;
 } */
 
-.category_label{
+.category_label {
   font-size: 16px;
   display: inline-block;
   cursor: pointer;
@@ -235,7 +237,8 @@ body:no-scroll{
   border-radius: 10px;
   color: #000000;
 }
-.check_category_label{
+
+.check_category_label {
   font-size: 16px;
   display: inline-block;
   cursor: pointer;
@@ -268,13 +271,13 @@ body:no-scroll{
   margin-top: 40px;
 }
 
-.selects{
-    margin-top: 10px;
+.selects {
+  margin-top: 10px;
 }
 
 
-.selects input[type=radio]{
-    display: none;
+.selects input[type=radio] {
+  display: none;
 }
 
 /* .selects input[type=radio]+label{
@@ -301,23 +304,25 @@ body:no-scroll{
     border: 1px solid #FF5037;
     color: #FFFFFF;
 } */
-.rightMargin{
-    margin-right: 25px;
+.rightMargin {
+  margin-right: 25px;
 }
-.radios{
+
+.radios {
   font-size: 16px;
-    display: inline-block;
-    cursor: pointer;
-    width: 195px;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    background-color: #ffffff;
-    border: 1px solid #C5C5C5;
-    border-radius: 10px;
-    color: #000000;
+  display: inline-block;
+  cursor: pointer;
+  width: 195px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #C5C5C5;
+  border-radius: 10px;
+  color: #000000;
 }
-.check_radios{
+
+.check_radios {
   font-size: 16px;
   display: inline-block;
   cursor: pointer;
@@ -332,15 +337,16 @@ body:no-scroll{
 }
 
 
-.citychoice_container{
+.citychoice_container {
   text-align: left;
   margin-top: 40px;
 }
-.citychoice{
+
+.citychoice {
   margin-top: 10px;
 }
 
-.city_inputs{
+.city_inputs {
   padding: 15px 22px;
   font-size: 16px;
   border: 1px solid #C5C5C5;
@@ -355,10 +361,11 @@ body:no-scroll{
   text-align: left;
   margin-top: 40px;
   width: 415px;
-  
+
 }
-.hash_tag_input_container{
- margin-bottom: 5px;
+
+.hash_tag_input_container {
+  margin-bottom: 5px;
 }
 
 
@@ -375,33 +382,38 @@ body:no-scroll{
   padding: 2px;
 }
 
+.make_study_button_nav {
+  text-decoration: none;
+  color: #000000;
+}
 
-
-  .studyWarning{
-    margin: 5px;
-    color: #ff5037;
+.studyWarning {
+  margin: 5px;
+  color: #ff5037;
 }
 
 
-.finish_button_container{
-    margin-top: 100px;
-    margin-bottom: 300px;
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
+.finish_button_container {
+  margin-top: 100px;
+  margin-bottom: 300px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
 }
-.finish_button{
-    width: 175px;
-    height: 50px;
-    padding: 11px;
-    color: #FF5037;
-    border: solid 1px #FF5037;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
+
+.finish_button {
+  width: 175px;
+  height: 50px;
+  padding: 11px;
+  color: #FF5037;
+  border: solid 1px #FF5037;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
 }
-.finish_text{
-    text-align: center;
-    padding: 2px;
-    margin-left: 5px;
+
+.finish_text {
+  text-align: center;
+  padding: 2px;
+  margin-left: 5px;
 }

@@ -79,13 +79,13 @@ function MyPage() {
 
         if (arrow_img[0] == 'down_arrow') { //현재 닫혀있는 상태라면
 
-            // authApi.get(`members/${memberId}/studies/participate`)
-            //     .then((response) => {
-            //         setParticipateList(response.data.result);
-            //     })
-            //     .catch((e) => {
-            //         console.log(e);
-            //     })
+            authApi.get(`members/${memberId}/studies/participate`)
+                .then((response) => {
+                    setParticipateList(response.data.result);
+                })
+                .catch((e) => {
+                    console.log(e);
+                })
         } else {
         }
 
@@ -98,7 +98,13 @@ function MyPage() {
         openAndClose(1)
 
         if (arrow_img[1] == 'down_arrow') { //현재 닫혀있는 상태라면
-
+            authApi.get(`members/${memberId}/studies/graduated`)
+                .then((response) => {
+                    setClosedList(response.data.result);
+                })
+                .catch((e) => {
+                    console.log(e);
+                })
 
 
         } else {
@@ -112,6 +118,13 @@ function MyPage() {
         openAndClose(2)
         if (arrow_img[2] == 'down_arrow') { //현재 닫혀있는 상태라면
 
+            authApi.get(`members/${memberId}/studies/apply`)
+                .then((response) => {
+                    setApplyStudy(response.data.result);
+                })
+                .catch((e) => {
+                    console.log(e);
+                })
 
 
         } else {
@@ -124,6 +137,13 @@ function MyPage() {
         openAndClose(3)
         if (arrow_img[3] == 'down_arrow') { //현재 닫혀있는 상태라면
 
+            authApi.get(`members/${memberId}/studies/favorite`)
+                .then((response) => {
+                    setFavoriteStudy(response.data.result);
+                })
+                .catch((e) => {
+                    console.log(e);
+                })
 
 
         } else {
@@ -230,7 +250,7 @@ function MyPage() {
 
                                         <div className='astudy_element'>
                                             <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
-                                            <NavLink to="/StudyWork" studyId={item.id} className='astudy_navlink'>
+                                            <NavLink to="/StudyWork" state={{ studyId: item.id }} className='astudy_navlink'>
                                                 <p className='astudy_name'>{item.name}</p>
                                             </NavLink>
                                             <p className='astudy_category'>{item.category}</p>
@@ -252,7 +272,7 @@ function MyPage() {
                                         <>
                                             <div className='astudy_element'>
                                                 <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
-                                                <NavLink to="/StudyWork" studyId={item.id} className='astudy_navlink'>
+                                                <NavLink to="/StudyWork" state={{ studyId: item.id }} className='astudy_navlink'>
                                                     <p className='astudy_name'>{item.name}</p>
                                                 </NavLink>
                                                 <p className='astudy_review' onClick={() => setReview_modal_on(true)}>리뷰쓰기</p>
@@ -280,7 +300,7 @@ function MyPage() {
 
                                     <div className='astudy_element'>
                                         <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
-                                        <NavLink to="/StudyDetail" studyId={item.id} className='astudy_navlink'>
+                                        <NavLink to="/StudyDetail" state={{ studyId: item.id }} className='astudy_navlink'>
                                             <p className='astudy_name'>{item.name}</p>
                                         </NavLink>
                                         <p className='astudy_category'>{item.category}</p>
@@ -298,7 +318,7 @@ function MyPage() {
                                 return (
                                     <div className='astudy_element'>
                                         <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
-                                        <NavLink to="/StudyDetail" studyId={item.id} className='astudy_navlink'>
+                                        <NavLink to="/StudyDetail" state={{ studyId: item.id }} className='astudy_navlink'>
                                             <p className='astudy_name'>{item.name}</p>
                                         </NavLink>
                                         <p className='astudy_category'>{item.category}</p>

@@ -7,9 +7,8 @@ import { useLocation } from 'react-router';
 export default function ProfileRevice(props) {
 
 
-    // 넘어올 정보
-    let location = useLocation();
-    const memberId = location.state.memberId
+    // 사용자 id get
+    const memberId = localStorage.getItem("id")
 
 
 
@@ -126,7 +125,6 @@ export default function ProfileRevice(props) {
 
     useEffect(() => {
         category_find()
-        console.log('카테고리가 바뀌는건 아니잖아');
     }, [])
 
 
@@ -178,9 +176,7 @@ export default function ProfileRevice(props) {
     let [memberPhone, setmemberPhone] = useState('');
     let [memberBirth, setMemberBirth] = useState('');
     let [memberGender, setMemberGender] = useState('');
-    let [memberRegion, setMemberRegion] = useState('');
     let [memberInterest, setMemberInterest] = useState('');
-
 
     useEffect(() => {
         authApi.get(`members/${memberId}`)
@@ -191,20 +187,28 @@ export default function ProfileRevice(props) {
                 setmemberPhone(response.data.phone)
                 setMemberBirth(response.data.birth);
                 setMemberGender(response.data.gender);
-                setMemberRegion(response.data.region);
                 setMemberInterest(response.data.interests);
                 handleCity(response.data.region.province);
                 setTown(response.data.region.city);
+                setEmail_check(response.data.isEmailOptIn)
+                if (response.data.isEmailOptIn) {
+                    setEmail_check_css("email_check_true.png")
+                }
 
                 const category = response.data.interests
                 let tempvalue = [...categories]
                 category_list.map((item) => {
                     if (category.includes(item.name)) {
-                        tempvalue.push(parseInt(item.id)) // 진짜 값
-                        setCategories(tempvalue)
+                        if (tempvalue.includes(item.id)) {
 
-                        tempcss[item.id - 1] = styles.category_display_checked //css
-                        setCategory_css(tempcss)
+                        } else {
+                            tempvalue.push(parseInt(item.id)) // 진짜 값
+                            setCategories(tempvalue)
+
+                            tempcss[item.id - 1] = styles.category_display_checked //css
+                            setCategory_css(tempcss)
+                        }
+
 
                     }
                 })
@@ -218,6 +222,22 @@ export default function ProfileRevice(props) {
             })
     }, [category_list])
 
+
+    //수정 api
+    const handleReivce = () => {
+
+        authApi.patch(`members/${memberId}`, {
+            "nickname": memberNickname,
+            "phone": memberPhone,
+            "province": city,
+            "city": town,
+            "emailOptIn": email_check,
+            "categories": categories
+        })
+            .then((response) => {
+                window.location.href = `${process.env.REACT_APP_BASE_URL}MyPage`;
+            })
+    }
 
     return (
         <div>
@@ -345,7 +365,8 @@ export default function ProfileRevice(props) {
                     </div>
                     <div className={styles.floor}>
                         <div className={styles.button_container}>
-                            <input type="submit" className={styles.buttons} value="회원가입" />
+                            <input type="submit" className={styles.buttons} value="정보수정"
+                                onClick={() => handleReivce()} />
                         </div>
                     </div>
                 </div>

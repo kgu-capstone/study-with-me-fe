@@ -167,7 +167,7 @@ function SignIn() {
             setMessage_nick('닉네임을 2자 이상으로 입력해주세요.');
             window.nick.focus();
         }
-        else if (phone == '') { // 닉네임은 입력되어있고 연락처 미입력시
+        else if (phone == '' || phone.length < 12) { // 닉네임은 입력되어있고 연락처 미입력시
             setMessage_nick('');
             setMessage_tel('연락처를 입력해주세요');
             window.tel.focus();

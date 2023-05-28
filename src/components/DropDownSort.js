@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import "../css/Main.css";
 import { authApi } from "../services/api";
-import * as sortManage from "../sortManage";
 
 const DropDownSort = (props) => {
   const [selectedOption, setSelectedOption] = useState(props.title);

@@ -16,10 +16,7 @@ export default function Profile({ closeModal, userId }) {
   let [memberRegion, setMemberRegion] = useState('');
   let [memberInterest, setMemberInterest] = useState('');
 
-  const [activeStudy, setActiveStudy] = useState([]);
-
   useEffect(() => {
-    console.log(userId);
     authApi.get(`members/${userId}`)
       .then((response) => {
         setMemberNickname(response.data.nickname);
@@ -37,17 +34,16 @@ export default function Profile({ closeModal, userId }) {
     //활동중인
     authApi.get(`members/${userId}/studies/participate`)
       .then((response) => {
-        let templist = [...activeStudy]
-        templist.concat(response.data.result);
-        setActiveStudy(templist)
+        setActiveStudy(response.data.result)
       })
     //활동했던
     authApi.get(`members/${userId}/studies/graduated`)
       .then((response) => {
         let templist = [...activeStudy]
-        templist.concat(response.data.result);
+        templist = templist.concat(response.data.result);
         setActiveStudy(templist)
       })
+
 
 
 
@@ -59,8 +55,10 @@ export default function Profile({ closeModal, userId }) {
       .catch(e => console.log(e))
 
 
-
   }, [])
+
+
+  let [activeStudy, setActiveStudy] = useState([]);
 
   const barData = {
     series: [{

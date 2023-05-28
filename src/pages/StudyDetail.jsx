@@ -8,7 +8,10 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Rechart from "../Rechart";
 import "../css/Main.css";
 import { useLocation } from 'react-router';
+import parse from 'html-react-parser';
+
 export default function StudyDetail() {
+
 
   // 넘어올 정보
   const location = useLocation()
@@ -145,7 +148,7 @@ export default function StudyDetail() {
         <div className="contents_inner">
           <div className="contents-area">
             <p className="studyDetail_study_contents_title">스터디 모집 내용</p>
-            <div>{detailDescription}</div>
+            <div className='studyDetail_study_contents'>{parse(detailDescription)}</div>
           </div>
 
           <div className="contents-area">

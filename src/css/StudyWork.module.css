@@ -5,63 +5,63 @@
     src: url(../fonts/Pretendard-Regular.woff);
 }
 
-@font-face{
+@font-face {
     font-family: 'Pretendard-Bold';
     src: url(../fonts/Pretendard-Bold.woff);
 }
 
-body{
+body {
     font-family: 'Pretendard-regular';
-    margin : 0px;
+    margin: 0px;
 }
 
 /* 폰트 스타일 */
-.bold_24{
+.bold_24 {
     font-family: 'Pretendard-Bold';
     font-size: 24px;
 }
 
-.bold_16{
+.bold_16 {
     font-family: 'Pretendard-Bold';
     font-size: 16px;
 }
 
-.regular_18{
+.regular_18 {
     font-family: 'Pretendard-regular';
     font-size: 18px;
 }
 
-.regular_24{
+.regular_24 {
     font-family: 'Pretendard-regular';
     font-size: 24px;
     text-decoration: none;
     color: black;
 }
 
-.regular_16{
+.regular_16 {
     font-family: 'Pretendard-regular';
     font-size: 16px;
 }
 
-.bold_24_red{
+.bold_24_red {
     font-family: 'Pretendard-Bold';
     font-size: 24px;
     text-decoration: none;
-    color: #FF5037;   
+    color: #FF5037;
 }
 
 /* 상단 스터디 정보 영역*/
-.infoes{
+.infoes {
     margin: 0 auto;
     width: 1024px;
 }
 
-.info_container{
+.info_container {
     height: 225px;
     background-color: #F5F5F5;
 }
 
-.info_left{
+.info_left {
     width: 50%;
     float: left;
     padding-right: 40px;
@@ -69,7 +69,7 @@ body{
     position: relative;
 }
 
-.info_right{
+.info_right {
     position: relative;
     padding-top: 36px;
     width: 50%;
@@ -77,45 +77,49 @@ body{
     padding-left: 40px;
 }
 
-.info_left_element{
+.info_left_element {
     padding: 10px 0;
     float: right;
 }
 
-.info_right_element{
-}
+.info_right_element {}
 
-.info_category{
+.info_category {
     font-size: 18px;
     color: #7D7D7D;
     margin-bottom: 10px;
 }
 
-.info_studyname{
+.info_studyname {
     margin-bottom: 45px;
 }
 
 
-.info_right_buttons{
+.info_right_buttons {
     float: right;
     position: absolute;
     right: 38px;
     bottom: 0px;
 }
 
-.applicantList_button{
+.applicantList_button {
     text-decoration: none;
     color: #FF5037;
 }
-.studyRevice_button{
+
+.studyRevice_button {
     text-decoration: none;
 }
-.info_button{
+
+.info_button {
     margin: 5px;
 }
 
 
-
+.info_studyname_navlink {
+    text-decoration: none;
+    color: #000000;
+}
 
 
 
@@ -124,69 +128,75 @@ body{
 /* 여기까지 상단 스터디 정보 영역*/
 
 /* info 아래 영역*/
-.study_container{
+.study_container {
     display: flex;
     justify-self: center;
     justify-content: center;
 }
 
-.left_container{   
+.left_container {
     float: left;
     margin-right: 100px;
 }
 
-.right_container{
+.right_container {
     float: right;
     margin-top: 15px;
     margin-bottom: 100px;
 }
 
-.left_container_element{
+.left_container_element {
     float: right;
 }
+
 /* 여기까지 info아래영역 전체설정*/
 
 
 /* 사이드 바 */
-.side_announce{
+.side_announce {
     display: block;
     margin-top: 45px;
 }
 
-.side_attend{
+.side_attend {
     display: block;
     margin-top: 20px;
 }
 
-.side_byweek{
+.side_byweek {
     display: block;
     margin-top: 20px;
 }
 
-.side_icons{
+.side_icons {
     margin-right: 15px;
 }
 
-.study_list_container{
+.study_list_container {
     display: flex;
 }
-.study_total_list_line{
+
+.study_total_list_line {
     margin-top: 20px;
     margin-left: 20px;
 }
-.study_list_line_each_contianer{
+
+.study_list_line_each_contianer {
     display: flex;
     flex-direction: row;
 }
-.study_list_line{
+
+.study_list_line {
     margin-top: 12px;
     margin-right: 5px;
 }
-.study_list_line_contianer{
+
+.study_list_line_contianer {
     font-size: 16px;
     margin-top: 20px;
 }
-.sidebar_each_study{
+
+.sidebar_each_study {
     cursor: pointer;
 }
 
@@ -194,16 +204,16 @@ body{
 /* 여기까지 사이드 바 */
 
 /* 여기부터 공지사항 구역 */
-.announce_writebutton{
+.announce_writebutton {
     text-align: center;
 }
 
-.announce_writebutton:hover{
+.announce_writebutton:hover {
     cursor: pointer;
     color: #FF5037;
 }
 
-.announce_write_contianer_none{
+.announce_write_contianer_none {
     display: none;
     width: 768px;
     margin-top: 13px;
@@ -211,7 +221,8 @@ body{
     border: 1px solid #C5C5C5;
     border-radius: 10px;
 }
-.announce_write_contianer_block{
+
+.announce_write_contianer_block {
     display: block;
     width: 768px;
     margin-top: 13px;
@@ -220,16 +231,17 @@ body{
     border-radius: 10px;
 }
 
-.announce_write_title{
+.announce_write_title {
     margin: 25px 0 0 30px;
 }
-.announce_revice_title{
+
+.announce_revice_title {
     margin: 0 0 0 30px;
 }
 
 
 
-.announce_write_title_input{
+.announce_write_title_input {
     width: 698px;
     height: 60px;
     margin: 0 0 0 30px;
@@ -237,21 +249,24 @@ body{
     border: solid 1px #C5C5C5;
     border-radius: 3px;
 }
-.announce_write_title_input:focus{
+
+.announce_write_title_input:focus {
     outline: 1px solid #3779eb;
 }
 
-.announce_write_contents{
+.announce_write_contents {
     margin: 25px 0 0 30px;
 
 }
-.announce_write_contents_input_container{
+
+.announce_write_contents_input_container {
     margin: 0 40px 0 30px;
-    
+
     border-radius: 10px;
 
 }
-.announce_write_contents_input{
+
+.announce_write_contents_input {
     font-size: 16px;
     width: 698px;
     /* height: 200px; */
@@ -261,11 +276,12 @@ body{
     padding: 15px;
 }
 
-.upload_button_container{
+.upload_button_container {
     align-items: center;
     display: flex;
 }
-.upload_button{
+
+.upload_button {
     margin: 30px auto;
     background-color: #FF5037;
     border: solid 1px #FF5037;
@@ -279,12 +295,12 @@ body{
 
 
 
-.announce_contianer{
+.announce_contianer {
     width: 768px;
 }
 
 
-.announce_each_contianer{
+.announce_each_contianer {
     width: 768px;
     margin-top: 13px;
     margin-bottom: 20px;
@@ -292,31 +308,34 @@ body{
     border-radius: 10px;
 }
 
-.announce_each_title{
+.announce_each_title {
     cursor: pointer;
     padding: 25px 30px;
 }
 
-.announce_each_content{
+.announce_each_content {
     padding: 10px 30px;
 }
-.announce_each_content img{
+
+.announce_each_content img {
     max-width: 100%;
 }
 
 
 /*공지사항 수정삭제버튼*/
-.announce_revice_contianer{
+.announce_revice_contianer {
     margin-top: 30px;
     margin-left: 30px;
     display: flex;
     color: #7D7D7D;
 }
-.announce_revice{
+
+.announce_revice {
     margin-right: 15px;
     cursor: pointer;
 }
-.announce_delete{
+
+.announce_delete {
     cursor: pointer;
 }
 
@@ -325,14 +344,15 @@ body{
 
 
 
-.announce_each_commnet_continer{
+.announce_each_commnet_continer {
     padding: 10px 30px;
 }
-.announce_each_comment_count{
+
+.announce_each_comment_count {
     padding: 20px 0 0 0;
 }
 
-.announce_each_comment_inputs{
+.announce_each_comment_inputs {
     margin: 18px 0;
     /* border: 1px solid #C5C5C5; */
     border-radius: 10px 0 0 10px;
@@ -340,7 +360,7 @@ body{
 }
 
 
-.announce_each_comment_input{
+.announce_each_comment_input {
     width: 630px;
     height: auto;
     border: 0;
@@ -351,10 +371,12 @@ body{
 
     resize: none;
 }
-.announce_each_comment_input::-webkit-scrollbar{
+
+.announce_each_comment_input::-webkit-scrollbar {
     display: none;
 }
-.announce_each_comment_button{
+
+.announce_each_comment_button {
     /* height: 100px; */
     height: auto;
     border: 1px solid #FF5037;
@@ -365,60 +387,71 @@ body{
     padding: 13px;
 }
 
-.announce_each_comment_lists{
+.announce_each_comment_lists {
     margin-bottom: 25px;
 
 }
-.announce_each_comment_list{
+
+.announce_each_comment_list {
     display: flex;
     margin-top: 3px;
 }
 
-.announce_each_comment_list_profile{
+.announce_each_comment_list_profile {
     margin: 7px 0;
 }
-.announce_each_comment_top_container{
+
+.announce_each_comment_top_container {
     width: 635px;
     display: flex;
     justify-content: space-between;
-    
+
 }
-.announce_each_comment_list_contents{
+
+.announce_each_comment_list_contents {
     margin: 0 0 20px 20px;
 }
-.announce_each_comment_nickname_contianer{
+
+.announce_each_comment_nickname_contianer {
     justify-content: space-between;
 }
-.announce_each_comment_list_nickname{
-    
+
+.announce_each_comment_list_nickname {
+
     margin: 0 0 0 0;
 }
-.announce_each_comment_revice_container{
+
+.announce_each_comment_revice_container {
     display: flex;
     color: #7D7D7D;
 }
-.announce_each_comment_revice_button{
+
+.announce_each_comment_revice_button {
     cursor: pointer;
 
 }
-.announce_each_comment_reviceOn_button{
+
+.announce_each_comment_reviceOn_button {
     cursor: pointer;
 }
-.announce_each_comment_reviceOff_button{
+
+.announce_each_comment_reviceOff_button {
     cursor: pointer;
     margin-left: 15px;
 }
-.announce_each_comment_delete_button{
+
+.announce_each_comment_delete_button {
     cursor: pointer;
     margin-left: 15px;
 }
 
 
-.announce_each_comment_list_content{
+.announce_each_comment_list_content {
     word-break: break-all;
     margin: 5px 0 0 0;
 }
-.announce_each_comment_list_content_revice{
+
+.announce_each_comment_list_content_revice {
     width: 100%;
     word-break: break-all;
     border: 1px solid #C5C5C5;
@@ -428,17 +461,19 @@ body{
     resize: none;
 
 }
-.announce_each_comment_list_content_revice::-webkit-scrollbar{
+
+.announce_each_comment_list_content_revice::-webkit-scrollbar {
     display: none;
 }
 
 
-.announce_each_content_contianer_none{
+.announce_each_content_contianer_none {
     visibility: hidden;
     height: 0vh;
-    
+
 }
-.announce_each_content_contianer_block{
+
+.announce_each_content_contianer_block {
     visibility: visible;
 }
 
@@ -447,7 +482,7 @@ body{
 
 
 /* 출석부 */
-.attend_contianer{
+.attend_contianer {
     width: 768px;
     margin-top: 30px;
     border: 1px solid #C5C5C5;
@@ -456,34 +491,38 @@ body{
 
 }
 
-.attend_name_contianer{
+.attend_name_contianer {
     margin: 30px 70px 30px 50px;
 }
-.attend_name_field{
+
+.attend_name_field {
     white-space: nowrap;
 }
 
-.attend_names{
+.attend_names {
     position: static;
 }
 
-.attend_weeks_contianer{
+.attend_weeks_contianer {
     display: flex;
     overflow-x: scroll;
     cursor: pointer;
 }
-.attend_weeks_contianer::-webkit-scrollbar{
+
+.attend_weeks_contianer::-webkit-scrollbar {
     display: none;
 }
 
-.attend_each_weeks{
+.attend_each_weeks {
     margin: 30px 40px 30px 0;
 
 }
-.attend_weeks_field{
+
+.attend_weeks_field {
     white-space: nowrap;
 }
-.attend_weeks{
+
+.attend_weeks {
     white-space: nowrap;
 }
 
@@ -495,17 +534,20 @@ body{
 
 /* 스터디 */
 
-.byweek_writebutton{
+.byweek_writebutton {
     text-align: center;
 }
-.byweek_writebutton:hover{
+
+.byweek_writebutton:hover {
     cursor: pointer;
     color: #FF5037;
 }
-.byweek_wirte_container_inner{
+
+.byweek_wirte_container_inner {
     margin-left: 30px;
 }
-.byweek_write_contianer_none{
+
+.byweek_write_contianer_none {
     display: none;
     width: 768px;
     margin-top: 13px;
@@ -513,7 +555,8 @@ body{
     border: 1px solid #C5C5C5;
     border-radius: 10px;
 }
-.byweek_write_contianer_block{
+
+.byweek_write_contianer_block {
     display: block;
     width: 768px;
     margin-top: 13px;
@@ -524,15 +567,16 @@ body{
     padding-left: 30px;
 }
 
-.byweek_period{
+.byweek_period {
     margin: 25px 0 0 0px;
 }
 
-.byweek_period_input_contianer{
+.byweek_period_input_contianer {
     display: flex;
     margin: 10px 0 0 0px;
 }
-.byweek_period_input_start{
+
+.byweek_period_input_start {
     width: 307px;
     margin: 25px 27px 0 0;
     border: solid 1px #C5C5C5;
@@ -540,14 +584,17 @@ body{
     color: black;
     padding: 10px 30px;
 }
-.byweek_period_tilde_contianer{
+
+.byweek_period_tilde_contianer {
     display: flex;
 }
-.byweek_period_tilde{
+
+.byweek_period_tilde {
     padding: 10px;
     margin: 23px 27px 0 0;
 }
-.byweek_period_input_end{
+
+.byweek_period_input_end {
     width: 307px;
     margin: 25px 0 0 0;
     border: solid 1px #C5C5C5;
@@ -559,29 +606,32 @@ body{
 
 
 
-.byweek_write_title{
+.byweek_write_title {
     margin: 25px 0 0 0px;
 }
 
-.byweek_write_title_input{
+.byweek_write_title_input {
     width: 698px;
     height: 60px;
     padding: 10px;
     border: solid 1px #C5C5C5;
     border-radius: 3px;
 }
-.byweek_write_title_input:focus{
+
+.byweek_write_title_input:focus {
     outline: 1px solid #3779eb;
 }
 
-.byweek_write_contents{
+.byweek_write_contents {
     margin: 25px 0 0 0px;
 }
-.byweek_write_contents_input_container{
+
+.byweek_write_contents_input_container {
     margin: 0 40px 0 0px;
     border-radius: 10px;
 }
-.byweek_write_contents_input{
+
+.byweek_write_contents_input {
     width: 698px;
     height: 200px;
     margin: 0 0 0 0px;
@@ -592,14 +642,15 @@ body{
 
 
 
-.byweek_file_container{
+.byweek_file_container {
     display: flex;
 }
 
-.byweek_file_attech_button{
+.byweek_file_attech_button {
     display: none;
 }
-.byweek_file_attech_button_label{
+
+.byweek_file_attech_button_label {
     margin: 15px 27px 0 0px;
     border: solid 1px #C5C5C5;
     border-radius: 3px;
@@ -609,39 +660,44 @@ body{
     width: 120px;
     height: 50px;
 }
-.byweek_file_attech_button_label:hover{
+
+.byweek_file_attech_button_label:hover {
     cursor: pointer;
 }
-.byweek_file_names{
+
+.byweek_file_names {
     margin: 28px 27px 0 0px;
     width: 547px;
     display: flex;
     overflow: scroll;
     word-break: normal;
 }
-.byweek_file_name{
+
+.byweek_file_name {
     margin-right: 20px;
 }
-.byweek_file_name_cancel{
+
+.byweek_file_name_cancel {
     margin-left: 10px;
     cursor: pointer;
 }
 
 
 
-.byweek_isHomework_toggle{
+.byweek_isHomework_toggle {
     margin: 50px 0 0 0px;
 }
 
-.byweek_toggles_contianer{
+.byweek_toggles_contianer {
     margin: 25px 0 0 0px;
 }
 
 /* 토글 선택창 구현 */
-.byweek_toggles_contianer input[type=radio]{
+.byweek_toggles_contianer input[type=radio] {
     display: none;
 }
-.byweek_toggle_on+label{
+
+.byweek_toggle_on+label {
     cursor: pointer;
     width: 98px;
     height: 50px;
@@ -656,14 +712,15 @@ body{
     color: #000000;
 
 }
-.byweek_toggle_on:checked+label{
+
+.byweek_toggle_on:checked+label {
     border: 1px solid #FF5037;
     background-color: #FF5037;
     color: #FFFFFF;
     box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.25);
 }
 
-.byweek_toggle_off+label{
+.byweek_toggle_off+label {
     cursor: pointer;
     width: 98px;
     height: 50px;
@@ -678,7 +735,8 @@ body{
     color: #000000;
 
 }
-.byweek_toggle_off:checked+label{
+
+.byweek_toggle_off:checked+label {
     border: 1px solid #A6A6A6;
     background-color: #A6A6A6;
     color: #FFFFFF;
@@ -689,7 +747,7 @@ body{
 
 
 
-.byweek_isHomework_yes{
+.byweek_isHomework_yes {
     margin: 25px 0 0 0px;
 
 }
@@ -697,21 +755,21 @@ body{
 
 
 
-.byweek_isAutoAtten_toggle{
+.byweek_isAutoAtten_toggle {
     margin: 25px 0 0 0px;
 }
 
 
 
 
-.byweek_contianer{
+.byweek_contianer {
     width: 768px;
 }
 
 
 
 
-.byweek_each_contianer{
+.byweek_each_contianer {
     width: 768px;
     margin-top: 13px;
     border: 1px solid #C5C5C5;
@@ -719,48 +777,52 @@ body{
 }
 
 
-.byweek_each_title{
+.byweek_each_title {
     cursor: pointer;
     padding: 25px 30px;
 }
 
-.announce_each_content{
+.announce_each_content {
     padding: 10px 30px;
     margin-bottom: 20px;
 }
 
-.byweek_each_content img{
+.byweek_each_content img {
     max-width: 100%;
 }
 
-.byweek_each_content_contianer{
+.byweek_each_content_contianer {
     padding: 10px 30px;
 }
 
-.byweek_each_content_contianer_none{
+.byweek_each_content_contianer_none {
     display: none;
 }
-.byweek_each_content_contianer_block{
+
+.byweek_each_content_contianer_block {
     display: block;
     margin: 10px 30px;
 }
 
 
 
-.byweek_each_attach_list{
+.byweek_each_attach_list {
     margin: 30px 0 0 0;
     display: flex;
 }
-.byweek_each_attach_title{
+
+.byweek_each_attach_title {
     color: #7D7D7D;
     margin: 0 25px 0 0;
-    
+
 }
-.bywee_each_attachs{
+
+.bywee_each_attachs {
     cursor: pointer;
     margin-right: 10px;
 }
-.byweek_each_attach_contianer{
+
+.byweek_each_attach_contianer {
     display: flex;
     width: 645px;
     overflow: scroll;
@@ -769,16 +831,18 @@ body{
 
 
 
-.byweek_revice_container{
+.byweek_revice_container {
     display: flex;
     color: #7D7D7D;
     margin: 20px 0 10px 0;
 }
-.byweek_revice_on_button{
+
+.byweek_revice_on_button {
     cursor: pointer;
     margin-right: 10px;
 }
-.byweek_delete_button{
+
+.byweek_delete_button {
     cursor: pointer;
 }
 
@@ -786,7 +850,7 @@ body{
 
 
 
-.byweek_each_homework_type_select{
+.byweek_each_homework_type_select {
     position: relative;
     border: 1px solid #C5C5C5;
     border-radius: 10px 0 0 10px;
@@ -798,7 +862,8 @@ body{
     text-align: center;
     cursor: pointer;
 }
-.byweek_each_homework_type_select_ON{
+
+.byweek_each_homework_type_select_ON {
     position: relative;
     border: 1px solid #C5C5C5;
     background-color: #C5C5C5;
@@ -811,7 +876,7 @@ body{
     cursor: pointer;
 }
 
-.byweek_each_homework_type_contianer{
+.byweek_each_homework_type_contianer {
     position: absolute;
     top: -105px;
     left: -1px;
@@ -819,7 +884,7 @@ body{
 
 }
 
-.byweek_each_homework_type_file{
+.byweek_each_homework_type_file {
     position: relative;
     border: 1px solid #C5C5C5;
     border-radius: 10px 10px 0 0px;
@@ -833,7 +898,7 @@ body{
 
 
 
-.byweek_each_homework_type_link{
+.byweek_each_homework_type_link {
     position: relative;
     border: 1px solid #C5C5C5;
     background-color: #FFFFFF;
@@ -843,10 +908,12 @@ body{
     width: 102px;
     text-align: center;
 }
-.byweek_file_homeworkAttach_button{
+
+.byweek_file_homeworkAttach_button {
     display: none;
 }
-.byweek_file_homeworkAttach_button_label{
+
+.byweek_file_homeworkAttach_button_label {
     border-top: solid 1px #C5C5C5;
     border-bottom: solid 1px #C5C5C5;
     border-radius: 3px;
@@ -864,13 +931,13 @@ body{
 
 
 
-.byweek_each_homework_inputs{
+.byweek_each_homework_inputs {
     padding: 10px 0;
     display: flex;
 }
 
 
-.byweek_each_homework_attach{
+.byweek_each_homework_attach {
     border: 1px solid #C5C5C5;
     border-radius: 10px 0 0 10px;
     background-color: #C5C5C5;
@@ -882,7 +949,7 @@ body{
 }
 
 
-.byweek_each_homework_input{
+.byweek_each_homework_input {
     height: 52px;
     width: 495px;
     border: 1px solid #C5C5C5;
@@ -890,7 +957,8 @@ body{
     font-size: 16px;
     padding: 13px;
 }
-.byweek_each_homework_input_fileON{
+
+.byweek_each_homework_input_fileON {
     height: 52px;
     width: 390px;
     border: 1px solid #C5C5C5;
@@ -899,7 +967,7 @@ body{
     padding: 13px;
 }
 
-.byweek_each_homework_button{
+.byweek_each_homework_button {
     border: 1px solid #FF5037;
     background-color: #FF5037;
     border-radius: 0 10px 10px 0;
@@ -907,45 +975,47 @@ body{
     font-size: 16px;
     padding: 13px 20px;
 }
-.byweek_homework_container{
+
+.byweek_homework_container {
     margin: 10px 0 30px 0;
 }
 
 
-.byweek_each_homework_contianer{
+.byweek_each_homework_contianer {
     margin: 12px 0 10px 0;
 }
 
-.byweek_each_homework{
+.byweek_each_homework {
     border: solid 1px #C5C5C5;
     border-radius: 10px;
     width: 699px;
     display: flex;
 }
 
-.byweek_each_homework_profile{
+.byweek_each_homework_profile {
     margin: 10px 15px;
 }
 
-.byweek_each_homework_nickname_container{
+.byweek_each_homework_nickname_container {
     display: flex;
     align-items: center;
 }
-.byweek_each_homework_nickname{
+
+.byweek_each_homework_nickname {
     margin-top: 16px;
 }
 
-.byweek_each_homework_nickname > p{
+.byweek_each_homework_nickname>p {
     margin: 0;
-} 
+}
 
-.byweek_each_homework_viewHomework{
+.byweek_each_homework_viewHomework {
     display: flex;
     margin: auto 0 auto auto;
     cursor: pointer;
 }
 
-.byweek_each_homework_viewHomework > p{
+.byweek_each_homework_viewHomework>p {
     margin: 0 25px 0 0;
     color: #7D7D7D;
     text-decoration: underline;

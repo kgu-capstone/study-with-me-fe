@@ -14,8 +14,81 @@ import { te } from "date-fns/locale";
 import { useInView } from "react-intersection-observer";
 
 function Main() {
+
+  useEffect(() => {
+    setSaveCategoryStatus(1)
+
+    if (memberId) {
+      authApi
+        .get(`members/${memberId}`)
+        .then((response) => {
+
+          //css
+          let tempcss = [...save_category_css]
+          for (let i = 0; i < tempcss.length; i++) {
+            tempcss[i] = "category"
+          }
+
+          //카테고리 설정
+          if (response.data.interests[0] == "어학") {
+            setSaveCategoryStatus(1); //실제 값
+            tempcss[0] = "category_clicked" //css
+          } else if (response.data.interests[0] == "면접") {
+            setSaveCategoryStatus(2);
+            tempcss[1] = "category_clicked" //css
+          } else if (response.data.interests[0] == "프로그래밍") {
+            setSaveCategoryStatus(3);
+            tempcss[2] = "category_clicked" //css
+          } else if (response.data.interests[0] == "인적성&NCS") {
+            setSaveCategoryStatus(4);
+            tempcss[3] = "category_clicked" //css
+          } else if (response.data.interests[0] == "자격증") {
+            setSaveCategoryStatus(5);
+            tempcss[4] = "category_clicked" //css
+          } else {
+            setSaveCategoryStatus(6);
+            tempcss[5] = "category_clicked" //css
+          }
+          setSave_category_css(tempcss)//css
+
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
+
+
+  const [hasNext, setHasNext] = useState(false);
+  //스터디 불러오는 함수 호출 후 리스트 병합
+  const getData = () => {
+
+    sortManage
+      .sortManage(
+        save_Category_Status,
+        save_Sort_Status,
+        save_page_status,
+        recruitStatus,
+        save_province_status,
+        save_city_status
+      )
+      .then((list) => {
+        //페이지가 0일때는 처음부터임으로 리스트를 넣음
+        if (save_page_status === 0) {
+          setStudyList(list);
+        }
+        //페이지가 0이 아닐때는 추가해야함으로 배열 병함
+        else {
+          setHasNext(hasNext)
+
+          let temp = [...studyList];
+          temp = temp.concat(list);
+          setStudyList(temp);
+        }
+      });
+  };
+
+  //state들
   const [save_Sort_Status, setSaveSortStatus] = useState("date");
-  const [save_Category_Status, setSaveCategoryStatus] = useState(1);
+  const [save_Category_Status, setSaveCategoryStatus] = useState(0);
   const [save_category_css, setSave_category_css] = useState([
     "category_clicked",
     "category",
@@ -38,61 +111,14 @@ function Main() {
   //로그인 한 사용자라면 정보 불러오기
   const memberId = localStorage.getItem("id");
 
-  useEffect(() => {
-    if (memberId) {
-      authApi
-        .get(`members/${memberId}`)
-        .then((response) => {
-          if (response.data.interests[0] == "어학") {
-            setSaveCategoryStatus(1);
-          } else if (response.data.interests[0] == "면접") {
-            setSaveCategoryStatus(2);
-          } else if (response.data.interests[0] == "프로그래밍") {
-            setSaveCategoryStatus(3);
-          } else if (response.data.interests[0] == "인적성&NCS") {
-            setSaveCategoryStatus(4);
-          } else if (response.data.interests[0] == "자격증") {
-            setSaveCategoryStatus(5);
-          } else {
-            setSaveCategoryStatus(6);
-          }
-          setSave_province_status(response.data.province);
-          setSave_city_status(response.data.city);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, []);
 
-  //스터디 불러오는 함수 호출 후 리스트 병합
-  const getData = () => {
-    sortManage
-      .sortManage(
-        save_Category_Status,
-        save_Sort_Status,
-        save_page_status,
-        recruitStatus,
-        save_province_status,
-        save_city_status
-      )
-      .then((list) => {
-        //페이지가 0일때는 처음부터임으로 리스트를 넣음
-        if (save_page_status == 0) {
-          setStudyList(list);
-        }
-        //페이지가 0이 아닐때는 추가해야함으로 배열 병함
-        else {
-          let temp = [...studyList];
-          temp = temp.concat(list);
-          setStudyList(temp);
-        }
-      });
-  };
 
   // 정렬들 페이지가 0이라서 변화가 없다면 함수를 아예 불러주고
   // 0이나닐때는 페이지를 0으로 바꿔서 무한스크롤 함수에서 api함수를 호출하도록 함
 
   useEffect(() => {
-    if (save_page_status == 0) {
+    if (save_page_status === 0) {
+
       getData();
     } else {
       setSave_page_status(0);
@@ -100,7 +126,7 @@ function Main() {
   }, [save_Category_Status]);
 
   useEffect(() => {
-    if (save_page_status == 0) {
+    if (save_page_status === 0) {
       getData();
     } else {
       setSave_page_status(0);
@@ -108,7 +134,7 @@ function Main() {
   }, [save_Sort_Status]);
 
   useEffect(() => {
-    if (save_page_status == 0) {
+    if (save_page_status === 0) {
       getData();
     } else {
       setSave_page_status(0);
@@ -116,15 +142,14 @@ function Main() {
   }, [recruitStatus]);
 
   useEffect(() => {
-    if (save_page_status == 0) {
+    if (save_page_status === 0) {
       getData();
-    } else {
-      setSave_page_status(0);
     }
   }, [save_province_status]);
 
   useEffect(() => {
-    if (save_page_status == 0) {
+
+    if (save_page_status === 0) {
       getData();
     } else {
       setSave_page_status(0);
@@ -138,15 +163,16 @@ function Main() {
     if (inView) {
       setSave_page_status(save_page_status + 1);
     }
+
   }, [inView]);
 
   useEffect(() => {
     getData();
   }, [save_page_status]);
 
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-  };
+
+
+
 
   return (
     <div className="main_main">
@@ -212,19 +238,19 @@ function Main() {
       <div className="sort_area_container">
         <div className="sort_area_inner">
           <div className="sort-area">
-            {recruitStatus == "off" ? (
-              <span className="some-area some_area_dummy">
-                더미
-              </span> /* 꼼수.. */
-            ) : (
-              <span className="some-area">
-                <RealEstate
-                  setProvince={setSave_province_status}
-                  setCity={setSave_city_status}
-                  province={save_province_status}
-                  city={save_city_status}
-                />
-              </span>
+            {recruitStatus === "offline" ? <span className="some-area">
+              <RealEstate
+                setProvince={setSave_province_status}
+                setCity={setSave_city_status}
+                province={save_province_status}
+                city={save_city_status}
+              />
+            </span> : (
+              (
+                <span className="some-area some_area_dummy">
+                  더미
+                </span> /* 꼼수.. */
+              )
             )}
 
             <span className="test">
@@ -262,24 +288,23 @@ function Main() {
       <div className="card_area_container">
         <div className="card_area_inner">
           {/* 스터디 카드 들어갈 공간 */}
-          {studyList &&
-            studyList.map((item, index) => {
-              let favorite_true = item.favoriteMarkingMembers.indexOf(memberId);
-              return (
-                <div className="card-area">
-                  <Card
-                    study_id={item.id}
-                    study_title={item.name}
-                    study_explanation={item.description}
-                    study_people={`${item.currentMembers} / ${item.maxMembers}`}
-                    study_image={`/img/studyprofiles/${item.thumbnail}`}
-                    study_recruit={item.recruitmentStatus}
-                    study_favorite={favorite_true}
-                    study_category={item.category}
-                  />
-                </div>
-              );
-            })}
+          {studyList && studyList.map((item, index) => {
+            let favorite_true = item.favoriteMarkingMembers && item.favoriteMarkingMembers.indexOf(memberId);
+            return (
+              <div className="card-area">
+                <Card
+                  study_id={item.id}
+                  study_title={item.name}
+                  study_explanation={item.description}
+                  study_people={`${item.currentMembers} / ${item.maxMembers}`}
+                  study_image={`/img/studyprofiles/${item.thumbnail}`}
+                  study_recruit={item.recruitmentStatus}
+                  study_favorite={favorite_true}
+                  study_category={item.category}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
 

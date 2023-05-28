@@ -5,10 +5,9 @@ import { authApi } from '../../services/api';
 
 export default function StudySidebar() {
 
-  // 넘어올 정보
+  // studyId
   const location = useLocation()
-  const studyId = 3
-  // const studyId = location.state?.studyId
+  const studyId = location.state?.studyId
 
 
   let [announceIcon, setAnnounceIcon] = useState('/img/announce_icon_red.svg');
@@ -61,6 +60,12 @@ export default function StudySidebar() {
 
   }, [])
 
+  //info에서 제목클릭하면 공지사항으로 바뀌게
+  useEffect(() => {
+    if (window.location.href == "http://localhost:3000/StudyWork/Announce")
+      handleAnnounce()
+  }, [window.location.href])
+
   // 클릭시 스터디 스크롤 이동
   const move_week_study = (index) => {
     document.getElementsByClassName(`${styles.byweek_each_contianer}`)[index].scrollIntoView();
@@ -70,15 +75,15 @@ export default function StudySidebar() {
     <div>
       <div className={`${styles.left_container}`}>
         <div className={`${styles.left_container_element}`}>
-          <NavLink to='/StudyWork/Announce' className={`${styles.sidebar} ${announceText} ${styles.isRed} ${styles.side_announce}`} onClick={() => handleAnnounce()}><img className={styles.side_icons} src={process.env.PUBLIC_URL + announceIcon} />공지사항</NavLink>
-          <NavLink to='/StudyWork/Attend' className={`${styles.sidebar} ${attendText} ${styles.isRed} ${styles.side_attend}`} onClick={() => handleAttend()}><img className={styles.side_icons} src={process.env.PUBLIC_URL + attendIcon} />출석부</NavLink>
-          <NavLink to='/StudyWork/ByWeek' className={`${styles.sidebar} ${byweekText} ${styles.isRed} ${styles.side_byweek}`} onClick={() => handleByweek()}><img className={styles.side_icons} src={process.env.PUBLIC_URL + byweekIcon} />스터디</NavLink>
+          <NavLink to='/StudyWork/Announce' state={{ studyId: studyId }} className={`${styles.sidebar} ${announceText} ${styles.isRed} ${styles.side_announce}`} onClick={() => handleAnnounce()}><img className={styles.side_icons} src={process.env.PUBLIC_URL + announceIcon} />공지사항</NavLink>
+          <NavLink to='/StudyWork/Attend' state={{ studyId: studyId }} className={`${styles.sidebar} ${attendText} ${styles.isRed} ${styles.side_attend}`} onClick={() => handleAttend()}><img className={styles.side_icons} src={process.env.PUBLIC_URL + attendIcon} />출석부</NavLink>
+          <NavLink to='/StudyWork/ByWeek' state={{ studyId: studyId }} className={`${styles.sidebar} ${byweekText} ${styles.isRed} ${styles.side_byweek}`} onClick={() => handleByweek()}><img className={styles.side_icons} src={process.env.PUBLIC_URL + byweekIcon} />스터디</NavLink>
 
           {window.location.href == `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`
             ?
             /* 스터디 목록 부분*/
             <div className={styles.study_list_container}>
-              <img height={0 && weekInfo.length > 0 && 13 + (weekInfo.length - 1) * 40} src={process.env.PUBLIC_URL + '/img/study_total_line.png'}
+              <img height={weekInfo.length > 0 && 13 + (weekInfo.length - 1) * 40} src={process.env.PUBLIC_URL + '/img/study_total_line.png'}
                 className={styles.study_total_list_line}
               />
               <div className={styles.study_list_line_contianer}>

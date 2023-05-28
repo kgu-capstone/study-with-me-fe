@@ -172,10 +172,15 @@ footer {
   font-size: 16px;
   margin-top: px;
   width: 196px;
+  height: 40px;
   white-space: nowrap;
   display: block;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.card-explanation img {
+  display: none;
 }
 
 .card-study_favorite {
@@ -367,6 +372,10 @@ link {
 .studyDetail_study_contents_title {
   font-family: "Pretendard-Bold";
   font-size: 24px;
+}
+
+.studyDetail_study_contents img {
+  width: 100%;
 }
 
 .studyDetail_study_age_title {

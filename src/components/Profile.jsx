@@ -1,11 +1,24 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useState, RechartsComponent } from 'react';
 import styles from '../css/Profile.module.css'
 import { authApi } from '../services/api';
 import Avatar from "boring-avatars";
-import ReactApexChart from "react-apexcharts";
 import PeerReview from './PeerReview';
 import { NavLink } from "react-router-dom";
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { defaultApi } from '../services/api'
+import axios from 'axios';
 
+/*useEffect(()=>{
+  defaultApi.get('members/1/attendances')
+  .then((response) => {
+    setMemberStatus(response.data.status);
+    setMemberErrorCode(response.data.errorCode);
+    setMemberMessage(response.data.message);
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+})*/
 
 export default function Profile({ closeModal, userId }) {
 
@@ -16,7 +29,35 @@ export default function Profile({ closeModal, userId }) {
   let [memberRegion, setMemberRegion] = useState('');
   let [memberInterest, setMemberInterest] = useState('');
 
+  const [activeStudy, setActiveStudy] = useState([]);
+
+  // 데이터 변수 정의 및 초기화
+let data = [];
+
+// API 호출 함수
+async function fetchData() {
+  try {
+    const response = await axios.get('API_ENDPOINT_URL');
+    const { ATTENDANCE, LATE, ABSENCE } = response.data;
+
+  const data = [
+    { name: 'RATE A', 
+      출석: {ATTENDANCE},
+      지각: {LATE},
+      결석: {ABSENCE}
+    },  ];
+    console.log('데이터:', data);
+  } catch (error) {
+    console.error('API 호출 오류:', error);
+  }
+}
+
+// API 호출 함수 실행
+fetchData();
+
+
   useEffect(() => {
+    console.log(userId);
     authApi.get(`members/${userId}`)
       .then((response) => {
         setMemberNickname(response.data.nickname);
@@ -34,16 +75,17 @@ export default function Profile({ closeModal, userId }) {
     //활동중인
     authApi.get(`members/${userId}/studies/participate`)
       .then((response) => {
-        setActiveStudy(response.data.result)
+        let templist = [...activeStudy]
+        templist.concat(response.data.result);
+        setActiveStudy(templist)
       })
     //활동했던
     authApi.get(`members/${userId}/studies/graduated`)
       .then((response) => {
         let templist = [...activeStudy]
-        templist = templist.concat(response.data.result);
+        templist.concat(response.data.result);
         setActiveStudy(templist)
       })
-
 
 
 
@@ -54,68 +96,82 @@ export default function Profile({ closeModal, userId }) {
       })
       .catch(e => console.log(e))
 
-
   }, [])
-
-
-  let [activeStudy, setActiveStudy] = useState([]);
-
-  const barData = {
-    series: [{
-      name: '출석',
-      data: [44]
-    }, {
-      name: '지각',
-      data: [44]
-    }, {
-      name: '결석',
-      data: [44]
-    }],
-
-    options: {
-      chart: {
-
-        toolbar: {
-          show: false,
-        },
-        type: 'bar',
-        height: 350,
-        stacked: true,
-        stackType: '100%'
-      },
-
-      legend: {
-        position: 'bottom'
-      },
-      responsive: [{
-        breakpoint: 480,
-      }],
-      plotOptions: {
-        bar: {
-          horizontal: true,
-
-        }
-      },
-      title: {
-        text: '출석률',
-        align: 'center',
-      },
-      yaxis: {
-        show: false,
-      },
-      xaxis: {
-        axisBorder: { show: false },
-        axisTicks: { show: false },
-        labels: { show: false },
-      },
-    },
-  }
 
   //PEERVIEW 쓰기
   const [isview_peerriew, setIsView_peerriew] = useState(false);
 
   //PEERVIEW 조회
   const [reviews, setReviews] = useState([]);
+
+
+  function Profile({ closeModal, userId }) {
+    const [attendanceData, setAttendanceData] = useState([]);
+  
+    useEffect(() => {
+      const fetchAttendance = async () => {
+        try {
+          const response = await authApi.get(`/members/${userId}/attendances`);
+          const attendanceResult = response.data.result;
+  
+          const mappedData = attendanceResult.map((item) => {
+            let statusLabel = '';
+            switch (item.status) {
+              case 'ATTENDANCE':
+                statusLabel = '출석';
+                break;
+              case 'LATE':
+                statusLabel = '지각';
+                break;
+              case 'ABSENCE':
+                statusLabel = '결석';
+                break;
+              default:
+                break;
+            }
+  
+            return {
+              name: statusLabel,
+              count: item.count,
+            };
+          });
+  
+          setAttendanceData(mappedData);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      fetchAttendance();
+    }, [userId]);
+  // 출석률 계산 함수
+  const calculateAttendanceRate = () => {
+    // 출석 횟수 합산
+    const totalAttendanceCount = attendanceData.reduce((sum, item) => sum + item.count, 0);
+
+    // 출석률 계산
+    const rateData = attendanceData.map((item) => ({
+      ...item,
+      rate: (item.count / totalAttendanceCount) * 100,
+    }));
+
+    return rateData;
+  };
+
+  // 출석률 표시
+  const renderAttendanceRate = () => {
+    const rateData = calculateAttendanceRate();
+
+    return rateData.map((item) => (
+      <div key={item.name}>
+        <span>{item.name}: </span>
+        <span>{item.rate.toFixed(2)}%</span>
+      </div>
+    ));
+  };
+
+
+
 
   return (
 
@@ -240,32 +296,41 @@ export default function Profile({ closeModal, userId }) {
 
           </div>
         </div>
+        <div className={styles.ratelabel}>출석률</div>
+        
 
-        <div>
+        <div className={styles.graph}>
+        <ResponsiveContainer width="100%" height="100%" data={data}>
+        <BarChart data={attendanceData}>
+  width={300}
+  height={500}
+  data={data}
+  margin={{
+    top: 20,
+    right: 30,
+    left: 20,
+    bottom: 5,
+  }}
 
+
+
+<Tooltip cursor={true} isAnimationActive={true} contentStyle={{ transform: 'rotate(-90deg)' }}/>
+  <Bar dataKey="출석" stackId="a" fill="#50FF12" />
+  <Bar dataKey="지각" stackId="a" fill="#FFE500" />
+  <Bar dataKey="결석" stackId="a" fill="#FF5037" />
+</BarChart>
+</ResponsiveContainer>
         </div>
 
-        <div>
-          <div id="chart"><div className={styles.graph}>
-            <ReactApexChart
-              options={barData.options}
-              series={barData.series}
-              type="bar"
 
-            />
-          </div>
-
-          </div>
-        </div>
         <div>
           {isview_peerriew && <PeerReview closeModal={setIsView_peerriew} userId={userId} userName={memberNickname} />}
         </div>
       </div>
 
-    </div >
+</div>
 
 
   )
 }
-   /* <div className={styles.graph}>
-<ChartComponent /> </div>*/
+}

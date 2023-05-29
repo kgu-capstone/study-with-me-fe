@@ -476,8 +476,8 @@ input {
   margin: 5px 0 5px 15px;
 }
 
-/* Bar 차트의 막대 색상 변경 */
+/* Bar 차트의 막대 색상 변경 
 
 path.recharts-rectangle {
   fill: #ff5037;
-}
+}*/

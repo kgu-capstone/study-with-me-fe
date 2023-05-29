@@ -124,18 +124,27 @@ main {
 }
 
 
-
+.ratelabel{
+    position: absolute;
+    left: 395px;
+    top: 357px;
+    font-size: 15.5px;
+    margin-bottom: 10px;
+}
 
 .graph {
     position: absolute;
-    left: 220px;
-    top: 250px;
+    left: 715px;
+    top: 478px;
     padding: 50px;
-    border-radius: 40px;
-    width: 400px;
-    height: 300px;
+    width: 130px;
+    height: 850px;
+    transform: rotate(90deg);
+    transform-origin: right top;
 
 }
+
+
 
 
 .squareB {

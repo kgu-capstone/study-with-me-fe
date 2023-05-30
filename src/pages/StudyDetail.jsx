@@ -25,14 +25,31 @@ export default function StudyDetail({ studyId }) {
   // 찜 버튼 구현부분
   const [like, setLike] = useState(false);
   const handleToggleLike = () => {
-    setLike((prevLike) => !prevLike);
+    setLike((prevLike) => {
+      if (prevLike) {
+        console.log("이미 찜한 스터디입니다.");
+        return prevLike;
+      } else {
+        // 찜 등록 API 호출
+        authApi
+          .post(`studies/${studyId}/like`)
+          .then(() => {
+            console.log("찜 등록에 성공했습니다.");
+            return true;
+          })
+          .catch((error) => {
+            // 찜 등록에 실패한 경우에 대한 처리를 할 수 있습니다.
+            console.log("찜 등록에 실패했습니다.", error);
+            return prevLike;
+          });
+      }
+    });
   };
 
   useEffect(
     (studyId) => {
       // 기본정보 api
       authApi.get(`studies/${studyId}`).then((response) => {
-        // 희민 TODO... 나머지 정보들 useState에 저장 후 보이도록 설정
         setPeople(response.data.maxMembers);
         setHashtag(response.data.hashtags);
         setPeopleNow(response.data.currentMembers);
@@ -131,7 +148,7 @@ export default function StudyDetail({ studyId }) {
           <div className="contents-area">
             <p className="studyDetail_study_age_title">스터디원 나이 분포</p>
             <div>
-              <Rechart />
+              <Rechart age={age} />
             </div>
           </div>
 

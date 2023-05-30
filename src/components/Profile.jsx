@@ -21,6 +21,9 @@ import axios from 'axios';
 })*/
 
 export default function Profile({ closeModal, userId }) {
+  // 사용자 id get
+  const memberId = localStorage.getItem("id")
+
 
   let [memberScore, setMemberScore] = useState(0);
   let [memberNickname, setMemberNickname] = useState('');
@@ -32,28 +35,33 @@ export default function Profile({ closeModal, userId }) {
   const [activeStudy, setActiveStudy] = useState([]);
 
   // 데이터 변수 정의 및 초기화
-let data = [];
+  let data = [];
 
-// API 호출 함수
-async function fetchData() {
-  try {
-    const response = await axios.get('API_ENDPOINT_URL');
-    const { ATTENDANCE, LATE, ABSENCE } = response.data;
+  // API 호출 함수
+  async function fetchData() {
+    try {
+      const response = await authApi.get(`members/${memberId}/attendances`);
+      const ATTENDANCE = response.data.result[0].count;
+      const LATE = response.data.result[1].count;
+      const ABSENCE = response.data.result[2].count;
 
-  const data = [
-    { name: 'RATE A', 
-      출석: {ATTENDANCE},
-      지각: {LATE},
-      결석: {ABSENCE}
-    },  ];
-    console.log('데이터:', data);
-  } catch (error) {
-    console.error('API 호출 오류:', error);
+      console.log(response.data.result);
+      const data = [
+        {
+          name: 'RATE A',
+          출석: { ATTENDANCE },
+          지각: { LATE },
+          결석: { ABSENCE }
+        },];
+      setAttendanceData(data)
+      console.log('데이터:', data);
+    } catch (error) {
+      console.error('API 호출 오류:', error);
+    }
   }
-}
 
-// API 호출 함수 실행
-fetchData();
+  // API 호출 함수 실행
+  fetchData();
 
 
   useEffect(() => {
@@ -79,13 +87,13 @@ fetchData();
         templist.concat(response.data.result);
         setActiveStudy(templist)
       })
-    //활동했던
-    authApi.get(`members/${userId}/studies/graduated`)
-      .then((response) => {
-        let templist = [...activeStudy]
-        templist.concat(response.data.result);
-        setActiveStudy(templist)
-      })
+    // //활동했던
+    // authApi.get(`members/${userId}/studies/graduated`)
+    //   .then((response) => {
+    //     let templist = [...activeStudy]
+    //     templist.concat(response.data.result);
+    //     setActiveStudy(templist)
+    //   })
 
 
 
@@ -105,45 +113,45 @@ fetchData();
   const [reviews, setReviews] = useState([]);
 
 
-  function Profile({ closeModal, userId }) {
-    const [attendanceData, setAttendanceData] = useState([]);
-  
-    useEffect(() => {
-      const fetchAttendance = async () => {
-        try {
-          const response = await authApi.get(`/members/${userId}/attendances`);
-          const attendanceResult = response.data.result;
-  
-          const mappedData = attendanceResult.map((item) => {
-            let statusLabel = '';
-            switch (item.status) {
-              case 'ATTENDANCE':
-                statusLabel = '출석';
-                break;
-              case 'LATE':
-                statusLabel = '지각';
-                break;
-              case 'ABSENCE':
-                statusLabel = '결석';
-                break;
-              default:
-                break;
-            }
-  
-            return {
-              name: statusLabel,
-              count: item.count,
-            };
-          });
-  
-          setAttendanceData(mappedData);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-  
-      fetchAttendance();
-    }, [userId]);
+  const [attendanceData, setAttendanceData] = useState([]);
+
+  useEffect(() => {
+    const fetchAttendance = async () => {
+      try {
+        const response = await authApi.get(`/members/${userId}/attendances`);
+        const attendanceResult = response.data.result;
+
+        const mappedData = attendanceResult.map((item) => {
+          let statusLabel = '';
+          switch (item.status) {
+            case 'ATTENDANCE':
+              statusLabel = '출석';
+              break;
+            case 'LATE':
+              statusLabel = '지각';
+              break;
+            case 'ABSENCE':
+              statusLabel = '결석';
+              break;
+            default:
+              break;
+          }
+
+          return {
+            name: statusLabel,
+            count: item.count,
+          };
+        });
+
+        setAttendanceData(mappedData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchAttendance();
+  }, [userId]);
+
   // 출석률 계산 함수
   const calculateAttendanceRate = () => {
     // 출석 횟수 합산
@@ -212,7 +220,7 @@ fetchData();
                   : <></>
               }
               {
-                memberScore >= 80
+                memberScore >= 90
                   ? <img className={styles.fire} src={process.env.PUBLIC_URL + '/img/fire.png'} />
                   : <></>
 
@@ -297,29 +305,29 @@ fetchData();
           </div>
         </div>
         <div className={styles.ratelabel}>출석률</div>
-        
+
 
         <div className={styles.graph}>
-        <ResponsiveContainer width="100%" height="100%" data={data}>
-        <BarChart data={attendanceData}>
-  width={300}
-  height={500}
-  data={data}
-  margin={{
-    top: 20,
-    right: 30,
-    left: 20,
-    bottom: 5,
-  }}
+          <ResponsiveContainer width="100%" height="100%" data={data}>
+            <BarChart data={attendanceData}>
+              width={300}
+              height={500}
+              data={data}
+              {/* margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }} */}
 
 
 
-<Tooltip cursor={true} isAnimationActive={true} contentStyle={{ transform: 'rotate(-90deg)' }}/>
-  <Bar dataKey="출석" stackId="a" fill="#50FF12" />
-  <Bar dataKey="지각" stackId="a" fill="#FFE500" />
-  <Bar dataKey="결석" stackId="a" fill="#FF5037" />
-</BarChart>
-</ResponsiveContainer>
+              <Tooltip cursor={true} isAnimationActive={true} contentStyle={{ transform: 'rotate(-90deg)' }} />
+              <Bar dataKey="출석" stackId="a" fill="#50FF12" />
+              <Bar dataKey="지각" stackId="a" fill="#FFE500" />
+              <Bar dataKey="결석" stackId="a" fill="#FF5037" />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
 
 
@@ -328,9 +336,9 @@ fetchData();
         </div>
       </div>
 
-</div>
+    </div>
 
 
   )
-}
+
 }

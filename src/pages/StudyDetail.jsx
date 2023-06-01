@@ -42,6 +42,9 @@ export default function StudyDetail() {
 
   useEffect(
     () => {
+      // 스크롤 맨 위로
+      window.scrollTo(0, 0)
+
       // 기본정보 api
       authApi.get(`studies/${studyId}`).then((response) => {
         // 희민 TODO... 나머지 정보들 useState에 저장 후 보이도록 설정
@@ -76,6 +79,16 @@ export default function StudyDetail() {
     },
     [studyId]
   );
+
+  const apply = () => {
+    authApi.post(`studies/${studyId}/applicants`)
+      .then(response => {
+        alert('지원이 완료되었습니다. 팀장이 승인하면 스터디를 들어갈 수 있습니다.')
+      })
+      .catch(err => {
+        alert(err.response.data.message)
+      })
+  }
 
   return (
     <div className="studyDetail_contianer">
@@ -138,7 +151,7 @@ export default function StudyDetail() {
 
             </div>
             <div className="apply-button-area">
-              <button className="apply-button ">지원하기</button>
+              <button className="apply-button" onClick={() => apply()} >지원하기</button>
             </div>
           </div>
         </div>

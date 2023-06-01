@@ -30,11 +30,13 @@ authApi.interceptors.response.use(
         const origianlRequest = config;
 
         if (error.response.status === 401) {
+            console.log('refreshtoken:::::');
+            console.log(localStorage.getItem("refreshToken"));
 
             try {
                 const data = await axios({
                     method: 'POST',
-                    url: `${process.env.REACT_APP_API_URL}api/token/reissue`,
+                    url: `${BASE_URL}token/reissue `,
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
                     }
@@ -42,6 +44,10 @@ authApi.interceptors.response.use(
 
                 const newAccessToken = data.data.accessToken
                 const newRefreshToken = data.data.refreshToken
+
+                console.log('새로운 토큰');
+                console.log(newAccessToken);
+                console.log(newRefreshToken);
                 origianlRequest.headers = {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + newAccessToken,
@@ -51,7 +57,7 @@ authApi.interceptors.response.use(
                 return await axios(origianlRequest);
 
             } catch (err) {
-                console.log('refesh로그아웃: ' + err);
+                console.log('refesh로그아웃: ' + err.data.message);
                 // refresh Token도 만료 -> 로그아웃
                 localStorage.clear();
 

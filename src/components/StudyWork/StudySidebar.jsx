@@ -18,53 +18,55 @@ export default function StudySidebar() {
   let [attendText, setAttendText] = useState(styles.regular_24);
   let [byweekText, setByweekText] = useState(styles.regular_24);
 
-  const handleAnnounce = () => {
-    setAnnounceIcon('/img/announce_icon_red.svg')
-    setAttendIcon('/img/attend_icon_black.svg')
-    setByweekIcon('/img/byweek_icon_black.svg')
 
-    setAnnounceText(styles.bold_24_red)
-    setAttendText(styles.regular_24)
-    setByweekText(styles.regular_24)
-  }
-
-  const handleAttend = () => {
-    setAnnounceIcon('/img/announce_icon_black.svg')
-    setAttendIcon('/img/attend_icon_red.svg')
-    setByweekIcon('/img/byweek_icon_black.svg')
-
-    setAnnounceText(styles.regular_24)
-    setAttendText(styles.bold_24_red)
-    setByweekText(styles.regular_24)
-  }
-
-  const handleByweek = () => {
-    setAnnounceIcon('/img/announce_icon_black.svg')
-    setAttendIcon('/img/attend_icon_black.svg')
-    setByweekIcon('/img/byweek_icon_red.svg')
-
-
-
-    setAnnounceText(styles.regular_24)
-    setAttendText(styles.regular_24)
-    setByweekText(styles.bold_24_red)
-  }
-
-  // 스터디 이름 불러오기
-  const [weekInfo, setWeekInfo] = useState([]);
   useEffect(() => {
+    if (window.location.href.split('?', 1) == `${process.env.REACT_APP_BASE_URL}study/work/notices`) {
+      setAnnounceIcon('/img/announce_icon_red.svg')
+      setAttendIcon('/img/attend_icon_black.svg')
+      setByweekIcon('/img/byweek_icon_black.svg')
+
+      setAnnounceText(styles.bold_24_red)
+      setAttendText(styles.regular_24)
+      setByweekText(styles.regular_24)
+    }
+    else if (window.location.href.split('?', 1) == `${process.env.REACT_APP_BASE_URL}study/work/attendances`) {
+      setAnnounceIcon('/img/announce_icon_black.svg')
+      setAttendIcon('/img/attend_icon_red.svg')
+      setByweekIcon('/img/byweek_icon_black.svg')
+
+      setAnnounceText(styles.regular_24)
+      setAttendText(styles.bold_24_red)
+      setByweekText(styles.regular_24)
+    }
+    if (window.location.href.split('?', 1) == `${process.env.REACT_APP_BASE_URL}study/work/weeks`) {
+      setAnnounceIcon('/img/announce_icon_black.svg')
+      setAttendIcon('/img/attend_icon_black.svg')
+      setByweekIcon('/img/byweek_icon_red.svg')
+
+      setAnnounceText(styles.regular_24)
+      setAttendText(styles.regular_24)
+      setByweekText(styles.bold_24_red)
+    }
+  }, [window.location.href])
+
+  const [weekInfo, setWeekInfo] = useState([]);
+  const [studyName, setStudyName] = useState('');
+  useEffect(() => {
+
+    // 주차 이름 불러오기
     authApi.get(`studies/${studyId}/weeks`)
       .then((response) => {
         setWeekInfo(response.data.weeks);
       })
 
+    // 스터디 이름
+    authApi.get(`studies/${studyId}`)
+      .then((response) => {
+        setStudyName(response.data.name)
+      })
+
   }, [])
 
-  //info에서 제목클릭하면 공지사항으로 바뀌게
-  useEffect(() => {
-    if (window.location.href == "http://localhost:3000/StudyWork/Announce")
-      handleAnnounce()
-  }, [window.location.href])
 
   // 클릭시 스터디 스크롤 이동
   const move_week_study = (index) => {
@@ -75,9 +77,9 @@ export default function StudySidebar() {
     <div>
       <div className={`${styles.left_container}`}>
         <div className={`${styles.left_container_element}`}>
-          <NavLink to='/StudyWork/Announce' state={{ studyId: studyId }} className={`${styles.sidebar} ${announceText} ${styles.isRed} ${styles.side_announce}`} onClick={() => handleAnnounce()}><img className={styles.side_icons} src={process.env.PUBLIC_URL + announceIcon} />공지사항</NavLink>
-          <NavLink to='/StudyWork/Attend' state={{ studyId: studyId }} className={`${styles.sidebar} ${attendText} ${styles.isRed} ${styles.side_attend}`} onClick={() => handleAttend()}><img className={styles.side_icons} src={process.env.PUBLIC_URL + attendIcon} />출석부</NavLink>
-          <NavLink to='/StudyWork/ByWeek' state={{ studyId: studyId }} className={`${styles.sidebar} ${byweekText} ${styles.isRed} ${styles.side_byweek}`} onClick={() => handleByweek()}><img className={styles.side_icons} src={process.env.PUBLIC_URL + byweekIcon} />스터디</NavLink>
+          <NavLink to={`/study/work/notices?name=${studyName}`} state={{ studyId: studyId }} className={`${styles.sidebar} ${announceText} ${styles.isRed} ${styles.side_announce}`} ><img className={styles.side_icons} src={process.env.PUBLIC_URL + announceIcon} />공지사항</NavLink>
+          <NavLink to={`/study/work/attendances?name=${studyName}`} state={{ studyId: studyId }} className={`${styles.sidebar} ${attendText} ${styles.isRed} ${styles.side_attend}`} ><img className={styles.side_icons} src={process.env.PUBLIC_URL + attendIcon} />출석부</NavLink>
+          <NavLink to={`/study/work/weeks?name=${studyName}`} state={{ studyId: studyId }} className={`${styles.sidebar} ${byweekText} ${styles.isRed} ${styles.side_byweek}`} ><img className={styles.side_icons} src={process.env.PUBLIC_URL + byweekIcon} />스터디</NavLink>
 
           {window.location.href == `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`
             ?

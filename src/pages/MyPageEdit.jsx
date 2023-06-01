@@ -2,15 +2,12 @@ import React, { useEffect, useState } from 'react'
 import styles from '../css/ProfileRevice.module.css'
 import Avatar from 'boring-avatars';
 import { authApi, defaultapi } from '../services/api';
-import { useLocation } from 'react-router';
 
 export default function ProfileRevice(props) {
 
 
     // 사용자 id get
     const memberId = localStorage.getItem("id")
-
-
 
 
     // 닉네임 + 프로필바꾸기
@@ -275,7 +272,7 @@ export default function ProfileRevice(props) {
                     </div>
                     <div className={styles.floor}>
                         <div className={styles.labels}>
-                            <label htmlFor="nick">닉네임</label> <img src='./img/info-circle.svg' className={styles.info_circle} /><p className={styles.info_nick}> 2~10글자, 한글/영어/숫자만 입력가능</p>
+                            <label htmlFor="nick">닉네임</label> <img src={process.env.PUBLIC_URL + '/img/info-circle.svg'} className={styles.info_circle} /><p className={styles.info_nick}> 2~10글자, 한글/영어/숫자만 입력가능</p>
                         </div>
                         <div>
                             <input type="text" id="nick" className={`${styles.inputs} ${styles.inputs_one}`} minLength='2' maxLength='10' onChange={(e) => handleNick(e.target.value)} value={memberNickname} />

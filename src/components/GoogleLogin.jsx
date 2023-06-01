@@ -11,7 +11,7 @@ export default class GoogleLogin extends Component {
   }
 
   handleLogin = async () => {
-    const redirectUrl = encodeURIComponent(`${process.env.REACT_APP_BASE_URL}sign-in`);
+    const redirectUrl = encodeURIComponent(`${process.env.REACT_APP_BASE_URL}login`);
     const response = await defaultapi.get(`oauth/access?redirectUrl=${redirectUrl}`) // 1. 백엔드 서버에서 Authorization Code 요청 URL 받아오기
 
     window.location.href = response.data.result; // 구글 회원가입으로 이동
@@ -20,7 +20,7 @@ export default class GoogleLogin extends Component {
   handleCallback = async () => {
     const searchParams = new URLSearchParams(window.location.search);
     const authorizationCode = searchParams.get('code'); // google redirect를 통해서 받아온 Authoriation Code
-    const redirectUrl = encodeURIComponent(`${process.env.REACT_APP_BASE_URL}sign-in`); // Redirect Url -> handleLogin의 redirectUri와 반드시 일치
+    const redirectUrl = encodeURIComponent(`${process.env.REACT_APP_BASE_URL}login`); // Redirect Url -> handleLogin의 redirectUri와 반드시 일치
 
     if (authorizationCode) {
       defaultapi
@@ -40,7 +40,7 @@ export default class GoogleLogin extends Component {
             localStorage.setItem("name", error.response.data.name);
             localStorage.setItem("email", error.response.data.email);
 
-            window.location.href = `${process.env.REACT_APP_BASE_URL}SignUp`;
+            window.location.href = `${process.env.REACT_APP_BASE_URL}sign-up`;
           }
         });
     }

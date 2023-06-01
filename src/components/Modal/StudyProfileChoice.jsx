@@ -1,13 +1,13 @@
 import React from "react";
-import styles from "../css/StudyProfileChoice.module.css";
+import styles from "../../css/StudyProfileChoice.module.css";
 
 export default function StudyProfileChoice({ closeModal, setProfile }) {
   const profileList = [
-    "certificate_CIP.png",
-    "certificate_EIP.png",
-    "certificate_CSSD.png",
-    "certificate_KH.png",
-    "certificate_GTQ.png",
+    "certification_CIP.png",
+    "certification_EIP.png",
+    "certification_CSSD.png",
+    "certification_KH.png",
+    "certification_GTQ.png",
     "interview_samsung.png",
     "interview_hyundai.png",
     "interview_LG.png",

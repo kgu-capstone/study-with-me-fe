@@ -1,23 +1,23 @@
 import React, { useState } from 'react'
 import styles from '../css/UserName.module.css'
-import Profile from './Profile'
-import Report from './Report'
+import Profile from './Modal/Profile'
+import Report from './Modal/Report'
 
-export default function UserName({userNickname, userId}) {
+export default function UserName({ userNickname, userId }) {
 
     //드롭다운
 
     const [userNameContainerCss, setUserNameContainerCss] = useState(`${styles.container}`);
 
-    const handleUserNameContainer = (is) =>{
+    const handleUserNameContainer = (is) => {
 
-        if(is == true){
+        if (is == true) {
             setUserNameContainerCss(`${styles.view_container}`)
-        }else{
+        } else {
             setUserNameContainerCss(`${styles.container}`)
         }
     }
-        
+
 
 
     //프로필 모달
@@ -29,28 +29,28 @@ export default function UserName({userNickname, userId}) {
 
     // onMouseOut={() => handleUserNameContainer(false)}
 
-  return (
-    <div className={styles.component_container} onMouseLeave={() => handleUserNameContainer(false)}>
-        <div className={userNameContainerCss} >
-            <div>
-            <div className={styles.view_profile} onClick={() => setIsview_profile_modal(true)}>프로필</div>
-            <div className={styles.report} onClick={() => setIsview_report_modal(true)}>신고하기</div>
+    return (
+        <div className={styles.component_container} onMouseLeave={() => handleUserNameContainer(false)}>
+            <div className={userNameContainerCss} >
+                <div>
+                    <div className={styles.view_profile} onClick={() => setIsview_profile_modal(true)}>프로필</div>
+                    <div className={styles.report} onClick={() => setIsview_report_modal(true)}>신고하기</div>
+                </div>
+
             </div>
-            
+
+            <div className={styles.userName} onClick={() => handleUserNameContainer(true)}>
+                <p>{userNickname}</p>
+            </div>
+
+            <div>
+                {isview_profile_modal && <Profile closeModal={setIsview_profile_modal} userId={userId} />}
+            </div>
+
+            <div>
+                {isview_report_modal && <Report closeModal={setIsview_report_modal} reporteeId={userId} />}
+            </div>
+
         </div>
-        
-        <div className={styles.userName} onClick={() => handleUserNameContainer(true)}>
-            <p>{userNickname}</p>
-        </div>
-
-<div>
-{isview_profile_modal && <Profile closeModal = {setIsview_profile_modal} userId = {userId}/>}
-</div>
-
-<div>
-{isview_report_modal && <Report closeModal = {setIsview_report_modal} reporteeId = {userId}/>}
-</div>
-
-    </div>
-  )
+    )
 }

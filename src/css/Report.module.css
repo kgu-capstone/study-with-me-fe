@@ -1,5 +1,5 @@
-.report_container{
-    
+.report_container {
+
     z-index: 999;
     position: fixed;
     top: 0;
@@ -9,7 +9,7 @@
     background-color: rgba(0, 0, 0, 0.65);
 }
 
-.modal_container{
+.modal_container {
     z-index: 1000;
     position: absolute;
     width: 824px;
@@ -21,46 +21,44 @@
     border-radius: 10px;
 }
 
-.reportq{
+.reportq {
     position: relative;
-    height: 20.88px;
-    top: 51px;
-    font-size:26px;
-    left : 325px;
-   }
+    margin-top: 60px;
+    text-align: center;
+    font-size: 24px;
+}
 
-   .reason{
-    font-size:14px;
-
+.reason {
+    font-size: 16px;
     position: relative;
     height: 13.92px;
-    left: 90px;
-    top: 130px;
+    left: 93px;
+    top: 55px;
     width: 150px;
 }
 
-.square{
-    top: 180px;
-    left:90px;
-    width:645px;
-    height:150px;
-    border-radius:15px;
-    position: absolute;
+.square {
+    top: 80px;
+    left: 90px;
+    width: 645px;
+    height: 150px;
+    border-radius: 15px;
+    position: relative;
     border-style: solid;
-    border-width:1px;
-    border-color:#C5C5C5;
-    }
+    border-width: 1px;
+    border-color: #C5C5C5;
+}
 
-      .reportbuttonA {
-        position: absolute;
-        top:380px;
-        left:333px;
-        width: 165px;
-        height: 50px;
-        background-color: #ff5037;
-        color: white;
-        border-radius: 10px;
-        font-size: 20px;
-        border:none;
-        text-align: center;
-      }
+.reportbuttonA {
+    position: absolute;
+    top: 380px;
+    left: 333px;
+    width: 165px;
+    height: 50px;
+    background-color: #ff5037;
+    color: white;
+    border-radius: 10px;
+    font-size: 20px;
+    border: none;
+    text-align: center;
+}

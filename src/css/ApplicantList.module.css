@@ -5,48 +5,50 @@
     src: url(../fonts/Pretendard-Regular.woff);
 }
 
-@font-face{
+@font-face {
     font-family: 'Pretendard-Bold';
     src: url(../fonts/Pretendard-Bold.woff);
 }
 
-body{
+body {
     font-family: 'Pretendard-regular';
-    margin : 0px;
+    margin: 0px;
 }
 
-.title{
+.title {
     font-family: 'Pretendard-Bold';
 
     font-size: 24px;
     text-align: center;
 }
 
-.container{
+.container {
     margin-top: 52px;
     display: flex;
     justify-content: center;
 }
 
-.field{
+.field {
     margin-top: 32px;
     margin-bottom: 12px;
     display: flex;
 }
 
-.data1{
+.data1 {
     text-align: center;
 }
-.data2{
-    text-align: center;
+
+.data2 {
+    padding: auto;
 }
-.data3{
+
+.data3 {
     display: flex;
     float: right;
 }
 
 
-.approve_button{
+.approve_button {
     width: 90px;
     height: 40px;
     color: white;
@@ -57,10 +59,12 @@ body{
     border-radius: 10px;
     margin-right: 26px;
 }
-.approve_button:hover{
+
+.approve_button:hover {
     cursor: pointer;
 }
-.reject_button{
+
+.reject_button {
     float: right;
     width: 90px;
     height: 40px;
@@ -72,35 +76,41 @@ body{
     border-radius: 10px;
     margin-right: 20px;
 }
-.reject_button:hover{
+
+.reject_button:hover {
     cursor: pointer;
 }
-.list{
+
+.list {
     margin-top: 24px;
     display: flex;
 }
 
 
-.indextd, .indexth{
+.indextd,
+.indexth {
     width: 50px;
     text-align: center;
     line-height: 40px;
 }
 
-.nametd, .nameth{
+.nametd,
+.nameth {
     width: 140px;
     text-align: center;
     line-height: 40px;
+    cursor: pointer;
 }
 
-.buttontd, .buttonth{
+.buttontd,
+.buttonth {
     width: 250px;
     text-align: center;
     line-height: 40px;
 }
 
 /* 거절 모달*/
-.reject_container{
+.reject_container {
     z-index: 999;
     position: fixed;
     top: 0;
@@ -111,7 +121,7 @@ body{
 
 }
 
-.modal_container{
+.modal_container {
     z-index: 1000;
     position: absolute;
     width: 863px;
@@ -123,15 +133,16 @@ body{
     border-radius: 10px;
 }
 
-.reject_title{
+.reject_title {
     margin-top: 67px;
     font-family: 'Pretendard-regular';
 
     /* font-family: 'Pretendard-Bold'; */
     font-size: 24px;
-    
+
 }
-.inputreject{
+
+.inputreject {
     margin-top: 10px;
     width: 635px;
     height: 104px;
@@ -141,7 +152,7 @@ body{
     padding: 10px 20px;
 }
 
-.reject_button_inmodal{
+.reject_button_inmodal {
     margin: 30px auto 0 auto;
     font-size: 24px;
     width: 155px;
@@ -155,11 +166,11 @@ body{
     justify-content: center;
 }
 
-.reject_button_inmodal:hover{
+.reject_button_inmodal:hover {
     cursor: pointer;
 }
 
-.warningMessage{
+.warningMessage {
     color: #FF5037;
     font-size: 16px;
 }

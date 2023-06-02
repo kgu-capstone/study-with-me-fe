@@ -64,7 +64,7 @@ export default function StudyInfo() {
           <div className={styles.info_right}>
             <div className={styles.info_right_element}>
               <p className={styles.info_category}>#{studyCategory}</p>
-              <NavLink to='/StudyWork/Announce' state={{ studyId: studyId }} className={styles.info_studyname_navlink}>
+              <NavLink to={`/study/work/notices?name=${studyName}`} state={{ studyId: studyId }} className={styles.info_studyname_navlink}>
                 <p className={`${styles.bold_24} ${styles.info_studyname}`}>{studyName}</p>
               </NavLink>
               <p className={styles.regular_18}>{studyCurrentMembers} / {studyMaxMembers}</p>
@@ -72,7 +72,7 @@ export default function StudyInfo() {
             <div className={`${styles.info_right_buttons}`}>
               {isHost && isRecruit ?
 
-                <NavLink to="/ApplicantList" state={{ studyId: studyId }} className={styles.applicantList_button}>
+                <NavLink to={`/study/applicants?name=${studyName}`} state={{ studyId: studyId }} className={styles.applicantList_button}>
                   <div>
                     <img src={process.env.PUBLIC_URL + '/img/participate_button.png'}
                       className={styles.info_button} />신청한 사람 보기
@@ -81,7 +81,7 @@ export default function StudyInfo() {
                 :
                 <></>}
               {isHost ?
-                <NavLink to="/StudyRevice" state={{ studyId: studyId, studyName: studyName }} className={styles.studyRevice_button}>
+                <NavLink to={`/study/edit?name=${studyName}`} state={{ studyId: studyId, studyName: studyName }} className={styles.studyRevice_button}>
                   <div>
                     <img src={process.env.PUBLIC_URL + '/img/setting_button.png'}
                       className={styles.info_button} />스터디정보수정

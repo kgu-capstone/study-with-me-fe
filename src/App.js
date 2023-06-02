@@ -11,15 +11,15 @@ import MyPage from "./pages/MyPage";
 import Root from "./pages/Root";
 import Main from "./pages/Main";
 import StudyWork from "./pages/StudyWork";
-import Announce from "./components/StudyWork/Announce";
-import Attend from "./components/StudyWork/Attend";
-import ByWeek from "./components/StudyWork/ByWeek";
-import MakeStudy from "./pages/MakeStudy";
+import Notices from "./components/StudyWork/Notices";
+import Attendances from "./components/StudyWork/Attendances";
+import Weeks from "./components/StudyWork/Weeks";
+import StudyCreate from "./pages/StudyCreate";
 import StudyDetail from "./pages/StudyDetail";
 
-import StudyRevice from './pages/StudyRevice';
-import ApplicantList from './pages/ApplicantList';
-import ProfileRevice from './pages/ProfileRevice';
+import StudyEdit from './pages/StudyEdit';
+import StudyApplicants from './pages/StudyApplicants';
+import MyPageEdit from './pages/MyPageEdit';
 
 
 const router = createBrowserRouter([
@@ -28,26 +28,25 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       { index: true, element: <Main /> },
-      { path: "sign-in", element: <SignIn /> },
-      { path: "SignUp", element: <SignUp /> },
-      { path: "MyPage", element: <MyPage /> },
-      { path: "ProfileRevice", element: <ProfileRevice /> },
-      { path: "StudyDetail", element: <StudyDetail /> },
+      { path: "login", element: <SignIn /> },
+      { path: "sign-up", element: <SignUp /> },
+      { path: "mypage", element: <MyPage /> },
+      { path: "mypage/edit", element: <MyPageEdit /> },
 
-      { path: "MakeStudy", element: <MakeStudy /> },
-
-      { path: "StudyRevice", element: <StudyRevice /> },
-      { path: "ApplicantList", element: <ApplicantList /> },
+      { path: "study/create", element: <StudyCreate /> },
+      { path: "study", element: <StudyDetail /> },
+      { path: "study/edit", element: <StudyEdit /> },
+      { path: "study/applicants", element: <StudyApplicants /> },
     ],
   },
   {
-    path: "/StudyWork",
+    path: "/study/work",
     element: <StudyWork />,
     children: [
-      { index: true, element: <Announce /> },
-      { path: "Announce", element: <Announce /> },
-      { path: "Attend", element: <Attend /> },
-      { path: "ByWeek", element: <ByWeek /> },
+      { index: true, element: <Notices /> },
+      { path: "notices", element: <Notices /> },
+      { path: "attendances", element: <Attendances /> },
+      { path: "weeks", element: <Weeks /> },
     ],
   },
 ]);

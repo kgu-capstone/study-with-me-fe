@@ -201,8 +201,8 @@ function SignIn() {
             console.log(data);
             defaultapi.post(`member`, data)
                 .then((response) => {
-                    alert("회원가입을 성공했습니다!");
-                    window.location.href = `${process.env.REACT_APP_BASE_URL}sign-in`;
+                    alert("회원가입을 성공했습니다! 로그인을 진행해주세요.");
+                    window.location.href = `${process.env.REACT_APP_BASE_URL}login`;
 
                 }).catch((error) => {
                     if (error.response.status === 409) {

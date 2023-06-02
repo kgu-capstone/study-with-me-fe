@@ -1,26 +1,140 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import styles from "../css/MakeStudy.module.css"
+import styles from "../css/StudyRevice.module.css"
 import '../css/MakeStudy.scss'
 
 import Tags from '@yaireo/tagify/dist/react.tagify' // React-wrapper file
 import "@yaireo/tagify/dist/tagify.css" // Tagify CSS
 
 import { authApi, defaultapi } from '../services/api';
-import StudyProfileChoice from '../components/StudyProfileChoice';
+import StudyProfileChoice from '../components/Modal/StudyProfileChoice';
 import { useLocation } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import parse from 'html-react-parser';
+
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { useHistory } from 'react-router';
 
 
+export default function StudyRevice() {
 
-const MakeStudy = () => {
+  // 넘어올 정보
+  const location = useLocation()
+  const stateStudyId = location.state?.studyId
+  const stateStudyName = location.state?.studyName
 
-  const { pathname } = useLocation();
+
+  /// 화면 뜰 떄 ///
+  let [category_list, setCategory_list] = useState([])
+  let classtemp = [`${styles.category_label}`]
 
   useEffect(() => {
+    // 스크롤 맨 위로
     window.scrollTo(0, 0);
-  }, [pathname]);
+
+    // 카테고리 조회
+    defaultapi.get(`categories`)
+      .then((response) => {
+        setCategory_list(response.data.result);
+
+        for (let i = 0; i < category_list.length; i++) { //check박스
+          category_list[i].isChecked = false;
+
+          classtemp[i] = `${styles.category_label}`; // 체크안된 css클래스를 미리 지정
+        }
+        setCategoryclass(classtemp)//
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+    , []);
+
+
+
+  useEffect(() => {
+    //스터디 정보 조회
+    authApi(`studies/${stateStudyId}`)
+      .then((response) => {
+        if (response.data.recruitmentStatus == '모집중') {
+          setRecruitOnclass(`${styles.recruit_toggle_on_checked}`);
+          setRecruitOffclass(`${styles.recruit_toggle_off_label}`);
+          setStudyRecruit(true);
+        } else {
+          setRecruitOnclass(`${styles.recruit_toggle_on_label}`);
+          setRecruitOffclass(`${styles.recruit_toggle_off_checked}`);
+          setStudyRecruit(false);
+        }
+
+        setStudyThumbnail(response.data.thumbnail)
+        setStudyName(response.data.name)
+        setStudyInfo(response.data.description)
+        setStudyNumber(response.data.maxMembers)
+        setHashtagarr(response.data.hashtags)
+
+        const category = response.data.category
+        category_list.map((item) => {
+          if (item.name == category) {
+            handleCategory(item.id);
+          }
+
+        })
+
+        setMinimumAttendanceForGraduation(response.data.minimumAttendanceForGraduation)
+        setRemainingOpportunityToUpdateGraduationPolicy(response.data.remainingOpportunityToUpdateGraduationPolicy);
+
+        setHashtagarr(response.data.hashtags);
+
+
+        if (response.data.type == "온라인") {
+          setOnclass(`${styles.check_radios}`)
+          setStudyOnoff('online')
+        }
+        else if (response.data.type == "오프라인") {
+          setOffclass(`${styles.check_radios}`)
+          setStudyOnoff('offline')
+          setCity(response.data.location.province);
+          setTown(response.data.location.city)
+        }
+
+      })
+      .catch((e) => {
+        console.log(e);
+      }
+      )
+  }, [category_list]);
+
+
+
+
+
+
+
+  // 스터디 모집 on off
+  const [recruitOnclass, setRecruitOnclass] = useState(`${styles.recruit_toggle_on_label}`);
+  const [recruitOffclass, setRecruitOffclass] = useState(`${styles.recruit_toggle_off_checked}`);
+
+
+  const handleRecruit = (value) => {
+    if (value == 'on') {
+      setRecruitOnclass(`${styles.recruit_toggle_on_checked}`);
+      setRecruitOffclass(`${styles.recruit_toggle_off_label}`);
+      setStudyRecruit(true);
+      console.log(value);
+      console.log('투루');
+      alert("수정사항 저장을 해야 반영이 됩니다.")
+    } else {
+      setRecruitOnclass(`${styles.recruit_toggle_on_label}`);
+      setRecruitOffclass(`${styles.recruit_toggle_off_checked}`);
+      setStudyRecruit(false);
+      console.log(value);
+      console.log('폴스');
+      alert("수정사항 저장을 해야 반영이 됩니다.")
+    }
+    console.log(studyOnoff);
+  }
+
 
 
   // 스터디 프로필 모달
@@ -65,30 +179,21 @@ const MakeStudy = () => {
 
 
 
-  //카테고리 조회
-  let [category_list, setCategory_list] = useState([])
+  // 카테고리 클릭시 css 변경 및 값 변경
+  const [categories, setCategories] = useState(-1); // 값
 
-  const category_find = () => {
-    defaultapi.get(`categories`)
-      .then((response) => {
-        setCategory_list(response.data.result);
+  const [categoryclass, setCategoryclass] = useState([]); // css
 
-        for (let i = 0; i < category_list.length; i++) { //check박스
-          category_list[i].isChecked = false;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+  const handleCategory = (id) => {
+    // replace class
+    let classarr = [...categoryclass]
+    classarr[categories] = `${styles.category_label}`
+    classarr[id] = `${styles.check_category_label}`;
+    setCategoryclass(classarr);
+
+    // change value
+    setCategories(id)
   }
-
-  useEffect(category_find, []);
-
-
-  // 카테고리 넣기
-  const [categories, setCategories] = useState([]);
-
-
 
 
 
@@ -107,6 +212,17 @@ const MakeStudy = () => {
   }
 
 
+  // 온 오프
+  const handleOnoff = (value) => {
+    setStudyOnoff(value)
+    if (value == 'online') {
+      setOnclass(`${styles.check_radios}`);
+      setOffclass(`${styles.radios}`);
+    } else {
+      setOnclass(`${styles.radios}`);
+      setOffclass(`${styles.check_radios}`);
+    }
+  }
 
 
 
@@ -199,6 +315,7 @@ const MakeStudy = () => {
   let hashtagarrtemp = [];
 
   const handleHashTag = useCallback((e) => {
+
     for (let i = 0; i < e.detail.tagify.value.length; i++) {
       hashtagarrtemp[i] = e.detail.tagify.getCleanValue()[i].value
 
@@ -211,7 +328,11 @@ const MakeStudy = () => {
 
 
 
+
+
+
   // 정보들
+  const [studyRecruit, setStudyRecruit] = useState(false);
   const [studyThumbnail, setStudyThumbnail] = useState('thumbnailtemp.svg');
   const [studyName, setStudyName] = useState('');
   const [studyInfo, setStudyInfo] = useState('');
@@ -219,6 +340,10 @@ const MakeStudy = () => {
   const [studyOnoff, setStudyOnoff] = useState('');
 
   const [minimumAttendanceForGraduation, setMinimumAttendanceForGraduation] = useState('');
+  const [remainingOpportunityToUpdateGraduationPolicy, setRemainingOpportunityToUpdateGraduationPolicy] = useState(0);
+
+  const [onclass, setOnclass] = useState(`${styles.radios}`);
+  const [offclass, setOffclass] = useState(`${styles.radios}`);
 
   // 유효성 안맞았을 때 경고문들
   const [studyThumbnailWarning, setStudyThumbnailWarning] = useState('');
@@ -237,9 +362,8 @@ const MakeStudy = () => {
   const hashelement = document.getElementById('hashloction')
 
 
-
-  // 스터디 만들기 버튼
-  const handleMakeStudy = () => {
+  // 스터디 수정 버튼
+  const handleReviceStudy = () => {
 
     let data = {}
 
@@ -258,7 +382,7 @@ const MakeStudy = () => {
       setStudyInfoWarning('스터디 설명을 입력해주세요');
       window.info.focus();
     }
-    else if (categories.length == 0) {
+    else if (categories == -1) {
       setStudyInfoWarning('');
       setStudyCategroryWarning('카테고리를 선택해주세요.');
       categoryelement.scrollIntoView();
@@ -294,12 +418,13 @@ const MakeStudy = () => {
         data = {
           "name": studyName,
           "description": studyInfo,
-          "capacity": studyNumber,
-          "category": categories,
+          "capacity": parseInt(studyNumber),
+          "category": parseInt(categories),
           "thumbnail": studyThumbnail,
           "type": studyOnoff,
           "province": null,
           "city": null,
+          "recruitmentStatus": studyRecruit,
           "minimumAttendanceForGraduation": minimumAttendanceForGraduation,
           "hashtags": hashtagarr,
         }
@@ -309,26 +434,30 @@ const MakeStudy = () => {
         data = {
           "name": studyName,
           "description": studyInfo,
-          "capacity": studyNumber,
-          "category": categories,
+          "capacity": parseInt(studyNumber),
+          "category": parseInt(categories),
           "thumbnail": studyThumbnail,
           "type": studyOnoff,
           "province": city,
           "city": town,
+          "recruitmentStatus": studyRecruit,
           "minimumAttendanceForGraduation": minimumAttendanceForGraduation,
           "hashtags": hashtagarr,
         }
       }
 
       console.log(data);
-      // api 발송
-      authApi.post(`study`, data)
+
+      //api 발송
+      authApi.patch(`studies/${stateStudyId}`, data)
         .then((response) => {
-          alert('스터디를 성공적으로 만들었습니다.')
-          window.location.href = `${process.env.REACT_APP_BASE_URL}MyPage`;
+
+
+          alert('스터디를 성공적으로 수정했습니다.')
+
         })
         .catch((e) => {
-          if (e.response.status === 409) {
+          if (e.response.status === 409) { // 이름중복
             alert(e.response.message);
           } else (
             console.log(e)
@@ -336,6 +465,26 @@ const MakeStudy = () => {
         })
     }
   }
+
+
+
+
+  // 스터디 종료
+  const handleFinishStudy = () => {
+    if (window.confirm('정말 종료하시겠습니까?')) {
+      authApi.delete(`studies/${stateStudyId}`)
+        .then((response) => {
+          alert('스터디를 종료하였습니다.')
+          window.location.href = `${process.env.REACT_APP_BASE_URL}`;
+        }).catch((e) => {
+          console.log(e);
+        })
+    }
+
+
+
+  }
+
 
 
   return (
@@ -348,9 +497,16 @@ const MakeStudy = () => {
           </div>
 
           <div>
-            <p className={styles.title}>스터디 만들기</p>
+            <p className={styles.title}><NavLink to={`/study/work/notices?name=${studyName}`} state={{ studyId: stateStudyId }}>{stateStudyName}</NavLink> 수정</p>
           </div>
 
+          <div>
+            <div className={styles.recruit_title}>스터디 모집 활성화/비활성화</div>
+            <div className={`${styles.recruit_toggles_contianer}`}>
+              <input type='radio' name='isRercuit' id='yesRecruit' className={`${styles.recruit_toggles_input}`} onClick={() => handleRecruit('on')} /><label htmlFor='yesRecruit' className={recruitOnclass}>ON</label>
+              <input type='radio' name='isRercuit' id='notRecruit' className={`${styles.recruit_toggles_input}`} onClick={() => handleRecruit('off')} /><label htmlFor='notRecruit' className={recruitOffclass}>OFF</label>
+            </div>
+          </div>
 
 
           <div id='thumbnail' className={styles.thumbnail} onClick={() => setIsview_profile_modal(true)}>
@@ -381,7 +537,7 @@ const MakeStudy = () => {
                   config={{ // (4)
                     extraPlugins: [uploadPlugin]
                   }}
-                  data="<p></p>"
+                  data={studyInfo}
                   onReady={editor => {
                     // You can store the "editor" and use when it is needed.
                     // console.log( 'Editor is ready to use!', editor );
@@ -400,7 +556,6 @@ const MakeStudy = () => {
                 />
               </div>
               {/* <textarea type="text" id='info' className={styles.study_info_input_box} value={studyInfo} onChange={(e) => setStudyInfo(e.target.value)} /> */}
-
               <p className={styles.studyWarning}>{studyInfoWarning}</p>
             </div>
 
@@ -411,8 +566,8 @@ const MakeStudy = () => {
                 {category_list.map((data) => {
                   return (
                     <><input type='radio' name='category' id={data.id} className={styles.category_input} value={data.id} key={data.id}
-                      onClick={(e) => setCategories(e.target.value)} />
-                      <label className={styles.checkboxs_label} htmlFor={data.id}>{data.name}</label></>
+                      onClick={(e) => handleCategory(e.target.value)} />
+                      <label className={`${styles.category_label} ${categoryclass[data.id]}`} htmlFor={data.id} >{data.name}</label></>
                   );
                 })}
               </div>
@@ -425,8 +580,8 @@ const MakeStudy = () => {
               <div>온/오프라인 유무</div>
               <div>
                 <div className={styles.selects}>
-                  <input type="radio" name="onoff" id="on" className={styles.radios} value='online' onClick={(e) => setStudyOnoff(e.target.value)} /><label htmlFor="on" className={styles.rightMargin}>온라인</label>
-                  <input type="radio" name="onoff" id="off" className={styles.radios} value='offline' onClick={(e) => setStudyOnoff(e.target.value)} /><label htmlFor="off">오프라인</label>
+                  <input type="radio" name="onoff" id="online" value='online' onClick={(e) => handleOnoff(e.target.value)} /><label htmlFor="online" className={`${onclass} ${styles.rightMargin}`}>온라인</label>
+                  <input type="radio" name="onoff" id="offline" value='offline' onClick={(e) => handleOnoff(e.target.value)} /><label htmlFor="offline" className={offclass}>오프라인</label>
                 </div>
               </div>
               <p className={styles.studyWarning}>{studyOnoffWarning}</p>
@@ -440,7 +595,7 @@ const MakeStudy = () => {
                   <div className={styles.citychoice_container}>
                     <div>스터디 지역</div>
                     <div className={styles.citychoice}>
-                      <select id="area-city" className={`${styles.city_inputs} ${styles.inputs_two} ${styles.rightMargin}`} onChange={(e) => handleCity(e.target.value)}>
+                      <select id="area-city" className={`${styles.city_inputs} ${styles.inputs_two} ${styles.rightMargin}`} value={city} onChange={(e) => handleCity(e.target.value)}>
                         {citys.map((city) => {
                           return (
                             <option value={city} key={city}>{city}</option>
@@ -448,7 +603,7 @@ const MakeStudy = () => {
                         })}
 
                       </select>
-                      <select id="area-town" className={`${styles.city_inputs} ${styles.inputs_two}`} onChange={(e) => setTown(e.target.value)}>
+                      <select id="area-town" className={`${styles.city_inputs} ${styles.inputs_two}`} value={town} onChange={(e) => setTown(e.target.value)}>
                         {towns.map((town) => {
                           return (
                             <option value={town} key={town}>{town}</option>
@@ -464,7 +619,7 @@ const MakeStudy = () => {
 
             <div className={styles.number}>
               <div>참여 인원
-                <img src='./img/info-circle.svg' className={styles.info_circle} /><p className={styles.info_warning}> 2명 - 10명 사이로 입력해주세요.</p>
+                <img src={process.env.PUBLIC_URL + '/img/info-circle.svg'} className={styles.info_circle} /><p className={styles.info_warning}> 2명 - 10명 사이로 입력해주세요.</p>
               </div>
               <input id='membernumber' type="text" min={2} max={10} className={styles.study_number_input}
                 onChange={(e) => handleNumberMax(e.target.value)}
@@ -473,16 +628,21 @@ const MakeStudy = () => {
               <p className={styles.studyWarning}>{studyNumberWarning}</p>
             </div>
 
-            <div className={styles.number}>
-              <div>졸업 최소 출석 수
-                <img src='./img/info-circle.svg' className={styles.info_circle} /><p className={styles.info_warning}> 졸업할 수 있는 최소 조건을 의미합니다.</p>
+            {remainingOpportunityToUpdateGraduationPolicy > 0
+              ?
+              <div className={styles.number}>
+                <div>졸업 최소 출석 수
+                  <img src={process.env.PUBLIC_URL + '/img/info-circle.svg'} className={styles.info_circle} /><p className={styles.info_warning}> 졸업할 수 있는 최소 조건을 의미합니다.</p>
+                </div>
+                <input id='mimattend' type="text" className={styles.study_number_input}
+                  onChange={(e) => handlemin(e.target.value)}
+                  value={minimumAttendanceForGraduation}
+                />
+                <p className={styles.studyWarning}>{studyMinimumAttendanceForGraduationWarning}</p>
               </div>
-              <input id='mimattend' type="text" className={styles.study_number_input}
-                onChange={(e) => handlemin(e.target.value)}
-                value={minimumAttendanceForGraduation}
-              />
-              <p className={styles.studyWarning}>{studyMinimumAttendanceForGraduationWarning}</p>
-            </div>
+              :
+              <></>}
+
 
 
 
@@ -512,11 +672,17 @@ const MakeStudy = () => {
             </div>
           </div>
 
-          <button className={styles.make_study_button} onClick={() => handleMakeStudy()}>스터디 만들기</button>
+          <NavLink to={`${process.env.REACT_APP_BASE_URL}study/work/notices?name=${studyName}`} state={{ studyId: stateStudyId }} className={styles.make_study_button_nav}>
+            <button className={styles.make_study_button} onClick={() => handleReviceStudy()}>수정사항 저장</button>
+          </NavLink>
+
+          <div className={styles.finish_button_container} onClick={() => handleFinishStudy()}>
+            <div className={styles.finish_button}><img src={process.env.PUBLIC_URL + '/img/warningbutton.png'} /><p className={styles.finish_text}>스터디 종료하기</p></div>
+          </div>
+
+
         </div>
       </div>
     </div>
-  );
-};
-
-export default MakeStudy;
+  )
+}

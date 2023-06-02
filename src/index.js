@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import MakeStudy from "./pages/MakeStudy";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

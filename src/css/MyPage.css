@@ -153,6 +153,16 @@ main {
   color: #FF5037;
 }
 
+.astudy_graduate {
+  position: absolute;
+  right: 70px;
+  top: 12px;
+}
+
+.astudy_graduate:hover {
+  cursor: pointer;
+}
+
 .astudyarrow {
   float: right;
   padding-top: 10px;

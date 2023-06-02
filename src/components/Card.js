@@ -5,20 +5,18 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import parse from 'html-react-parser';
 
 const Card = ({
-  title,
   study_id,
   study_title,
   study_explanation,
   study_people,
   study_image,
-  card_function,
   study_recruit,
   study_favorite,
   study_category,
 }) => {
   return (
     <div>
-      <Link to="/StudyDetail" style={{ textDecoration: "none" }} state={{ studyId: study_id }}>
+      <Link to={`/study?name=${study_title}`} style={{ textDecoration: "none" }} state={{ studyId: study_id }}>
         <div className="card">
           <div className="card-body">
             <div className="card_top_container">

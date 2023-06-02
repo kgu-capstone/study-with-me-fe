@@ -21,6 +21,10 @@
     border-radius: 10px;
 }
 
+.relative {
+    position: relative
+}
+
 main {
     border: 1px solid #D9D9D9;
     background-color: #D9D9D9;
@@ -91,7 +95,6 @@ main {
     width: 50%;
     display: flex;
     position: relative;
-
 }
 
 .label {
@@ -124,7 +127,7 @@ main {
 }
 
 
-.ratelabel{
+.ratelabel {
     position: absolute;
     left: 395px;
     top: 357px;
@@ -162,7 +165,7 @@ main {
 .square_top {
     display: flex;
     margin-top: 16px;
-
+    justify-content: center;
 }
 
 .square_topA {
@@ -172,7 +175,7 @@ main {
 .bstudy {
     font-size: 20px;
     position: relative;
-    margin-left: 120px;
+    text-align: center;
 }
 
 .active_study_container {
@@ -216,8 +219,8 @@ main {
 }
 
 .write_review {
-    padding: 5px;
-    margin-left: 10px;
+    position: absolute;
+    right: 25px;
     color: #7D7D7D;
     cursor: pointer;
 }

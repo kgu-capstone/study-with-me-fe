@@ -1,0 +1,105 @@
+.byweek_each_homework_inputs {
+    padding: 10px 0;
+    display: flex;
+}
+
+.byweek_each_homework_type_select_ON {
+    position: relative;
+    border: 1px solid #C5C5C5;
+    background-color: #C5C5C5;
+    border-radius: 0 0 0 10px;
+    font-size: 16px;
+    color: white;
+    padding: 13px;
+    width: 102px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.byweek_each_homework_type_contianer {
+    position: absolute;
+    top: -105px;
+    left: -1px;
+    color: #FFFFFF;
+
+}
+
+.byweek_each_homework_type_file {
+    position: relative;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px 10px 0 0px;
+    background-color: #FFFFFF;
+    font-size: 16px;
+    color: #C5C5C5;
+    padding: 13px;
+    width: 102px;
+    text-align: center;
+}
+
+.byweek_each_homework_type_link {
+    position: relative;
+    border: 1px solid #C5C5C5;
+    background-color: #FFFFFF;
+    font-size: 16px;
+    color: #C5C5C5;
+    padding: 13px;
+    width: 102px;
+    text-align: center;
+}
+
+.byweek_each_homework_type_select {
+    position: relative;
+    border: 1px solid #C5C5C5;
+    border-radius: 10px 0 0 10px;
+    background-color: #C5C5C5;
+    font-size: 16px;
+    color: white;
+    padding: 13px;
+    width: 102px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.byweek_file_homeworkAttach_button {
+    display: none;
+}
+
+.byweek_file_homeworkAttach_button_label {
+    border-top: solid 1px #C5C5C5;
+    border-bottom: solid 1px #C5C5C5;
+    border-radius: 3px;
+    background-color: #FAFAFA;
+    color: black;
+    padding: 13px 20px;
+    width: 105px;
+    height: 52px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.byweek_each_homework_input_fileON {
+    height: 52px;
+    width: 390px;
+    border: 1px solid #C5C5C5;
+    border-radius: 0;
+    font-size: 16px;
+    padding: 13px;
+}
+
+.byweek_each_homework_button {
+    border: 1px solid #FF5037;
+    background-color: #FF5037;
+    border-radius: 0 10px 10px 0;
+    color: white;
+    font-size: 16px;
+    padding: 13px 20px;
+}
+
+.byweek_each_homework_input {
+    height: 52px;
+    width: 495px;
+    border: 1px solid #C5C5C5;
+    border-radius: 0;
+    font-size: 16px;
+    padding: 13px;
+}

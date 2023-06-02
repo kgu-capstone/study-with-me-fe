@@ -1,11 +1,10 @@
 import React, { Component, useEffect, useState } from 'react';
 import '../css/MyPage.css';
-import axios from 'axios';
 import { authApi } from '../services/api';
 import Avatar from "boring-avatars";
 import Button from 'react-bootstrap/Button';
 import { Link, NavLink } from 'react-router-dom';
-import StudyReview from '../components/StudyReview';
+import StudyReview from '../components/Modal/StudyReview';
 /*import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';*/
 
@@ -23,6 +22,7 @@ function MyPage() {
     let [memberRegion, setMemberRegion] = useState('');
     let [memberInterest, setMemberInterest] = useState('');
 
+    const [isApiUpdate, setIsApiUpdate] = useState(0);
     useEffect(() => {
         authApi.get(`members/${memberId}`)
             .then((response) => {
@@ -36,7 +36,7 @@ function MyPage() {
             .catch((error) => {
                 console.log(error);
             })
-    }, [])
+    }, [isApiUpdate])
 
 
 
@@ -155,6 +155,20 @@ function MyPage() {
     const [review_modal_on, setReview_modal_on] = useState(false);
 
 
+    // 졸업하기
+    const goGraduate = (studyId) => {
+        authApi.patch(`studies/${studyId}/graduate`)
+            .then((response) => {
+                setIsApiUpdate(isApiUpdate + 1)
+
+            })
+            .catch((err) => {
+                console.log('왜안돼');
+                alert('gkgk')
+            })
+
+    }
+
     return (
 
         <>
@@ -233,7 +247,7 @@ function MyPage() {
                     </div>
 
                 </div>
-                <Link to="/ProfileRevice" state={{ memberId: memberId }} className='mypage_revice_navlink'>
+                <Link to="/mypage/edit" state={{ memberId: memberId }} className='mypage_revice_navlink'>
                     <div className='mypage_brush'>
                         <img src={process.env.PUBLIC_URL + '/img/brush-2.png'} />
                         &nbsp;&nbsp;프로필 수정
@@ -250,9 +264,12 @@ function MyPage() {
 
                                         <div className='astudy_element'>
                                             <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
-                                            <NavLink to="/StudyWork" state={{ studyId: item.id }} className='astudy_navlink'>
+                                            <NavLink to={`/study/work/notices?name=${item.name}`} state={{ studyId: item.id }} className='astudy_navlink'>
                                                 <p className='astudy_name'>{item.name}</p>
                                             </NavLink>
+                                            <img width={24} height={24} src={process.env.PUBLIC_URL + `/img/graduate.png`} className='astudy_graduate'
+                                                onClick={() => goGraduate(item.id)}
+                                            />
                                             <p className='astudy_category'>{item.category}</p>
                                         </div>
 
@@ -272,7 +289,7 @@ function MyPage() {
                                         <>
                                             <div className='astudy_element'>
                                                 <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
-                                                <NavLink to="/StudyWork" state={{ studyId: item.id }} className='astudy_navlink'>
+                                                <NavLink to={`/study/work/notices?name=${item.name}`} state={{ studyId: item.id }} className='astudy_navlink'>
                                                     <p className='astudy_name'>{item.name}</p>
                                                 </NavLink>
                                                 <p className='astudy_review' onClick={() => setReview_modal_on(true)}>리뷰쓰기</p>
@@ -300,7 +317,7 @@ function MyPage() {
 
                                     <div className='astudy_element'>
                                         <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
-                                        <NavLink to="/StudyDetail" state={{ studyId: item.id }} className='astudy_navlink'>
+                                        <NavLink to={`/study?name=${item.name}`} state={{ studyId: item.id }} className='astudy_navlink'>
                                             <p className='astudy_name'>{item.name}</p>
                                         </NavLink>
                                         <p className='astudy_category'>{item.category}</p>
@@ -318,7 +335,7 @@ function MyPage() {
                                 return (
                                     <div className='astudy_element'>
                                         <img width={50} height={50} src={process.env.PUBLIC_URL + `/img/studyprofiles/${item.thumbnail}`} />
-                                        <NavLink to="/StudyDetail" state={{ studyId: item.id }} className='astudy_navlink'>
+                                        <NavLink to={`/study?name=${item.name}`} state={{ studyId: item.id }} className='astudy_navlink'>
                                             <p className='astudy_name'>{item.name}</p>
                                         </NavLink>
                                         <p className='astudy_category'>{item.category}</p>
@@ -332,7 +349,7 @@ function MyPage() {
 
 
                     <div>
-                        <Link to="/MakeStudy">
+                        <Link to="/study/create">
                             <div className='squarebutton_container'>
                                 <button class='squarebutton'>스터디 만들기</button>
                             </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import styles from '../css/StudyReview.module.css'
-import { authApi } from '../services/api'
+import styles from '../../css/StudyReview.module.css'
+import { authApi } from '../../services/api'
 
 export default function StudyReview({ closeModal, studyId, studyName, studyThumbnail }) {
 

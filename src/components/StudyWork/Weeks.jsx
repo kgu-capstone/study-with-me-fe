@@ -26,6 +26,7 @@ import { authApi } from '../../services/api';
 import { error, event } from 'jquery';
 import UserName from '../UserName';
 import { useLocation } from 'react-router';
+import AssignmentSummit from '../AssignmentSummit';
 
 
 
@@ -57,18 +58,31 @@ export default function ByWeek() {
   //// 스터디 불러오기 ////
   const [weekInfo, setWeekInfo] = useState([]);
 
-  useEffect(() => {
+  const weeksapi = () => {
     authApi.get(`studies/${studyId}/weeks`)
       .then((response) => {
         console.log(response.data.weeks);
         setWeekInfo(response.data.weeks);
 
+
       })
       .catch((err) => {
         console.log(err);
       })
+  }
 
+  useEffect(() => {
+    // 스크롤 맨 위로
+    window.scrollTo(0, 0);
+    weeksapi()
   }, [])
+
+  // 스터디 불러오기 api 업데이트
+  const [isApiUpdate, setIsApiUpdate] = useState(0);
+
+  useEffect(() => {
+    weeksapi()
+  }, [isApiUpdate])
 
 
   // 처음에 불러올 때 메뉴 모두 닫힌상태로 만들기
@@ -83,16 +97,19 @@ export default function ByWeek() {
     setWeekFoldcss(tempFoldListcss)
   }, [weekInfo])
 
-  // 클릭하면 펼치거나 접기
+  // 클릭하면 펼치거나 접기 + 값도 펼치기
   const handleFold = (index) => {
     let tempFoldListcss = [...weekfoldcss];
-    if (tempFoldListcss[index] == (`${styles.byweek_each_content_contianer_none}`)) {
-      tempFoldListcss[index] = (`${styles.byweek_each_content_contianer_block}`)
-    } else {
-      tempFoldListcss[index] = (`${styles.byweek_each_content_contianer_none}`)
+    for (let i = 0; i < tempFoldListcss.length; i++) {
+      tempFoldListcss[i] = (`${styles.byweek_each_content_contianer_none}`)
     }
 
+    tempFoldListcss[index] = (`${styles.byweek_each_content_contianer_block}`)
+
     setWeekFoldcss(tempFoldListcss)
+
+    setHomeworksFiles()
+    setHomeworkFileName('')
   }
 
 
@@ -243,22 +260,16 @@ export default function ByWeek() {
   }
 
   // 파일첨부 - 과제
-  let [homeworksFiles, setHomeworksFiles] = useState([]);
-  const [HomewworkdFileName, setHomeworkFileName] = useState([]);
+  let [homeworksFiles, setHomeworksFiles] = useState();
+  const [HomewworkdFileName, setHomeworkFileName] = useState('');
 
 
-  const handleHomworkUpload = (e, index) => {
-    // 파일
-    e.preventDefault();
-
+  const handleHomworkUpload = (e) => {
+    //파일
     const file = e.target.files[0];
-    setHomeworksFiles([...homeworksFiles, { uploadFile: file }]);
+    setHomeworksFiles({ uploadFile: file })
 
-
-    // 파일 이름만
-    const temp = [...HomewworkdFileName];
-    temp[index] = homeworksFiles[homeworksFiles.length - 1] && homeworksFiles[homeworksFiles.length - 1].uploadFile.name
-    setHomeworkFileName(temp)
+    setHomeworkFileName(e.target.files[0].name)
   }
 
 
@@ -302,7 +313,16 @@ export default function ByWeek() {
         }
       }
     ).then((response) => {
-      window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`;
+      setIsApiUpdate(isApiUpdate + 1) // api 업데이트
+      handleByweekWrite() // 글쓰기 닫기
+
+      setByweekInputTitle('') // 글쓰기 useState 초기화
+      setByweekInputContent('')
+      setStartDate(new Date())
+      setEndDate(new Date())
+      setInputAssignmentExists(true)
+      setInputAutoAttendance(true)
+      //초기화
     }).catch((error) => {
       console.log(error);
     })
@@ -320,13 +340,14 @@ export default function ByWeek() {
   // 과제 제출 타입
   const [homeworkTypeOpen, setHomeworkTypeOpen] = useState(false);
 
+
   const [homeworkType, setHomeworkType] = useState('file');
 
   // 과제제출 api 파일
   const handleHomeWorkUplaodFile = (week) => {
     const fileData = new FormData();
 
-    fileData.append("file", homeworksFiles[homeworksFiles.length - 1] && homeworksFiles[homeworksFiles.length - 1].uploadFile);
+    fileData.append("file", homeworksFiles && homeworksFiles.uploadFile);
     fileData.append("type", homeworkType);
 
     for (const key of fileData.keys()) {
@@ -345,7 +366,11 @@ export default function ByWeek() {
         }
       }
     ).then((response) => {
-      window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`;
+      setIsApiUpdate(isApiUpdate + 1) // api 업데이트
+
+      setHomeworkType('file'); //초기화
+      setHomeworkTypeOpen(false);
+      setHomeworkLink('')
     }).catch((error) => {
       console.log(error);
     })
@@ -355,6 +380,11 @@ export default function ByWeek() {
   // 과제제출 api 링크
   const [homeworkLink, setHomeworkLink] = useState('');
 
+  const handleHomeworkLink = (value, week) => {
+    let tempLink = [...homeworkLink]
+    tempLink[week] = value
+    setHomeworkLink(tempLink)
+  }
   const handleHomeWorkUplaodLink = (week) => {
     const fileData = new FormData();
 
@@ -369,7 +399,11 @@ export default function ByWeek() {
         }
       }
     ).then((response) => {
-      window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`;
+      setIsApiUpdate(isApiUpdate + 1) // api 업데이트
+
+      setHomeworkType('file'); //초기화
+      setHomeworkTypeOpen(false);
+      setHomeworkLink('')
     }).catch((error) => {
       console.log(error);
     })
@@ -382,7 +416,9 @@ export default function ByWeek() {
   const handleStudyWeekDelete = (week_value) => {
     if (window.confirm('해당 주차를 삭제하시겠습니까?')) {
       authApi.delete(`studies/${studyId}/weeks/${week_value}`)
-        .then(res => window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`)
+        .then(res => {
+          setIsApiUpdate(isApiUpdate + 1) // api 업데이트
+        })
         .catch(err => console.log(err))
     }
   }
@@ -445,7 +481,7 @@ export default function ByWeek() {
             <p>제목</p>
           </div>
           <div>
-            <input type='text' className={`${styles.byweek_write_title_input}`} onChange={(e) => setByweekInputTitle(e.target.value)}></input>
+            <input type='text' className={`${styles.byweek_write_title_input}`} value={byweekInputTitle} onChange={(e) => setByweekInputTitle(e.target.value)}></input>
           </div>
         </div>
 
@@ -460,7 +496,7 @@ export default function ByWeek() {
               config={{ // (4)
                 extraPlugins: [uploadPlugin]
               }}
-              data="<p></p>"
+              data={byweekInputContent}
               onReady={editor => {
                 // You can store the "editor" and use when it is needed.
                 console.log('Editor is ready to use!', editor);
@@ -601,6 +637,7 @@ export default function ByWeek() {
                           <div>
                             <div className={`${styles.byweek_each_homework_inputs}`}>
 
+                              {/* <AssignmentSummit studyId={studyId} week={item.week} setIsApiUpdate={setIsApiUpdate} isApiUpdate={isApiUpdate} /> */}
 
                               {/* 타입 버튼을 열였느냐 */}
                               {homeworkTypeOpen
@@ -638,13 +675,14 @@ export default function ByWeek() {
                               }
 
 
+
                               {
                                 homeworkType == 'file'
                                   ?
                                   // 파일을 선택했다면 
                                   <>
                                     <input type='file' id='homeworkupload' className={`${styles.byweek_file_homeworkAttach_button}`}
-                                      onChange={(e) => handleHomworkUpload(e, index)}
+                                      onChange={(e) => handleHomworkUpload(e, item.week)}
                                     ></input>
                                     <label htmlFor='homeworkupload' className={`${styles.byweek_file_homeworkAttach_button_label}`} >파일첨부</label>
 
@@ -657,7 +695,7 @@ export default function ByWeek() {
                                   :
                                   // 링크를 선택했다면
                                   <>
-                                    <input type='text' className={`${styles.byweek_each_homework_input}`} value={homeworkLink} onChange={(e) => setHomeworkLink(e.target.value)}></input>
+                                    <input type='text' className={`${styles.byweek_each_homework_input}`} value={homeworkLink} onChange={(e) => setHomeworkLink(e.target.value, item.week)}></input>
                                     <button type='button' className={`${styles.byweek_each_homework_button}`}
                                       onClick={() => handleHomeWorkUplaodLink(item.week)}
                                     >과제 등록</button>
@@ -712,7 +750,7 @@ export default function ByWeek() {
                     }
 
                   </div>
-                </div>
+                </div >
 
               </>
             )
@@ -720,7 +758,7 @@ export default function ByWeek() {
         }
 
       </div>
-    </div>
+    </div >
   )
 
 }

@@ -492,19 +492,34 @@ body {
 }
 
 .attend_name_contianer {
-    margin: 30px 70px 30px 50px;
+    margin: 30px 50px 30px 50px;
 }
 
 .attend_name_field {
     white-space: nowrap;
+    text-align: center;
 }
 
 .attend_names {
     position: static;
 }
 
-.attend_weeks_contianer {
+.attend_host_name_contianer {
     display: flex;
+    white-space: nowrap;
+}
+
+.attend_cronwimg {
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.attend_participant_name_container {
+    display: flex;
+    white-space: nowrap;
+}
+
+.attend_weeks_contianer {
     overflow-x: scroll;
     cursor: pointer;
 }
@@ -513,19 +528,50 @@ body {
     display: none;
 }
 
-.attend_each_weeks {
-    margin: 30px 40px 30px 0;
+.attend_weeks_count_contianer {
+    display: flex;
+}
 
+.attend_each_weeks {
+    margin-top: 28px;
+    width: 100px;
+    text-align: center;
 }
 
 .attend_weeks_field {
     white-space: nowrap;
+    width: 100px;
 }
 
 .attend_weeks {
     white-space: nowrap;
 }
 
+.attend_each_user_status {
+    display: flex;
+}
+
+.atten_each_status {
+    width: 100px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.attend_attend_color {
+    color: #07B638;
+}
+
+.attend_not_color {
+    color: #D9D9D9;
+}
+
+.attend_late_color {
+    color: #FFE500;
+}
+
+.attend_absent_color {
+    color: #FF5037;
+}
 
 /* 여기까지 출석부 */
 

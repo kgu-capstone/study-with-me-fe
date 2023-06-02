@@ -9,6 +9,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import { authApi } from '../../services/api';
 import { useLocation } from 'react-router';
+import { useParams } from 'react-router';
 
 export default function Announce() {
 
@@ -18,7 +19,6 @@ export default function Announce() {
   // studyId
   const location = useLocation()
   const studyId = location.state?.studyId
-
 
   // 유저가 팀장인지 불러오기
   const [isHost, setIsHost] = useState(false)
@@ -45,13 +45,18 @@ export default function Announce() {
       .catch((e) => console.log(e))
   }
 
-
+  const [announce, setAnnounce] = useState(0);
   useEffect(() => {
     // 스크롤 맨 위로
     window.scrollTo(0, 0);
 
     announceApi()
   }, [])
+
+  // api 업데이트
+  useEffect(() => {
+    announceApi()
+  }, [announce])
 
 
   // 공지사항 none css 입력
@@ -143,6 +148,7 @@ export default function Announce() {
 
 
 
+
   //공지사항등록  api
   const handleAnnounceUpload = () => {
     authApi.post(`studies/${studyId}/notice`,
@@ -151,7 +157,11 @@ export default function Announce() {
         "content": announceContent
       })
       .then((response) => {
-        window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/Announce`;
+        setAnnounce(announce + 1) // 공지사항 api를 다시 부르라는 신호
+        handleAnnounceWrite()
+
+        setAnnounceTitle('') // useState 초기화
+        setAnnounceContent('')
       })
       .catch((e) => {
         console.log(e);
@@ -206,7 +216,15 @@ export default function Announce() {
       }
     )
       .then((response) => {
-        window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/Announce`;
+        setAnnounce(announce + 1) // 공지사항 api를 다시 부르라는 신호
+
+        let TempReviceOn = [...announceReviceOnOff]; // 수정창 닫기
+        for (let i = 0; i < TempReviceOn.length; i++) {
+
+          TempReviceOn[i] = false
+        }
+        setAnnounceReviceOnOff(TempReviceOn);
+
       })
       .catch((err) => {
         console.log(err);
@@ -223,7 +241,7 @@ export default function Announce() {
     if (window.confirm('공지사항을 삭제하시겠습니까?')) {
       authApi.delete(`studies/${studyId}/notices/${noticeId}`)
         .then((response) => {
-          window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/Announce`;
+          setAnnounce(announce + 1) // 공지사항 api를 다시 부르라는 신호
         })
         .catch((err) => {
           console.log(err);
@@ -259,7 +277,7 @@ export default function Announce() {
       { "content": value }
     )
       .then((response) => {
-        window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/Announce`;
+        setAnnounce(announce + 1) // 공지사항 api를 다시 부르라는 신호
       })
       .catch((err) => {
         console.log(err);
@@ -351,7 +369,7 @@ export default function Announce() {
             <p>공지사항 제목</p>
           </div>
           <div>
-            <input type='text' className={`${styles.announce_write_title_input}`} onChange={(e) => setAnnounceTitle(e.target.value)}></input>
+            <input type='text' className={`${styles.announce_write_title_input}`} value={announceTitle} onChange={(e) => setAnnounceTitle(e.target.value)}></input>
           </div>
         </div>
 
@@ -368,7 +386,7 @@ export default function Announce() {
               config={{ // (4)
                 extraPlugins: [uploadPlugin]
               }}
-              data="<p></p>"
+              data={announceContent}
               onReady={editor => {
                 // You can store the "editor" and use when it is needed.
                 // console.log( 'Editor is ready to use!', editor );

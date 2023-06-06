@@ -3,12 +3,15 @@ import styles from '../../css/StudyWork.module.css';
 import UserName from '../UserName';
 import { authApi } from '../../services/api';
 import { useLocation } from 'react-router';
+import { DriveEta, ResetTvOutlined } from '@mui/icons-material';
+import { NavLink } from 'react-router-dom';
 
 export default function Attend() {
 
   // studyId
   const location = useLocation()
   const studyId = location.state?.studyId
+  const [studyName, setStudyName] = useState('');
 
 
   const scrollRef = useRef(null);
@@ -58,40 +61,21 @@ export default function Attend() {
 
 
 
-  const [host, setHost] = useState('');
+  const [host, setHost] = useState({});
   const [attend, setAttend] = useState([]);
-  const [attendLength, setAttendLength] = useState([]);
-  const [attendInfo, setAttendInfo] = useState({});
+  const [attendInfo, setAttendInfo] = useState([]);
 
 
   const [attendWeek, setAttendWeek] = useState([]);
 
   // 출석 정보 조회 api
   useEffect(() => {
-
-    // authApi.get(`studies/${studyId}/attendances`)
-    //   .then((response) => {
-    //     //사용자 이름
-    //     setAttendName(response.data.summaries["1"])
-
-    //     //주차 길이 + 주차 정보
-    //     let lengthtemp = []
-    //     let infotemp = []
-    //     for (let i = 1; i <= Object.keys(response.data.summaries).length; i++) {
-    //       lengthtemp.push(i)
-    //       infotemp.push(response.data.summaries[i])
-    //     }
-    //     setAttendLength(lengthtemp);
-    //     setAttendInfo(infotemp);
-
-
-    //     console.log(lengthtemp);
-    //     console.log(infotemp);
-
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   })
+    //스터디 이름
+    authApi.get(`studies/${studyId}`)
+      .then((response) => {
+        setStudyName(response.data.name)
+      })
+      .catch((err) => console.log(err.data.message))
     //참여자 이름 조회
     authApi.get(`studies/${studyId}/participants`)
       .then((response) => {
@@ -102,11 +86,12 @@ export default function Attend() {
     // 출석정보 조회
     authApi.get(`studies/${studyId}/attendances`)
       .then((response) => {
-        console.log(response.data.summaries);
-        console.log(response.data.summaries);
-        // for (let i = 0; i < response.data.summaries.lenght; i++) {
-        //   console.log(response.data.summaries[i]);
-        // }
+        console.log(response.data.result);
+
+        setAttendInfo(response.data.result)
+
+      }).catch((err) => {
+        console.log(err.data.message);
 
       })
 
@@ -126,66 +111,49 @@ export default function Attend() {
 
   // 팀장위임
   const delegation = (participantId) => {
-    authApi.patch(`studies/${studyId}/participants/${participantId}/delegation`)
-      .then((response) => {
-        alert("팀장을 위임하였습니다.")
-      })
-      .catch((err) => {
-        alert(err.response.message)
-      })
+    if (window.confirm('팀장을 위임하시겠습니까?')) {
+      authApi.patch(`studies/${studyId}/participants/${participantId}/delegation`)
+        .then((response) => {
+          alert("팀장을 위임하였습니다.")
+          window.location.reload();
+        })
+        .catch((err) => {
+          alert(err.response.message)
+        })
+    }
   }
 
 
   return (
     <div className={`${styles.right_container}`}>
       <div className={`${styles.attend_contianer}`}>
-
-        {/* 우저 이름들 */}
         <div className={`${styles.attend_name_contianer}`}>
           <div className={`${styles.attend_name_field} ${styles.regular_24}`}>
             <p>이름</p>
-
           </div>
-          <div className={`${styles.attend_names} ${styles.regular_16}`}>
-            <div className={`${styles.attend_host_name_contianer}`}>
-              <img width={24} height={24} className={styles.attend_cronwimg} src={process.env.PUBLIC_URL + "/img/crown_red.png"}
-              />
-              {host && <UserName userNickname={host.nickname} userId={host.id} />}
-            </div>
-
-            <div className={`${styles.attend_participant_name_container}`}>
-
-              <img width={24} height={24} className={styles.attend_cronwimg} src={process.env.PUBLIC_URL + "/img/crown_gray.png"}
-                onClick={() => delegation(2)}
-              />
-              <UserName userNickname={"천사"} userId={2} />
-            </div>
-
-            <div className={`${styles.attend_participant_name_container}`}>
-              <img width={24} height={24} className={styles.attend_cronwimg} src={process.env.PUBLIC_URL + "/img/crown_gray.png"} />
-              <UserName userNickname={"악마"} userId={2} />
-            </div>
-
-            <div className={`${styles.attend_participant_name_container}`}>
-              <img width={24} height={24} className={styles.attend_cronwimg} src={process.env.PUBLIC_URL + "/img/crown_gray.png"} />
-              <UserName userNickname={"민듀공쥬"} userId={2} />
-            </div>
-            {/* {
-              attend && attend.map((item, index) => {
-                return (
+          {
+            attendInfo.length > 0 && attendInfo.map((result) => (
+              result.member.id == host.id && result.member.participantStatus == "APPROVE" ?
+                <>
                   <div className={`${styles.attend_participant_name_container}`}>
-                    <img width={24} height={24} className={styles.attend_cronwimg} src={process.env.PUBLIC_URL + "/img/crown_gray.png"} />
-                    <UserName userNickname={item.participant.nickname} userId={item.participant.id} />
+                    <img width={24} height={24} className={styles.attend_cronwimg} src={process.env.PUBLIC_URL + "/img/crown_red.png"}
+                    />
+                    <UserName userNickname={result.member.nickname} userId={result.member.id} />
                   </div>
-                )
-              })
-            } */}
-
-          </div>
+                </>
+                :
+                result.member.participantStatus == "APPROVE" &&
+                <div className={`${styles.attend_participant_name_container}`}><img width={24} height={24} className={styles.attend_cronwimg} src={process.env.PUBLIC_URL + "/img/crown_gray.png"}
+                  onClick={() => delegation(result.member.id)}
+                />
+                  <UserName userNickname={result.member.nickname} userId={result.member.id} />
+                </div>
+            ))
+          }
         </div>
 
 
-        {/* 주차별 */}
+
         <div className={`${styles.attend_weeks_contianer}`}
           ref={scrollRef}
           onMouseDown={onDragStart}
@@ -195,167 +163,46 @@ export default function Attend() {
           <div className={styles.attend_weeks_count_contianer}>
             {attendWeek && attendWeek.map((week) => {
               return (
-                <>
+                <div>
                   <div className={`${styles.attend_each_weeks}`}>
                     <div className={`${styles.attend_weeks_field} ${styles.regular_24}`}>
                       <p>{week}주차</p>
                     </div>
                   </div>
-                </>
+                  {
+                    attendInfo.length > 0 && attendInfo.map((result) => (
+                      result.member.participantStatus == "APPROVE" && result.summaries.map((status) => (
+                        status.week == week ?
+                          <div className={styles.attend_each_user_status}>
+                            <div className={styles.attend_each_status}>
+                              <p>{status.status}</p>
+                            </div>
+                          </div>
+                          :
+                          <div className={styles.attend_each_user_status}>
+                          </div>
+                        // <div className={styles.attend_each_user_status}>
+                        //   <div className={styles.attend_each_status}>
+                        //     <p>-</p>
+                        //   </div>
+                        // </div>
+                      ))
+                    ))
+                  }
+                </div>
               )
             })}
           </div>
-
-          <div>
-            <div className={styles.attend_each_user_status}>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p className={styles.attend_late_color}>지각</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p className={styles.attend_absent_color}>결석</p>
-              </div>
-
-
-            </div>
-            <div className={styles.attend_each_user_status}>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p className={styles.attend_late_color}>지각</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-
-            </div>
-            <div className={styles.attend_each_user_status}>
-              <div className={styles.atten_each_status}>
-                <p className={styles.attend_late_color}>지각</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p className={styles.attend_absent_color}>결석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-
-            </div>
-            <div className={styles.attend_each_user_status}>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p className={styles.attend_not_color}>미출결</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-              <div className={styles.atten_each_status}>
-                <p>출석</p>
-              </div>
-
-            </div>
-
-          </div>
-
-          {/* {
-            // attendLength && attendLength.map((week, index) => {
-            //   return (
-            //     <>
-            //       <div className={`${styles.attend_each_weeks}`}>
-            //         <div className={`${styles.attend_weeks_field} ${styles.regular_24}`}>
-            //           <p>{week}주차</p>
-
-            //         </div>
-
-            //         <div className={`${styles.attend_weeks} ${styles.regular_16}`}>
-            //           {
-            //             attendInfo[index].map((attend, attendindex) => {
-            //               return (
-            //                 <>
-            //                   <p>{attend.status}</p>
-            //                 </>
-            //               )
-
-            //             })
-            //           }
-
-            //         </div>
-            //       </div>
-            //     </>
-            //   )
-
-          // })
-          // */}
-
-
-
-
         </div>
 
+
+
+
+
+
+
       </div>
-    </div >
+    </div>
 
 
   )

@@ -69,6 +69,18 @@ body {
     position: relative;
 }
 
+.info_left_graduate_button {
+    display: flex;
+    left: 0;
+    top: 20px;
+    position: absolute;
+    cursor: pointer;
+}
+
+.left_info_gradute_img {
+    margin-right: 10px;
+}
+
 .info_right {
     position: relative;
     padding-top: 36px;
@@ -504,20 +516,17 @@ body {
     position: static;
 }
 
-.attend_host_name_contianer {
+.attend_participant_name_container {
     display: flex;
     white-space: nowrap;
 }
+
 
 .attend_cronwimg {
     margin-right: 15px;
     cursor: pointer;
 }
 
-.attend_participant_name_container {
-    display: flex;
-    white-space: nowrap;
-}
 
 .attend_weeks_contianer {
     overflow-x: scroll;
@@ -547,11 +556,12 @@ body {
     white-space: nowrap;
 }
 
+
 .attend_each_user_status {
     display: flex;
 }
 
-.atten_each_status {
+.attend_each_status {
     width: 100px;
     text-align: center;
     flex-shrink: 0;
@@ -893,8 +903,14 @@ body {
 }
 
 
+.byweek_period_endDate {
+    display: flex;
+    margin: 10px 0 5px 0;
+}
 
-
+.byweek_period_red {
+    color: #FF5037;
+}
 
 .byweek_each_homework_type_select {
     position: relative;

@@ -265,7 +265,7 @@ export default function Profile({ closeModal, userId }) {
           </div>
           <div className={styles.squareA}>
             <div className={styles.square_topA}>
-              <div className={styles.bstudy}>활동한 스터디</div>
+              <div className={styles.bstudy}>활동하는 스터디</div>
               <div className={styles.active_study_container}>
                 {activeStudy && activeStudy.map((item) => {
                   return (

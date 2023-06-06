@@ -155,19 +155,6 @@ function MyPage() {
     const [review_modal_on, setReview_modal_on] = useState(false);
 
 
-    // 졸업하기
-    const goGraduate = (studyId) => {
-        authApi.patch(`studies/${studyId}/graduate`)
-            .then((response) => {
-                setIsApiUpdate(isApiUpdate + 1)
-
-            })
-            .catch((err) => {
-                console.log('왜안돼');
-                alert('gkgk')
-            })
-
-    }
 
     return (
 
@@ -267,9 +254,6 @@ function MyPage() {
                                             <NavLink to={`/study/work/notices?name=${item.name}`} state={{ studyId: item.id }} className='astudy_navlink'>
                                                 <p className='astudy_name'>{item.name}</p>
                                             </NavLink>
-                                            <img width={24} height={24} src={process.env.PUBLIC_URL + `/img/graduate.png`} className='astudy_graduate'
-                                                onClick={() => goGraduate(item.id)}
-                                            />
                                             <p className='astudy_category'>{item.category}</p>
                                         </div>
 
@@ -292,7 +276,11 @@ function MyPage() {
                                                 <NavLink to={`/study/work/notices?name=${item.name}`} state={{ studyId: item.id }} className='astudy_navlink'>
                                                     <p className='astudy_name'>{item.name}</p>
                                                 </NavLink>
-                                                <p className='astudy_review' onClick={() => setReview_modal_on(true)}>리뷰쓰기</p>
+                                                {item.review == null ?
+                                                    <p className='astudy_review' onClick={() => setReview_modal_on(true)}>리뷰쓰기</p>
+                                                    :
+                                                    <></>}
+
                                                 <div>
                                                     {review_modal_on && <StudyReview closeModal={setReview_modal_on} studyId={item.id} studyName={item.name} studyThumbnail={item.thumbnail}></StudyReview>}
                                                 </div>

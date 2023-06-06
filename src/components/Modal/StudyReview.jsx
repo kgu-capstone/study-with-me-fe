@@ -6,7 +6,7 @@ export default function StudyReview({ closeModal, studyId, studyName, studyThumb
 
     const [text, setText] = useState('');
     const wirteReview = () => {
-        authApi(`studies/${studyId}/review`, text)
+        authApi.post(`studies/${studyId}/review`, text)
             .then(res => closeModal(false))
             .catch(err => console.log(err))
     }

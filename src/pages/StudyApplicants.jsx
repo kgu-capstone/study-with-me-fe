@@ -20,7 +20,7 @@ export default function ApplicantList() {
   const [isApplicantsUpdate, setIsApplicantsUpldate] = useState(0);
 
   useEffect(() => {
-    authApi(`studies/${studyId}/applicants`)
+    authApi.get(`studies/${studyId}/applicants`)
       .then((response) => {
         setApplicantsList(response.data.applicants)
       })
@@ -32,7 +32,7 @@ export default function ApplicantList() {
   // 승인 버튼
   const handleStudyApprove = (applierId, nickName) => {
     if (window.confirm('승인하시겠습니까?')) {
-      authApi(`studies/${studyId}/applicants/${applierId}/approve`)
+      authApi.patch(`studies/${studyId}/applicants/${applierId}/approve`)
         .then((response) => {
           alert(`${nickName}님을 승인하였습니다`);
           setIsApplicantsUpldate(isApplicantsUpdate + 1)
@@ -44,7 +44,6 @@ export default function ApplicantList() {
 
 
   // 거절 모달
-
   const [input_reject_reason, setInput_reject_reason] = useState(false);
 
   //프로필 모달

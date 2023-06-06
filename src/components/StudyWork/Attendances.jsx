@@ -5,6 +5,7 @@ import { authApi } from '../../services/api';
 import { useLocation } from 'react-router';
 import { DriveEta, ResetTvOutlined } from '@mui/icons-material';
 import { NavLink } from 'react-router-dom';
+import AttendRevice from '../AttendRevice';
 
 export default function Attend() {
 
@@ -124,6 +125,7 @@ export default function Attend() {
   }
 
 
+
   return (
     <div className={`${styles.right_container}`}>
       <div className={`${styles.attend_contianer}`}>
@@ -174,18 +176,13 @@ export default function Attend() {
                       result.member.participantStatus == "APPROVE" && result.summaries.map((status) => (
                         status.week == week ?
                           <div className={styles.attend_each_user_status}>
-                            <div className={styles.attend_each_status}>
-                              <p>{status.status}</p>
+                            <div>
+                              <AttendRevice status={status} memberId={result.member.id} studyId={studyId} hostId={host.id} />
                             </div>
                           </div>
                           :
                           <div className={styles.attend_each_user_status}>
                           </div>
-                        // <div className={styles.attend_each_user_status}>
-                        //   <div className={styles.attend_each_status}>
-                        //     <p>-</p>
-                        //   </div>
-                        // </div>
                       ))
                     ))
                   }
@@ -198,6 +195,20 @@ export default function Attend() {
 
 
 
+
+
+
+      </div>
+      <div className={styles.attend_legend_contianer}>
+        <div className={styles.attend_each_legend}>
+          <div className={styles.attend_attendance}></div><p className={styles.attend_text}>출석</p>
+        </div>
+        <div className={styles.attend_each_legend}>
+          <div className={styles.attend_late}></div><p className={styles.attend_text}>지각</p>
+        </div>
+        <div className={styles.attend_each_legend}>
+          <div className={styles.attend_absent}></div><p className={styles.attend_text}>결석</p>
+        </div>
 
 
 

@@ -562,7 +562,10 @@ body {
 }
 
 .attend_each_status {
+    position: relative;
     width: 100px;
+    height: 40px;
+    align-items: center;
     text-align: center;
     flex-shrink: 0;
 }
@@ -581,6 +584,102 @@ body {
 
 .attend_absent_color {
     color: #FF5037;
+}
+
+
+
+.attend_revice_contianer_block {
+    position: absolute;
+    bottom: 50px;
+    width: 100px;
+    height: 40px;
+    background-color: #FFFFFF;
+    border: solid 1px #E1E1E1;
+    border-radius: 10px;
+    display: flex;
+}
+
+.attend_revice_contianer_none {
+    display: none;
+}
+
+.attend_attendance_choice {
+    width: 18px;
+    height: 18px;
+    background-color: #50FF12;
+    border-radius: 100%;
+    margin-top: 10px;
+    margin-left: 11px;
+    flex-shrink: 0;
+}
+
+.attend_late_choice {
+    width: 18px;
+    height: 18px;
+    background-color: #FFE500;
+    border-radius: 100%;
+    margin: 10px;
+    flex-shrink: 0;
+}
+
+.attend_absent_choice {
+    width: 18px;
+    height: 18px;
+    background-color: #FF5037;
+    border-radius: 100%;
+    margin-top: 10px;
+    margin-right: 9px;
+    flex-shrink: 0;
+}
+
+.attend_attendance {
+    margin: 3px auto 0 auto;
+    width: 18px;
+    height: 18px;
+    background-color: #50FF12;
+    border-radius: 100%;
+    flex-shrink: 0;
+}
+
+.attend_late {
+    margin: 3px auto 0 auto;
+    width: 18px;
+    height: 18px;
+    background-color: #FFE500;
+    border-radius: 100%;
+    flex-shrink: 0;
+}
+
+.attend_absent {
+    margin: 3px auto 0 auto;
+    width: 18px;
+    height: 18px;
+    background-color: #FF5037;
+    border-radius: 100%;
+    flex-shrink: 0;
+}
+
+.attend_null {
+    margin: auto;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.attend_legend_contianer {
+    margin-top: 30px;
+    margin-right: 3px;
+    float: right;
+    display: flex;
+}
+
+.attend_each_legend {
+    display: flex;
+}
+
+.attend_text {
+    margin-left: 7px;
+    margin-right: 15px;
 }
 
 /* 여기까지 출석부 */

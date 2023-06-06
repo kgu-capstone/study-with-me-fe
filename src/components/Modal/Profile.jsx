@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState, RechartsComponent } from 'react'
 import styles from '../../css/Profile.module.css'
 import { authApi } from '../../services/api';
 import Avatar from "boring-avatars";
-import PeerReview from '../PeerReview';
+import PeerReview from './PeerReview';
 import { NavLink } from "react-router-dom";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { defaultApi } from '../../services/api'

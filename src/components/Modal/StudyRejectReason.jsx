@@ -12,11 +12,11 @@ export default function StudyRejectReason({ closeModal, studyId, applierId, appl
   // 거절 버튼
   const handleStudyReject = (applierId, nickName) => {
 
-    authApi(`studies/${studyId}/applicants/${applierId}/reject`)
+    authApi.patch(`studies/${studyId}/applicants/${applierId}/reject`)
       .then((response) => {
         alert(`${nickName}님을 거절하였습니다.`);
         closeModal(false);
-        window.location.href = `${process.env.REACT_APP_BASE_URL}ApplicantList`;
+        window.location.reload()
       })
       .catch((e) => {
         if (e.response.status === 400) {

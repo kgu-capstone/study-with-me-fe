@@ -45,7 +45,6 @@ const Card = ({
               ) : (
                 <div className="heart">
                   <FontAwesomeIcon icon={faHeart} />{" "}
-                  {/* 여기에 빈하트 아이콘 넣기 */}
                 </div>
               )}
               <div className="heart">

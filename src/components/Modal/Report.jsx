@@ -26,11 +26,12 @@ export default function Report({ closeModal, reporteeId }) {
 
   return (
     <div className={styles.report_container} onClick={() => closeModal(false)}>
-      <div className={styles.modal_container} onClick={(e) => e.stopPropagation}>
+      <div className={styles.modal_container} onClick={(e) => e.stopPropagation()}>
 
         <div className={styles.reportq}><b>{memberNickname}님</b>을 신고하시겠습니까?</div>
-        <div className={styles.reason}>사유</div>
-        <input className={styles.square}></input>
+
+        <p className={styles.reason}>사유</p>
+        <textarea className={styles.square}></textarea>
 
         <div onClick={() => reportbutton()}>
           <button className={styles.reportbuttonA}>신고하기</button>

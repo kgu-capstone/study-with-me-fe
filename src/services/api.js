@@ -35,7 +35,7 @@ authApi.interceptors.response.use(
 
             try {
                 const data = await axios({
-                    method: 'POST',
+                    method: 'post',
                     url: `${BASE_URL}token/reissue `,
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,

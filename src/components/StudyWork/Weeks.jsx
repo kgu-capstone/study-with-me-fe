@@ -63,8 +63,6 @@ export default function ByWeek() {
       .then((response) => {
         console.log(response.data.weeks);
         setWeekInfo(response.data.weeks);
-
-
       })
       .catch((err) => {
         console.log(err);
@@ -425,6 +423,8 @@ export default function ByWeek() {
 
 
 
+  // 과제 날짜 마감이 지나면 빨간색 표시를 위해 오늘 날짜 데이터 담기
+  const today = new Date();
 
 
   return (
@@ -597,14 +597,14 @@ export default function ByWeek() {
                         <div className={`${styles.byweek_each_attach_list}`}>
                           <p className={`${styles.byweek_each_attach_title}`}>첨부</p>
                           {
-                            item.attachments.map((attachs, attachsIndex) => {
+                            item.attachments.map((attachs) => {
                               return (
                                 <>
                                   <p className={`${styles.bywee_each_attachs}`}
-                                    onClick={() => openAttach(attachs, attachs.split('/')[4].split('-').slice(-1))}
+                                    onClick={() => openAttach(attachs.link, attachs.uploadFileName)}
                                   >
-                                    {/* 파일 이름만 골라내기*/}
-                                    {decodeURI(attachs.split('/')[4].split('-').slice(-1))}&nbsp;&nbsp;</p>
+                                    {/* 파일 이름*/}
+                                    {decodeURI(attachs.uploadFileName)}&nbsp;&nbsp;</p>
                                 </>
                               )
 
@@ -635,6 +635,22 @@ export default function ByWeek() {
                         ?
                         <>
                           <div>
+                            <div className={`${styles.byweek_period_endDate}`}>
+                              과제 마감일:&nbsp;&nbsp;
+                              {today < new Date(item.period.endDate)
+                                ?
+                                <>
+                                  <div>{item.period.endDate.substring(0, 10)}&nbsp;&nbsp;{item.period.endDate.substring(11, 16)}
+                                  </div>
+                                </>
+                                :
+                                <>
+                                  {/* 마감기간 지났을 땐 빨간색 표시 */}
+                                  <div className={styles.byweek_period_red}>{item.period.endDate.substring(0, 10)}&nbsp;&nbsp;{item.period.endDate.substring(11, 16)}
+                                  </div>
+                                </>
+                              }
+                              {/* {item.period.endDate.substring(0, 10)}&nbsp;&nbsp;{item.period.endDate.substring(11, 16)} */}</div>
                             <div className={`${styles.byweek_each_homework_inputs}`}>
 
                               {/* <AssignmentSummit studyId={studyId} week={item.week} setIsApiUpdate={setIsApiUpdate} isApiUpdate={isApiUpdate} /> */}
@@ -749,7 +765,7 @@ export default function ByWeek() {
 
                     }
 
-                  </div>
+                  </div >
                 </div >
 
               </>
@@ -757,7 +773,7 @@ export default function ByWeek() {
           })
         }
 
-      </div>
+      </div >
     </div >
   )
 

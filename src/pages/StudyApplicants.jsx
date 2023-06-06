@@ -16,55 +16,29 @@ export default function ApplicantList() {
 
 
   // 정보 불러오기
-  let applicantsList = [];
+  const [applicantsList, setApplicantsList] = useState([]);
   const [isApplicantsUpdate, setIsApplicantsUpldate] = useState(0);
 
-  // useEffect(() => {
-  //   authApi(`studies/${studyId}/applicants`)
-  //     .then((response) => {
-  //       for (let i = 0; i < response.data.applicants.length; i++) {
-  //         applicantsList[i] = response.data.applicants[i]
-  //       }
-  //     })
-  //     .catch((e) => console.log(e))
-  // }, [isApplicantsUpdate])
+  useEffect(() => {
+    authApi(`studies/${studyId}/applicants`)
+      .then((response) => {
+        setApplicantsList(response.data.applicants)
+      })
+      .catch((e) => console.log(e))
 
-  applicantsList = [{
-    "id": 1,
-    "nickname": "더미C",
-    "score": 100,
-    "applyDate": "2023-05-29T09:06:15.7453189"
-  }, {
-    "id": 2,
-    "nickname": "닉네임2",
-    "score": 92,
-    "applyDate": "2023-05-28T09:06:15.7453189"
-  }, {
-    "id": 3,
-    "nickname": "닉네임3",
-    "score": 93,
-    "applyDate": "2023-05-27T09:06:15.7453189"
-  }, {
-    "id": 4,
-    "nickname": "닉네임4",
-    "score": 98,
-    "applyDate": "2023-05-26T09:06:15.7453189"
-  }, {
-    "id": 5,
-    "nickname": "닉네임5",
-    "score": 95,
-    "applyDate": "2023-05-25T09:06:15.7453189"
-  }]
+  }, [isApplicantsUpdate])
 
 
   // 승인 버튼
   const handleStudyApprove = (applierId, nickName) => {
-    authApi(`studies/${studyId}/applicants/${applierId}/approve`)
-      .then((response) => {
-        alert(`${nickName}님을 승인하였습니다`);
-        setIsApplicantsUpldate(isApplicantsUpdate + 1)
-      })
-      .catch((e) => console.log(e));
+    if (window.confirm('승인하시겠습니까?')) {
+      authApi(`studies/${studyId}/applicants/${applierId}/approve`)
+        .then((response) => {
+          alert(`${nickName}님을 승인하였습니다`);
+          setIsApplicantsUpldate(isApplicantsUpdate + 1)
+        })
+        .catch((e) => console.log(e));
+    }
   }
 
 

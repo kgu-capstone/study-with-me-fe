@@ -18,11 +18,12 @@ export default function StudyInfo() {
   const [studyName, setStudyName] = useState('');
   const [studyCurrentMembers, setStudyCurrentMembers] = useState(0);
   const [studyMaxMembers, setStudyMaxMembers] = useState(0);
+  const [minimumAttendanceForGraduation, setminimumAttendanceForGraduation] = useState(0);
 
   const [isHost, setIsHost] = useState(false)
   const [isRecruit, setIsRecruit] = useState(false);
 
-
+  const [attendInfo, setAttendInfo] = useState();
   useEffect(() => {
     authApi.get(`studies/${studyId}`)
       .then((response) => {
@@ -32,6 +33,7 @@ export default function StudyInfo() {
         setStudyName(response.data.name);
         setStudyCurrentMembers(response.data.currentMembers);
         setStudyMaxMembers(response.data.maxMembers);
+        setminimumAttendanceForGraduation(response.data.minimumAttendanceForGraduation)
         document.getElementsByClassName(`${styles.info_container}`)[0].style.backgroundColor = `${response.data.thumbnailBackground}`;
 
         //팀장인가
@@ -49,8 +51,33 @@ export default function StudyInfo() {
       .catch((e) => {
         console.log(e)
       })
-  })
 
+
+    //사용자의 출석 수 구하기
+
+    authApi.get(`studies/${studyId}/attendances`)
+      .then((response) => {
+        setAttendInfo(response.data.result)
+      })
+  }, [])
+
+  // 졸업하기
+  const goGraduate = () => {
+    authApi.patch(`studies/${studyId}/graduate`)
+      .then((response) => {
+        alert(`${studyName}스터디를 졸업하였습니다. 축하합니다.`)
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log('왜안돼');
+        alert('gkgk')
+      })
+
+  }
+
+  //출석 카운트
+  let attendCount = 0
+  let noGraduate = 1
 
   return (
     <div>
@@ -58,6 +85,22 @@ export default function StudyInfo() {
         <div className={styles.infoes}>
           <div className={styles.info_left}>
             <div className={styles.info_left_element}>
+
+              {/* 졸업버튼 */}
+              {attendInfo && attendInfo.map((item) => {
+                {/* 최소 졸업 수 만족 */ }
+                item.member.id == memberId && item.summaries && item.summaries.map((attendStatus) => {
+                  attendStatus.status == "출석" && (attendCount = attendCount + 1)
+                })
+              })}
+              {attendInfo && attendInfo.map((item) => {
+                item.member.id == memberId && item.member.participantStatus == "GRADUATED" && (noGraduate = 0)
+              })}
+              {minimumAttendanceForGraduation <= attendCount && noGraduate ?
+                <div className={styles.info_left_graduate_button} onClick={() => goGraduate()}><img className={styles.left_info_gradute_img} width={24} height={24} src={process.env.PUBLIC_URL + `/img/graduate.png`} /><p>졸업하기</p></div>
+                :
+                <></>
+              }
               <img width={132} height={132} src={process.env.PUBLIC_URL + `/img/studyprofiles/${studyThumbnail}`} />
             </div>
           </div>
@@ -71,7 +114,6 @@ export default function StudyInfo() {
             </div>
             <div className={`${styles.info_right_buttons}`}>
               {isHost && isRecruit ?
-
                 <NavLink to={`/study/applicants?name=${studyName}`} state={{ studyId: studyId }} className={styles.applicantList_button}>
                   <div>
                     <img src={process.env.PUBLIC_URL + '/img/participate_button.png'}
@@ -94,6 +136,6 @@ export default function StudyInfo() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }

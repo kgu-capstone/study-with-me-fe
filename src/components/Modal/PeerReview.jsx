@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import styles from '../css/PeerReview.module.css'
-import { authApi } from '../services/api';
+import styles from '../../css/PeerReview.module.css'
+import { authApi } from '../../services/api';
 
 export default function PeerReview({ closeModal, userId, userName }) {
 

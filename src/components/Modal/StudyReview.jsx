@@ -13,6 +13,7 @@ export default function StudyReview({ closeModal, studyId, studyName, studyThumb
                 closeModal(false)
                 window.location.reload()
             })
+
             .catch(err => console.log(err))
     }
     return (

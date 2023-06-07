@@ -11,10 +11,11 @@ export default function PeerReview({ closeModal, userId, userName }) {
             alert("리뷰를 입력해주세요");
         }
         else {
-            authApi.post(`members/${6}/review`, {
+            authApi.post(`members/${userId}/review`, {
                 "content": review_input
             }).then(res => {
                 closeModal(false);
+                window.location.reload()
             }).catch((error) => {
                 alert(error.data.message)
             })

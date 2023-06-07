@@ -11,8 +11,9 @@ export default function StudyRejectReason({ closeModal, studyId, applierId, appl
 
   // 거절 버튼
   const handleStudyReject = (applierId, nickName) => {
-
-    authApi.patch(`studies/${studyId}/applicants/${applierId}/reject`)
+    authApi.patch(`studies/${studyId}/applicants/${applierId}/reject`, {
+      "reason": rejectReson
+    })
       .then((response) => {
         alert(`${nickName}님을 거절하였습니다.`);
         closeModal(false);

@@ -87,8 +87,6 @@ export default function Attend() {
     // 출석정보 조회
     authApi.get(`studies/${studyId}/attendances`)
       .then((response) => {
-        console.log(response.data.result);
-
         setAttendInfo(response.data.result)
 
       }).catch((err) => {

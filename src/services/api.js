@@ -45,9 +45,6 @@ authApi.interceptors.response.use(
                 const newAccessToken = data.data.accessToken
                 const newRefreshToken = data.data.refreshToken
 
-                console.log('새로운 토큰');
-                console.log(newAccessToken);
-                console.log(newRefreshToken);
                 origianlRequest.headers = {
                     'Content-Type': 'application/json',
                     Authorization: 'Bearer ' + newAccessToken,

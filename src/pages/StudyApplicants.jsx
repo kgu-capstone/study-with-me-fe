@@ -21,7 +21,6 @@ export default function ApplicantList() {
 
   useEffect(() => {
     authApi.get(`studies/${studyId}/applicants`)
-
       .then((response) => {
         setApplicantsList(response.data.applicants)
       })
@@ -34,7 +33,6 @@ export default function ApplicantList() {
   const handleStudyApprove = (applierId, nickName) => {
     if (window.confirm('승인하시겠습니까?')) {
       authApi.patch(`studies/${studyId}/applicants/${applierId}/approve`)
-
         .then((response) => {
           alert(`${nickName}님을 승인하였습니다`);
           setIsApplicantsUpldate(isApplicantsUpdate + 1)

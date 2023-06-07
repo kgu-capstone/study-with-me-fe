@@ -1,10 +1,10 @@
-@font-face{
+@font-face {
     font-family: 'Pretendard-Bold';
     src: url(../fonts/Pretendard-Bold.woff);
 }
 
 
-.peer_container{    
+.peer_container {
     z-index: 999;
     position: fixed;
     top: 0;
@@ -14,11 +14,11 @@
     background-color: rgba(0, 0, 0, 0.30);
 }
 
-.modal_container{
+.modal_container {
     z-index: 1000;
     position: absolute;
     width: 480px;
-    height: 407px;
+    height: 455px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -26,32 +26,35 @@
     border-radius: 10px;
 }
 
-.x_button{
+.x_button {
     margin-top: 20px;
     margin-right: 20px;
     float: right;
     cursor: pointer;
 }
 
-.title{
+.title {
     text-align: center;
-    margin-top: 90px;
+    margin-top: 80px;
     font-size: 24px;
     font-family: 'Pretendard-Bold';
 }
 
-.warning{
+.warning {
     text-align: center;
     margin-top: 30px;
     color: #FF5037;
 }
-.warning_button{
+
+.warning_button {
     margin-right: 7px;
 }
-.input_container{
+
+.input_container {
     text-align: center;
 }
-.input{
+
+.input {
     margin-top: 30px;
     border: 1px solid #C5C5C5;
     border-radius: 10px;
@@ -59,16 +62,19 @@
     padding: 10px;
     width: 300px;
 }
-.info_container{
+
+.info_container {
     margin: 10px;
     text-align: center;
     color: #7D7D7D;
 }
-.button_container{
+
+.button_container {
     margin-top: 30px;
     text-align: center;
 }
-.button{
+
+.button {
     background-color: #FF5037;
     border: 0;
     border-radius: 10px;

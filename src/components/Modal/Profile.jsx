@@ -45,7 +45,6 @@ export default function Profile({ closeModal, userId }) {
       const LATE = response.data.result[1].count;
       const ABSENCE = response.data.result[2].count;
 
-      console.log(response.data.result);
       const data = [
         {
           name: 'RATE A',
@@ -54,18 +53,17 @@ export default function Profile({ closeModal, userId }) {
           결석: 1
         },];
       setAttendanceData(data)
-      console.log('데이터:', data);
     } catch (error) {
       console.error('API 호출 오류:', error);
     }
   }
 
-  // API 호출 함수 실행
-  fetchData();
+
 
 
   useEffect(() => {
-    console.log(userId);
+
+
     authApi.get(`members/${userId}`)
       .then((response) => {
         setMemberNickname(response.data.nickname);
@@ -148,6 +146,9 @@ export default function Profile({ closeModal, userId }) {
     };
 
     fetchAttendance();
+
+    // API 호출 함수 실행
+    fetchData();
   }, [userId]);
 
   // 출석률 계산 함수

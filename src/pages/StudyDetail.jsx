@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Foot from "../components/Foot";
-import { authApi } from "../services/api";
+import { authApi, defaultapi } from "../services/api";
 import UserName from "../components/UserName";
 import Avatar from "boring-avatars";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -46,7 +46,7 @@ export default function StudyDetail() {
       window.scrollTo(0, 0)
 
       // 기본정보 api
-      authApi.get(`studies/${studyId}`).then((response) => {
+      defaultapi.get(`studies/${studyId}`).then((response) => {
         // 희민 TODO... 나머지 정보들 useState에 저장 후 보이도록 설정
         setPeople(response.data.maxMembers);
         setHashtag(response.data.hashtags);

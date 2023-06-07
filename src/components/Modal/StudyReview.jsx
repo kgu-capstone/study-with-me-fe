@@ -6,8 +6,14 @@ export default function StudyReview({ closeModal, studyId, studyName, studyThumb
 
     const [text, setText] = useState('');
     const wirteReview = () => {
-        authApi.post(`studies/${studyId}/review`, text)
-            .then(res => closeModal(false))
+        authApi.post(`studies/${studyId}/review`, {
+            "content": text
+        })
+            .then((response) => {
+                closeModal(false)
+                window.location.reload()
+            })
+
             .catch(err => console.log(err))
     }
     return (
@@ -16,7 +22,7 @@ export default function StudyReview({ closeModal, studyId, studyName, studyThumb
                 <div className={styles.thumbnail}><img width={82} height={82} src={process.env.PUBLIC_URL + `/img/studyprofiles/${studyThumbnail}`} /></div>
                 <div className={styles.title}><span className={styles.span}>{studyName}</span>스터디 리뷰</div>
                 <div className={styles.input_title}>리뷰</div>
-                <div><textarea type='text' className={styles.input} value={text} onChange={() => setText()} /></div>
+                <div><textarea type='text' className={styles.input} value={text} onChange={(e) => setText(e.target.value)} /></div>
                 <div>
                     <button onClick={() => wirteReview()} className={styles.button}>리뷰쓰기</button>
                 </div>

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import "../css/Main.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 
 const Card = ({
   study_id,
@@ -14,9 +15,19 @@ const Card = ({
   study_favorite,
   study_category,
 }) => {
+  const [like, setLike] = useState(study_favorite);
+  const handleToggleLike = () => {
+    setLike((prevLike) => !prevLike);
+  };
+
   return (
     <div>
-      <Link to={`/study?name=${study_title}`} style={{ textDecoration: "none" }} state={{ studyId: study_id }}>
+      <div></div>
+      <Link
+        to={`/study?name=${study_title}`}
+        style={{ textDecoration: "none" }}
+        state={{ studyId: study_id }}
+      >
         <div className="card">
           <div className="card-body">
             <div className="card_top_container">
@@ -40,15 +51,27 @@ const Card = ({
               {study_recruit}
               {study_favorite != -1 ? (
                 <div className="heart">
-                  <FontAwesomeIcon icon={faHeart} />
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    className={`studyDetail_heart ${like ? "liked" : ""}`}
+                    onClick={handleToggleLike}
+                  />
                 </div>
               ) : (
                 <div className="heart">
-                  <FontAwesomeIcon icon={faHeart} />{" "}
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    className={`studyDetail_heart ${like ? "liked" : ""}`}
+                    onClick={handleToggleLike}
+                  />{" "}
                 </div>
               )}
               <div className="heart">
-                <FontAwesomeIcon icon={faHeart} />
+                <FontAwesomeIcon
+                  icon={faHeart}
+                  className={`studyDetail_heart ${like ? "liked" : ""}`}
+                  onClick={handleToggleLike}
+                />
               </div>
             </div>
             <div className="study_card_img_contianer">

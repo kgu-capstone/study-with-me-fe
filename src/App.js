@@ -17,10 +17,9 @@ import Weeks from "./components/StudyWork/Weeks";
 import StudyCreate from "./pages/StudyCreate";
 import StudyDetail from "./pages/StudyDetail";
 
-import StudyEdit from './pages/StudyEdit';
-import StudyApplicants from './pages/StudyApplicants';
-import MyPageEdit from './pages/MyPageEdit';
-
+import StudyEdit from "./pages/StudyEdit";
+import StudyApplicants from "./pages/StudyApplicants";
+import MyPageEdit from "./pages/MyPageEdit";
 
 const router = createBrowserRouter([
   {

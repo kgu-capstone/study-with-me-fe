@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/Main.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import parse from "html-react-parser";
+import { authApi } from '../services/api';
 
 const Card = ({
   study_id,
@@ -13,22 +14,62 @@ const Card = ({
   study_image,
   study_recruit,
   study_favorite,
+  study_favorite_count,
   study_category,
 }) => {
-  const [like, setLike] = useState(study_favorite);
+  // 화면 바뀌기 전까지 임시적으로 서버에서 정보를 다시받지 않고 프론트에서 바로 하트를 바꾸기 다루기 위한 찜 css
+  const [favorite, setFavorite] = useState()
+  const [favorite_count, setfavorite_count] = useState();
+  useEffect(() => {
+    setFavorite(study_favorite)
+    setfavorite_count(study_favorite_count)
+  }, [study_id])
+
+
   const handleToggleLike = () => {
-    setLike((prevLike) => !prevLike);
+    // // 찜 등록
+    if (favorite == -1) {
+      authApi.post(`studies/${study_id}/like`)
+        .then((response) => {
+          setFavorite(1)
+          setfavorite_count(favorite_count + 1)
+        })
+        .catch(err => console.log(err))
+    }
+    //찜 취소
+    else {
+      authApi.delete(`studies/${study_id}/like`)
+        .then((response) => {
+          setFavorite(-1)
+          setfavorite_count(favorite_count - 1)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+
   };
 
   return (
     <div>
-      <div></div>
-      <Link
-        to={`/study?name=${study_title}`}
-        style={{ textDecoration: "none" }}
-        state={{ studyId: study_id }}
-      >
-        <div className="card">
+      <div className="card">
+        <div className='card_favorite_contianer' onClick={() => handleToggleLike()}>
+          <div className={`${favorite == -1 ? "card_favorite_count_none" : "card_favorite_count_liked"}`}>
+            {favorite_count}
+          </div>
+          <div>
+            <FontAwesomeIcon
+              icon={faHeart}
+              className={`${favorite == -1 ? "studyCard_heart_none" : "studyCard_heart_liked"}`}
+            />
+          </div>
+        </div>
+        <Link
+          to={`/study?name=${study_title}`}
+          style={{ textDecoration: "none" }}
+          state={{ studyId: study_id, favorite: favorite }}
+        >
+
           <div className="card-body">
             <div className="card_top_container">
               {study_recruit == "모집중" ? (
@@ -49,7 +90,7 @@ const Card = ({
                 />
               )}
               {study_recruit}
-              {study_favorite != -1 ? (
+              {/* {study_favorite != -1 ? (
                 <div className="heart">
                   <FontAwesomeIcon
                     icon={faHeart}
@@ -72,7 +113,7 @@ const Card = ({
                   className={`studyDetail_heart ${like ? "liked" : ""}`}
                   onClick={handleToggleLike}
                 />
-              </div>
+              </div> */}
             </div>
             <div className="study_card_img_contianer">
               <img
@@ -89,9 +130,10 @@ const Card = ({
             <p className="card-people">{study_people}</p>
             <p className="card_category">{study_category}</p>
           </div>
-        </div>
-      </Link>
-    </div>
+
+        </Link>
+      </div>
+    </div >
   );
 };
 

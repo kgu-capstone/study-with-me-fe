@@ -26,7 +26,6 @@ export default function Nav() {
       })
   }, [localStorage.getItem("nick")])
 
-
   return (
     <div>
       <div className={styles.nav_area}>

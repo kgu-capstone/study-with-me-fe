@@ -11,9 +11,11 @@ import { useLocation } from "react-router";
 import parse from "html-react-parser";
 
 export default function StudyDetail() {
+
   // 넘어올 정보
   const location = useLocation();
   const studyId = location.state?.studyId;
+
 
   const [study_recruit, setStudy_recruit] = useState("모집중"); // 모집중 변수담아주세요
   const [hostName, setHostName] = useState("콩콩이"); // 방장닉네임 담아주세요.
@@ -32,14 +34,35 @@ export default function StudyDetail() {
   const [studyName, setStudyName] = useState("");
 
   // 찜 버튼 구현부분
-  const [like, setLike] = useState(false);
+  const [favorite, setFavorite] = useState(false);
   const handleToggleLike = () => {
-    setLike((prevLike) => !prevLike);
+    //이미 찜되어있다면
+    //찜 등록
+    if (favorite == -1) {
+      authApi.post(`studies/${studyId}/like`)
+        .then((response) => {
+          setFavorite(1);
+        })
+        .catch(err => console.log(err))
+    }
+    // 찜취소
+    else {
+      authApi.delete(`studies/${studyId}/like`)
+        .then((response) => {
+          setFavorite(-1);
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   };
 
   useEffect(() => {
     // 스크롤 맨 위로
     window.scrollTo(0, 0);
+
+    // 찜
+    setFavorite(location.state?.favorite)
 
     // 기본정보 api
     defaultapi.get(`studies/${studyId}`).then((response) => {
@@ -112,8 +135,8 @@ export default function StudyDetail() {
             <span>
               <FontAwesomeIcon
                 icon={faHeart}
-                onClick={handleToggleLike}
-                className={`studyDetail_heart ${like ? "liked" : ""}`}
+                onClick={() => handleToggleLike()}
+                className={`${favorite == -1 ? "studyDetail_heart_none" : "studyDetail_heart_liked"}`}
               />
             </span>
           </div>

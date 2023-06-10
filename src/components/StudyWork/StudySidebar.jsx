@@ -5,6 +5,20 @@ import { authApi } from '../../services/api';
 
 export default function StudySidebar() {
 
+  //##-- 만약 id가 없는 비로그인상태라면 --##
+  //로그인 후 redirect href 미리 저장 -> 활동페이지는 마이페이지로
+  localStorage.setItem("loginRedirectpath", `${process.env.REACT_APP_BASE_URL}mypage`)
+
+  // 사용자 id get
+  let memberId;
+  if (localStorage.getItem("id")) {
+    memberId = localStorage.getItem("id")
+  } else {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}login`;
+  }
+  //##-----------------------------------##
+
+
   // studyId
   const location = useLocation()
   const studyId = location.state?.studyId
@@ -64,7 +78,6 @@ export default function StudySidebar() {
       .then((response) => {
         setStudyName(response.data.name)
       })
-
   }, [])
 
 
@@ -81,7 +94,7 @@ export default function StudySidebar() {
           <NavLink to={`/study/work/attendances?name=${studyName}`} state={{ studyId: studyId }} className={`${styles.sidebar} ${attendText} ${styles.isRed} ${styles.side_attend}`} ><img className={styles.side_icons} src={process.env.PUBLIC_URL + attendIcon} />출석부</NavLink>
           <NavLink to={`/study/work/weeks?name=${studyName}`} state={{ studyId: studyId }} className={`${styles.sidebar} ${byweekText} ${styles.isRed} ${styles.side_byweek}`} ><img className={styles.side_icons} src={process.env.PUBLIC_URL + byweekIcon} />스터디</NavLink>
 
-          {window.location.href == `${process.env.REACT_APP_BASE_URL}StudyWork/ByWeek`
+          {window.location.href.split('?', 1) == `${process.env.REACT_APP_BASE_URL}study/work/weeks`
             ?
             /* 스터디 목록 부분*/
             <div className={styles.study_list_container}>

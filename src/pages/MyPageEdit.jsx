@@ -5,10 +5,18 @@ import { authApi, defaultapi } from '../services/api';
 
 export default function ProfileRevice(props) {
 
+    //##-- 만약 id가 없는 비로그인상태라면 --##
+    //로그인 후 redirect href 미리 저장
+    localStorage.setItem("loginRedirectpath", window.location.href)
 
     // 사용자 id get
-    const memberId = localStorage.getItem("id")
-
+    let memberId;
+    if (localStorage.getItem("id")) {
+        memberId = localStorage.getItem("id")
+    } else {
+        window.location.href = `${process.env.REACT_APP_BASE_URL}login`;
+    }
+    //##-----------------------------------##
 
     // 닉네임 + 프로필바꾸기
     const handleNick = (nickValue) => {
@@ -113,7 +121,6 @@ export default function ProfileRevice(props) {
 
                 }
                 setCategory_css(tempcss)
-                console.log(tempcss);
             })
             .catch((error) => {
                 console.log(error);

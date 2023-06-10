@@ -13,8 +13,19 @@ import { useParams } from 'react-router';
 
 export default function Announce() {
 
+  //##-- 만약 id가 없는 비로그인상태라면 --##
+  //로그인 후 redirect href 미리 저장
+  localStorage.setItem("loginRedirectpath", window.location.href)
+
   // 사용자 id get
-  const memberId = localStorage.getItem("id")
+  let memberId;
+  if (localStorage.getItem("id")) {
+    memberId = localStorage.getItem("id")
+  } else {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}login`;
+  }
+  //##-----------------------------------##
+
 
   // studyId
   const location = useLocation()

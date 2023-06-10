@@ -15,21 +15,17 @@ export default function AssignmentSummit({ studyId, week, setIsApiUpdate, isApiU
 
     // 파일업로드
     const handleHomworkUpload = (e, week) => {
-        console.log(week);
-        console.log(e.target.files);
         const file = e.target.files[0];
 
         // 주차별로 파일이름
         let tempFile = [...homeworksFiles]
         tempFile[week] = { uploadFile: file }
         setHomeworksFiles(tempFile);
-        console.log(tempFile);
 
         // 파일 이름만 
         let tempFilename = [...HomewworkdFileName]
         tempFilename[week] = e.target.files[0].name
         setHomeworkFileName(tempFilename)
-        console.log(tempFilename);
     }
 
     // 과제제출 api 파일
@@ -38,14 +34,6 @@ export default function AssignmentSummit({ studyId, week, setIsApiUpdate, isApiU
 
         fileData.append("file", homeworksFiles && homeworksFiles[week].uploadFile);
         fileData.append("type", homeworkType);
-
-        for (const key of fileData.keys()) {
-            console.log(key);
-        }
-        for (const value of fileData.values()) {
-            console.log(value);
-        }
-        console.log(fileData);
 
         authApi.post(`studies/${studyId}/weeks/${week}/assignment`,
             fileData,

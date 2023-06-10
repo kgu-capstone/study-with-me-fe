@@ -12,6 +12,7 @@ export default function StudyProfileChoice({ closeModal, setProfile }) {
     "interview_hyundai.png",
     "interview_LG.png",
     "interview_NCS.png",
+    "ncs_ncs.png",
     "language_IELTS.png",
     "language_JLPT.png",
     "language_JPT.png",
@@ -26,6 +27,7 @@ export default function StudyProfileChoice({ closeModal, setProfile }) {
     "programming_Baekjoon.png",
     "programming_CSS.png",
     "programming_HTML.png",
+    "etc_teacherExam.png",
   ];
 
   const choiceThumbnail = (name) => {

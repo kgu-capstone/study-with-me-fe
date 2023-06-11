@@ -102,7 +102,7 @@ export default function Attend() {
     authApi.get(`studies/${studyId}/attendances`)
       .then((response) => {
         setAttendInfo(response.data.result)
-        console.log(response.data.result);
+        // console.log(response.data.result);
 
       }).catch((err) => {
         console.log(err.data.message);
@@ -148,7 +148,7 @@ export default function Attend() {
           </div>
           {
             attendInfo.length > 0 && attendInfo.map((result) => (
-              result.member.id == host.id && result.member.participantStatus == "APPROVE" ?
+              result.member.id == host.id ?
                 <>
                   <div className={`${styles.attend_participant_name_container}`}>
                     <img width={24} height={24} className={styles.attend_cronwimg} src={process.env.PUBLIC_URL + "/img/crown_red.png"}
@@ -157,7 +157,6 @@ export default function Attend() {
                   </div>
                 </>
                 :
-                result.member.participantStatus == "APPROVE" &&
                 <div className={`${styles.attend_participant_name_container}`}><img width={24} height={24} className={styles.attend_cronwimg} src={process.env.PUBLIC_URL + "/img/crown_gray.png"}
                   onClick={() => delegation(result.member.id)}
                 />
@@ -186,7 +185,6 @@ export default function Attend() {
                   </div>
                   {
                     attendInfo.length > 0 && attendInfo.map((result) => (
-                      result.member.participantStatus === "APPROVE" &&
                       result.summaries.map((status) => (status.week == week ?
                         <div className={styles.attend_each_user_status}>
                           <div>

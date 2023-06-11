@@ -87,7 +87,7 @@ export default function StudyDetail() {
     });
 
     // 리뷰 api
-    authApi
+    defaultapi
       .get(`studies/${studyId}/reviews`)
       .then((response) => {
         setReviews(response.data.reviews);

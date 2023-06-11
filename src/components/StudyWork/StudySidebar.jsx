@@ -98,9 +98,14 @@ export default function StudySidebar() {
             ?
             /* 스터디 목록 부분*/
             <div className={styles.study_list_container}>
-              <img height={weekInfo.length > 0 && 13 + (weekInfo.length - 1) * 40} src={process.env.PUBLIC_URL + '/img/study_total_line.png'}
-                className={styles.study_total_list_line}
-              />
+              {weekInfo.length > 0
+                ?
+                <img height={13 + (weekInfo.length - 1) * 40} src={process.env.PUBLIC_URL + '/img/study_total_line.png'}
+                  className={styles.study_total_list_line}
+                />
+                :
+                <></>}
+
               <div className={styles.study_list_line_contianer}>
                 {weekInfo.map((item, index) => {
                   return (

@@ -102,6 +102,7 @@ export default function Attend() {
     authApi.get(`studies/${studyId}/attendances`)
       .then((response) => {
         setAttendInfo(response.data.result)
+        console.log(response.data.result);
 
       }).catch((err) => {
         console.log(err.data.message);
@@ -185,16 +186,15 @@ export default function Attend() {
                   </div>
                   {
                     attendInfo.length > 0 && attendInfo.map((result) => (
-                      result.member.participantStatus == "APPROVE" && result.summaries.map((status) => (
-                        status.week == week ?
-                          <div className={styles.attend_each_user_status}>
-                            <div>
-                              <AttendRevice status={status} memberId={result.member.id} studyId={studyId} hostId={host.id} />
-                            </div>
+                      result.member.participantStatus === "APPROVE" &&
+                      result.summaries.map((status) => (status.week == week ?
+                        <div className={styles.attend_each_user_status}>
+                          <div>
+                            <AttendRevice status={status} memberId={result.member.id} studyId={studyId} hostId={host.id} />
                           </div>
-                          :
-                          <div className={styles.attend_each_user_status}>
-                          </div>
+                        </div>
+                        :
+                        <></>
                       ))
                     ))
                   }

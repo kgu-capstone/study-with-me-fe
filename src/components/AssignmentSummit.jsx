@@ -66,9 +66,6 @@ export default function AssignmentSummit({ studyId, week, setIsApiUpdate, isApiU
         fileData.append("type", homeworkType);
         fileData.append("link", homeworkLink);
 
-        console.log(studyId);
-        console.log(week);
-
         // authApi.post(`studies/${studyId}/weeks/${week}/assignment`,
         //     fileData,
         //     {

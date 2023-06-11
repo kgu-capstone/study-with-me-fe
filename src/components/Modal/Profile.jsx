@@ -62,8 +62,6 @@ export default function Profile({ closeModal, userId }) {
 
 
   useEffect(() => {
-
-
     authApi.get(`members/${userId}`)
       .then((response) => {
         setMemberNickname(response.data.nickname);

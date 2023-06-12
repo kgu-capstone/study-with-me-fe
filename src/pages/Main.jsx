@@ -13,38 +13,12 @@ import { te } from "date-fns/locale";
 import { useInView } from "react-intersection-observer";
 
 function Main() {
-  const [studyList, setStudyList] = useState([
-    {
-      id: 1,
-      name: "Spring 스터디",
-      description: "Spring 스터디입니다",
-      category: "프로그래밍",
-      thumbnail: "programming_C.png",
-      thumbnailBackground: "#F0F5FF",
-      type: "온라인",
-      recruitmentStatus: "모집중",
-      currentMembers: 0,
-      maxMembers: 10,
-      registerDate: "2023-05-31T21:18:13.2200377",
-      hashtags: ["스프링", "Spring", "프로그래밍", "김영한"],
-      favoriteMarkingMembers: [46, 51, 53],
-    },
-    {
-      id: 2,
-      name: "JPA 스터디",
-      description: "JPA 스터디입니다",
-      category: "프로그래밍",
-      thumbnail: "programming_Java.png",
-      thumbnailBackground: "#FFF2F2",
-      type: "온라인",
-      recruitmentStatus: "모집중",
-      currentMembers: 2,
-      maxMembers: 4,
-      registerDate: "2023-05-30T21:18:13.2200377",
-      hashtags: ["Hibernate", "JPA", "프로그래밍", "김영한"],
-      favoriteMarkingMembers: [74],
-    },
-  ]);
+
+  //로그인 후 redirect href 미리 저장
+  localStorage.setItem("loginRedirectpath", window.location.href)
+
+
+  const [studyList, setStudyList] = useState([]);
 
   useEffect(() => {
     setSaveCategoryStatus(1);
@@ -139,7 +113,6 @@ function Main() {
   // 정렬들 페이지가 0이라서 변화가 없다면 함수를 아예 불러주고
   // 0이나닐때는 페이지를 0으로 바꿔서 무한스크롤 함수에서 api함수를 호출하도록 함
 
-  /* 
   useEffect(() => {
     if (save_page_status === 0) {
       getData();
@@ -190,7 +163,7 @@ function Main() {
   useEffect(() => {
     getData();
   }, [save_page_status]);
-*/
+
   return (
     <div className="main_main">
       <Ad />
@@ -307,9 +280,7 @@ function Main() {
           {/* 스터디 카드 들어갈 공간 */}
           {studyList &&
             studyList.map((item, index) => {
-              let favorite_true =
-                item.favoriteMarkingMembers &&
-                item.favoriteMarkingMembers.indexOf(memberId);
+              let favorite_true = item.favoriteMarkingMembers.indexOf(parseInt(memberId))
               return (
                 <div className="card-area">
                   <Card
@@ -320,6 +291,7 @@ function Main() {
                     study_image={`/img/studyprofiles/${item.thumbnail}`}
                     study_recruit={item.recruitmentStatus}
                     study_favorite={favorite_true}
+                    study_favorite_count={item.favoriteMarkingMembers.length}
                     study_category={item.category}
                   />
                 </div>
@@ -328,10 +300,10 @@ function Main() {
         </div>
       </div>
 
-      {/* 무한 스크롤 
-      
-       <div ref={ref}></div>
-      */}
+      {/* 무한 스크롤  */}
+
+      <div ref={ref}></div>
+
 
       <div className="footer-area">
         <Foot />

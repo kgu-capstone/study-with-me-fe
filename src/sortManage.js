@@ -3,9 +3,6 @@ import { authApi, defaultapi } from "./services/api";
 export const sortManage = async (category, sort, page, type, province, city) => {
   let data = {}
 
-  console.log(category, sort, page, type, province, city);
-
-
   data["category"] = category
   data["sort"] = sort
   data["page"] = page
@@ -19,13 +16,11 @@ export const sortManage = async (category, sort, page, type, province, city) => 
     data["city"] = city
   }
 
-  console.log(data);
   if (category >= 1 && category <= 6 && page >= 0) {
     return await defaultapi.get(`studies`, {
       params: data
     })
       .then((response) => {
-        console.log(response.data);
         return response.data.studyList;
       })
       .catch((err) => {

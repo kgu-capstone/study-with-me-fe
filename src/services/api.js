@@ -30,9 +30,6 @@ authApi.interceptors.response.use(
         const origianlRequest = config;
 
         if (error.response.status === 401) {
-            console.log('refreshtoken:::::');
-            console.log(localStorage.getItem("refreshToken"));
-
             try {
                 const data = await axios({
                     method: 'post',
@@ -55,10 +52,14 @@ authApi.interceptors.response.use(
 
             } catch (err) {
                 console.log('refesh로그아웃: ' + err.data.message);
-                // refresh Token도 만료 -> 로그아웃
-                localStorage.clear();
+                // refresh Token도 만료 -> 로그아웃      
+                authApi.post(`oauth/logout`)
+                    .then((response) => {
+                        localStorage.clear();
+                        window.location.href = `${process.env.REACT_APP_BASE_URL}`;
+                    }).catch((err) => console.log(err))
 
-                window.location.href = `${process.env.REACT_APP_BASE_URL}`;
+
             }
             return Promise.reject(error);
         }

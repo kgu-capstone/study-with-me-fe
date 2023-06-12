@@ -5,6 +5,15 @@ import { defaultapi } from '../services/api';
 
 function SignIn() {
 
+    //##-- 만약 id가 없는 비로그인상태라면 --##
+    //로그인 후 redirect href 미리 저장 -> 활동페이지는 마이페이지로
+    localStorage.setItem("loginRedirectpath", `${process.env.REACT_APP_BASE_URL}`)
+
+    if (localStorage.getItem("name") == null) {
+        window.location.href = `${process.env.REACT_APP_BASE_URL}login`;
+    }
+    //##-----------------------------------##
+
     // 로그인에서 받아 온 정보
     const name = localStorage.getItem("name");
     const email = localStorage.getItem("email");
@@ -198,9 +207,10 @@ function SignIn() {
             }
             const config = { "Content-Type": 'application/json' };
 
-            console.log(data);
             defaultapi.post(`member`, data)
                 .then((response) => {
+                    localStorage.removeItem("name");
+                    localStorage.removeItem("email");
                     alert("회원가입을 성공했습니다! 로그인을 진행해주세요.");
                     window.location.href = `${process.env.REACT_APP_BASE_URL}login`;
 

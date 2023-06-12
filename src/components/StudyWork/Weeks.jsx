@@ -32,13 +32,23 @@ import AssignmentSummit from '../AssignmentSummit';
 
 export default function ByWeek() {
 
+  //##-- 만약 id가 없는 비로그인상태라면 --##
+  //로그인 후 redirect href 미리 저장 -> 활동페이지는 마이페이지로
+  localStorage.setItem("loginRedirectpath", `${process.env.REACT_APP_BASE_URL}mypage`)
+
+  // 사용자 id get
+  let memberId;
+  if (localStorage.getItem("id")) {
+    memberId = localStorage.getItem("id")
+  } else {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}login`;
+  }
+  //##-----------------------------------##
+
   // studyId
   const location = useLocation()
   const studyId = location.state?.studyId
 
-
-  // 사용자 id get
-  const memberId = localStorage.getItem("id")
 
   // 팀장인지 불러오기
   const [isHost, setIsHost] = useState(false)
@@ -61,7 +71,6 @@ export default function ByWeek() {
   const weeksapi = () => {
     authApi.get(`studies/${studyId}/weeks`)
       .then((response) => {
-        console.log(response.data.weeks);
         setWeekInfo(response.data.weeks);
       })
       .catch((err) => {
@@ -247,8 +256,6 @@ export default function ByWeek() {
 
     const file = e.target.files[0];
     setFiles([...files, { uploadFile: file }]);
-
-    console.log(files);
   }
 
   const handlefileUploadCancle = (index) => {
@@ -295,14 +302,6 @@ export default function ByWeek() {
     fileData.append("assignmentExists", inputAssignmentExists);
     fileData.append("autoAttendance", inputAutoAttendance);
 
-    for (const key of fileData.keys()) {
-      console.log(key);
-    }
-    for (const value of fileData.values()) {
-      console.log(value);
-    }
-    console.log(fileData);
-
     authApi.post(`studies/${studyId}/week`,
       fileData,
       {
@@ -347,14 +346,6 @@ export default function ByWeek() {
 
     fileData.append("file", homeworksFiles && homeworksFiles.uploadFile);
     fileData.append("type", homeworkType);
-
-    for (const key of fileData.keys()) {
-      console.log(key);
-    }
-    for (const value of fileData.values()) {
-      console.log(value);
-    }
-    console.log(fileData);
 
     authApi.post(`studies/${studyId}/weeks/${week}/assignment`,
       fileData,
@@ -499,7 +490,7 @@ export default function ByWeek() {
               data={byweekInputContent}
               onReady={editor => {
                 // You can store the "editor" and use when it is needed.
-                console.log('Editor is ready to use!', editor);
+                // console.log('Editor is ready to use!', editor);
               }}
               onChange={(event, editor) => {
                 const data = editor.getData();

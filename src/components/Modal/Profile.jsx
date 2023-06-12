@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState, RechartsComponent } from 'react';
 import styles from '../../css/Profile.module.css'
-import { authApi } from '../../services/api';
+import { authApi, defaultapi } from '../../services/api';
 import Avatar from "boring-avatars";
 import PeerReview from './PeerReview';
 import { NavLink } from "react-router-dom";
@@ -40,7 +40,7 @@ export default function Profile({ closeModal, userId }) {
   // API 호출 함수
   async function fetchData() {
     try {
-      const response = await authApi.get(`members/${memberId}/attendances`);
+      const response = await defaultapi.get(`members/${memberId}/attendances`);
       const ATTENDANCE = response.data.result[0].count;
       const LATE = response.data.result[1].count;
       const ABSENCE = response.data.result[2].count;
@@ -62,9 +62,7 @@ export default function Profile({ closeModal, userId }) {
 
 
   useEffect(() => {
-
-
-    authApi.get(`members/${userId}`)
+    defaultapi.get(`members/${userId}`)
       .then((response) => {
         setMemberNickname(response.data.nickname);
         setMemberBirth(response.data.birth);
@@ -79,7 +77,7 @@ export default function Profile({ closeModal, userId }) {
 
 
     //활동중인
-    authApi.get(`members/${userId}/studies/participate`)
+    defaultapi.get(`members/${userId}/studies/participate`)
       .then((response) => {
         setActiveStudy(response.data.result)
       })
@@ -94,7 +92,7 @@ export default function Profile({ closeModal, userId }) {
 
 
     //리뷰
-    authApi.get(`members/${userId}/reviews`)
+    defaultapi.get(`members/${userId}/reviews`)
       .then((response) => {
         setReviews(response.data.reviews);
       })
@@ -114,7 +112,7 @@ export default function Profile({ closeModal, userId }) {
   useEffect(() => {
     const fetchAttendance = async () => {
       try {
-        const response = await authApi.get(`/members/${userId}/attendances`);
+        const response = await defaultapi.get(`/members/${userId}/attendances`);
         const attendanceResult = response.data.result;
 
         const mappedData = attendanceResult.map((item) => {

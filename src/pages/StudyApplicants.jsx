@@ -10,6 +10,19 @@ import Profile from '../components/Modal/Profile'
 
 export default function ApplicantList() {
 
+  //##-- 만약 id가 없는 비로그인상태라면 --##
+  //로그인 후 redirect href 미리 저장 -> 활동페이지는 마이페이지로
+  localStorage.setItem("loginRedirectpath", `${process.env.REACT_APP_BASE_URL}mypage`)
+
+  // 사용자 id get
+  let memberId;
+  if (localStorage.getItem("id")) {
+    memberId = localStorage.getItem("id")
+  } else {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}login`;
+  }
+  //##-----------------------------------##
+
   // studyId
   const location = useLocation()
   const studyId = location.state?.studyId

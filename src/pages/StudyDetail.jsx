@@ -11,13 +11,18 @@ import { useLocation } from "react-router";
 import parse from "html-react-parser";
 
 export default function StudyDetail() {
+
+  //로그인 후 redirect href 미리 저장 -> 활동페이지는 마이페이지로
+  localStorage.setItem("loginRedirectpath", `${process.env.REACT_APP_BASE_URL}`)
+
   // 넘어올 정보
   const location = useLocation();
   const studyId = location.state?.studyId;
 
-  const [study_recruit, setStudy_recruit] = useState("모집중"); // 모집중 변수담아주세요
-  const [hostName, setHostName] = useState("콩콩이"); // 방장닉네임 담아주세요.
-  const [hostid, setHostId] = useState(1); // 방장아이디 담아주세요.
+
+  const [study_recruit, setStudy_recruit] = useState("모집중");
+  const [hostName, setHostName] = useState("콩콩이");
+  const [hostid, setHostId] = useState(1);
 
   const [thumbnail, setThumbnail] = useState("");
   const [reviews, setReviews] = useState([]);
@@ -25,21 +30,41 @@ export default function StudyDetail() {
   const [hashtag, setHashtag] = useState();
   const [people, setPeople] = useState(0);
   const [people_now, setPeopleNow] = useState(0);
-  const [detailDescription, setDescription] = useState(
-    "열정적으로 활동할 스티디원 모집합니다."
-  );
-  const [age, setAge] = useState(0);
+  const [detailDescription, setDescription] = useState('');
+  const [participants, setParticipants] = useState([]);
+  const [ageData, setAgeData] = useState([]);
   const [studyName, setStudyName] = useState("");
 
   // 찜 버튼 구현부분
-  const [like, setLike] = useState(false);
+  const [favorite, setFavorite] = useState(false);
   const handleToggleLike = () => {
-    setLike((prevLike) => !prevLike);
+    //이미 찜되어있다면
+    //찜 등록
+    if (favorite == -1) {
+      authApi.post(`studies/${studyId}/like`)
+        .then((response) => {
+          setFavorite(1);
+        })
+        .catch(err => console.log(err))
+    }
+    // 찜취소
+    else {
+      authApi.delete(`studies/${studyId}/like`)
+        .then((response) => {
+          setFavorite(-1);
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   };
 
   useEffect(() => {
     // 스크롤 맨 위로
     window.scrollTo(0, 0);
+
+    // 찜
+    setFavorite(location.state?.favorite)
 
     // 기본정보 api
     defaultapi.get(`studies/${studyId}`).then((response) => {
@@ -47,7 +72,7 @@ export default function StudyDetail() {
       setHashtag(response.data.hashtags);
       setPeopleNow(response.data.currentMembers);
       setDescription(response.data.description);
-      setAge(response.data.participants.age);
+      setParticipants(response.data.participants);
 
       setHostName(response.data.host.nickname);
       setHostId(response.data.host.id);
@@ -62,7 +87,7 @@ export default function StudyDetail() {
     });
 
     // 리뷰 api
-    authApi
+    defaultapi
       .get(`studies/${studyId}/reviews`)
       .then((response) => {
         setReviews(response.data.reviews);
@@ -74,12 +99,12 @@ export default function StudyDetail() {
   const apply = () => {
     authApi
       .post(`studies/${studyId}/applicants`)
-      .then((response) => {
+      .then(response => {
         alert(
           "지원이 완료되었습니다. 팀장이 승인하면 스터디를 들어갈 수 있습니다."
         );
       })
-      .catch((err) => {
+      .catch(err => {
         alert(err.response.data.message);
       });
   };
@@ -112,8 +137,8 @@ export default function StudyDetail() {
             <span>
               <FontAwesomeIcon
                 icon={faHeart}
-                onClick={handleToggleLike}
-                className={`studyDetail_heart ${like ? "liked" : ""}`}
+                onClick={() => handleToggleLike()}
+                className={`${favorite == -1 ? "studyDetail_heart_none" : "studyDetail_heart_liked"}`}
               />
             </span>
           </div>
@@ -164,7 +189,7 @@ export default function StudyDetail() {
           <div className="contents-area">
             <p className="studyDetail_study_age_title">스터디원 나이 분포</p>
             <div>
-              <Rechart />
+              <Rechart participants={participants} />
             </div>
           </div>
 

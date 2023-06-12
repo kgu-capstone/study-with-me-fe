@@ -150,9 +150,10 @@ footer {
   color: black;
   text-decoration: none;
   display: flex;
+  position: relative;
 }
 
-.card:active {
+.card-body:active {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16), 0 2px 14px rgba(0, 0, 0, 0.16);
 }
 
@@ -287,18 +288,68 @@ link {
   margin-left: 10px;
 }
 
-.studyDetail_heart {
-  cursor: pointer;
-  top: 10px;
-  right: 10px;
+
+.card_favorite_count_liked {
+  z-index: 1;
   position: absolute;
-  font-size: 17px;
-  color: white;
+  width: 25px;
+  top: 18px;
+  right: 15px;
+  text-align: center;
+  font-size: 10px;
+  color: #FFFFFF;
 }
 
-.studyDetail_heart.liked {
+.card_favorite_count_none {
+  z-index: 1;
+  position: absolute;
+  width: 25px;
+  top: 18px;
+  right: 16px;
+  text-align: center;
+  font-size: 10px;
+  color: #000000;
+}
+
+.card_favorite_contianer {
+  cursor: pointer;
+}
+
+.studyCard_heart_liked {
+  cursor: pointer;
+  top: 13px;
+  right: 15px;
+  position: absolute;
+  font-size: 26px;
+  color: #ff5037;
+}
+
+.studyCard_heart_none {
+  cursor: pointer;
+  top: 13px;
+  right: 15px;
+  position: absolute;
+  font-size: 26px;
+  color: #E1E1E1;
+}
+
+.studyDetail_heart_liked {
+  cursor: pointer;
+  top: 10px;
+  right: 0px;
+  position: absolute;
+  font-size: 26px;
   color: #ff5037;
   /* or any other color you want for the liked state */
+}
+
+.studyDetail_heart_none {
+  cursor: pointer;
+  top: 10px;
+  right: 0px;
+  position: absolute;
+  font-size: 26px;
+  color: #E1E1E1;
 }
 
 .StudyDetail-img {

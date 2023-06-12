@@ -10,6 +10,19 @@ import AttendRevice from '../AttendRevice';
 
 export default function Attend() {
 
+  //##-- 만약 id가 없는 비로그인상태라면 --##
+  //로그인 후 redirect href 미리 저장 -> 활동페이지는 마이페이지로
+  localStorage.setItem("loginRedirectpath", `${process.env.REACT_APP_BASE_URL}mypage`)
+
+  // 사용자 id get
+  let memberId;
+  if (localStorage.getItem("id")) {
+    memberId = localStorage.getItem("id")
+  } else {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}login`;
+  }
+  //##-----------------------------------##
+
   // studyId
   const location = useLocation()
   const studyId = location.state?.studyId
@@ -89,6 +102,7 @@ export default function Attend() {
     authApi.get(`studies/${studyId}/attendances`)
       .then((response) => {
         setAttendInfo(response.data.result)
+        // console.log(response.data.result);
 
       }).catch((err) => {
         console.log(err.data.message);
@@ -134,7 +148,7 @@ export default function Attend() {
           </div>
           {
             attendInfo.length > 0 && attendInfo.map((result) => (
-              result.member.id == host.id && result.member.participantStatus == "APPROVE" ?
+              result.member.id == host.id ?
                 <>
                   <div className={`${styles.attend_participant_name_container}`}>
                     <img width={24} height={24} className={styles.attend_cronwimg} src={process.env.PUBLIC_URL + "/img/crown_red.png"}
@@ -143,7 +157,6 @@ export default function Attend() {
                   </div>
                 </>
                 :
-                result.member.participantStatus == "APPROVE" &&
                 <div className={`${styles.attend_participant_name_container}`}><img width={24} height={24} className={styles.attend_cronwimg} src={process.env.PUBLIC_URL + "/img/crown_gray.png"}
                   onClick={() => delegation(result.member.id)}
                 />
@@ -172,16 +185,14 @@ export default function Attend() {
                   </div>
                   {
                     attendInfo.length > 0 && attendInfo.map((result) => (
-                      result.member.participantStatus == "APPROVE" && result.summaries.map((status) => (
-                        status.week == week ?
-                          <div className={styles.attend_each_user_status}>
-                            <div>
-                              <AttendRevice status={status} memberId={result.member.id} studyId={studyId} hostId={host.id} />
-                            </div>
+                      result.summaries.map((status) => (status.week == week ?
+                        <div className={styles.attend_each_user_status}>
+                          <div>
+                            <AttendRevice status={status} memberId={result.member.id} studyId={studyId} hostId={host.id} />
                           </div>
-                          :
-                          <div className={styles.attend_each_user_status}>
-                          </div>
+                        </div>
+                        :
+                        <></>
                       ))
                     ))
                   }

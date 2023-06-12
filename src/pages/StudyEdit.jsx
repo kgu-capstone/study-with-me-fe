@@ -19,6 +19,19 @@ import { useHistory } from 'react-router';
 
 export default function StudyRevice() {
 
+  //##-- 만약 id가 없는 비로그인상태라면 --##
+  //로그인 후 redirect href 미리 저장 -> 활동페이지는 마이페이지로
+  localStorage.setItem("loginRedirectpath", `${process.env.REACT_APP_BASE_URL}mypage`)
+
+  // 사용자 id get
+  let memberId;
+  if (localStorage.getItem("id")) {
+    memberId = localStorage.getItem("id")
+  } else {
+    window.location.href = `${process.env.REACT_APP_BASE_URL}login`;
+  }
+  //##-----------------------------------##
+
   // 넘어올 정보
   const location = useLocation()
   const stateStudyId = location.state?.studyId
@@ -121,18 +134,13 @@ export default function StudyRevice() {
       setRecruitOnclass(`${styles.recruit_toggle_on_checked}`);
       setRecruitOffclass(`${styles.recruit_toggle_off_label}`);
       setStudyRecruit(true);
-      console.log(value);
-      console.log('투루');
       alert("수정사항 저장을 해야 반영이 됩니다.")
     } else {
       setRecruitOnclass(`${styles.recruit_toggle_on_label}`);
       setRecruitOffclass(`${styles.recruit_toggle_off_checked}`);
       setStudyRecruit(false);
-      console.log(value);
-      console.log('폴스');
       alert("수정사항 저장을 해야 반영이 됩니다.")
     }
-    console.log(studyOnoff);
   }
 
 
@@ -445,8 +453,6 @@ export default function StudyRevice() {
           "hashtags": hashtagarr,
         }
       }
-
-      console.log(data);
 
       //api 발송
       authApi.patch(`studies/${stateStudyId}`, data)

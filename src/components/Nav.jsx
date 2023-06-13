@@ -9,8 +9,13 @@ export default function Nav() {
   const [isLogin, setIsLogin] = useState(false);
 
   const handleLogout = () => {
-    localStorage.clear();
+    authApi.post(`oauth/logout`)
+      .then((response) => { })
+      .catch((err) => console.log(err))
+
+    localStorage.clear()
     window.location.reload();
+
   };
 
   const [nick, setNick] = useState("nick");

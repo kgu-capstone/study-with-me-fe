@@ -519,6 +519,7 @@ body {
 .attend_participant_name_container {
     display: flex;
     white-space: nowrap;
+    height: 40px;
 }
 
 

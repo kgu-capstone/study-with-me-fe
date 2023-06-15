@@ -301,7 +301,7 @@ export default function Announce() {
     if (window.confirm('댓글을 삭제하시겠습니까?')) {
       authApi.delete(`notices/${noticeId}/comments/${commentId}`)
         .then((response) => {
-          announceApi();
+          window.location.reload()
         })
         .catch((err) => {
           console.log(err);
@@ -354,7 +354,7 @@ export default function Announce() {
         "content": reviceValue
       })
       .then((response) => {
-        window.location.href = `${process.env.REACT_APP_BASE_URL}StudyWork/Announce`;
+        window.location.reload()
       })
       .catch((err) => {
         console.log(err);

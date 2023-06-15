@@ -15,6 +15,7 @@ export default function Nav() {
 
     localStorage.clear()
     window.location.reload();
+
   };
 
   const [nick, setNick] = useState("nick");

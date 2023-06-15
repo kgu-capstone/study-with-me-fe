@@ -37,7 +37,8 @@ export default function AttendRevice({ status, memberId, studyId, hostId }) {
             <div className={attend_revice_contianer_css}>
                 <div className={styles.attend_attendance_choice} onClick={() => reviceAttend("출석")}></div>
                 <div className={styles.attend_late_choice} onClick={() => reviceAttend("지각")}></div>
-                <div className={styles.attend_absent_choice} onClick={() => reviceAttend("결석")}></div></div>
+                <div className={styles.attend_absent_choice} onClick={() => reviceAttend("결석")}></div>
+            </div>
             <div onClick={() => veiwReviceAttend()}>
 
                 {

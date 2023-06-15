@@ -417,6 +417,7 @@ body {
     width: 635px;
     display: flex;
     justify-content: space-between;
+    height: 23px;
 
 }
 
@@ -429,7 +430,6 @@ body {
 }
 
 .announce_each_comment_list_nickname {
-
     margin: 0 0 0 0;
 }
 
@@ -519,6 +519,7 @@ body {
 .attend_participant_name_container {
     display: flex;
     white-space: nowrap;
+    height: 40px;
 }
 
 
@@ -559,6 +560,7 @@ body {
 
 .attend_each_user_status {
     display: flex;
+    height: 40px;
 }
 
 .attend_each_status {

@@ -55,10 +55,9 @@ authApi.interceptors.response.use(
                 // refresh Token도 만료 -> 로그아웃      
                 authApi.post(`oauth/logout`)
                     .then((response) => {
-                        localStorage.clear();
-                        window.location.href = `${process.env.REACT_APP_BASE_URL}`;
                     }).catch((err) => console.log(err))
-
+                localStorage.clear();
+                window.location.href = `${process.env.REACT_APP_BASE_URL}`;
 
             }
             return Promise.reject(error);
